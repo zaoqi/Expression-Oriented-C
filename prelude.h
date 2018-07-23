@@ -65,10 +65,7 @@ INLINE void make_void(){}
 #define anonymous_enumeration enum
 
 //let_cc(t,x)L ... J;
-#define _HELPER_prelude_let_cc_a_(value) value)
-#define _HELPER_prelude_let_cc_do_(t, x, value) ({t _TEMP_prelude_let_cc_##x##_;_TEMP_prelude_let_cc_##x##_=(value);_TEMP_prelude_let_cc_label_##x##_:_TEMP_prelude_let_cc_##x##_;})
-#define let_cc(t, x) _HELPER_prelude_let_cc_do_(t, x, _HELPER_prelude_let_cc_a_
-#define throw(x, v) ({_TEMP_prelude_let_cc_##x##_=x;goto _TEMP_prelude_let_cc_label_##x##_;*((void*)0);})
+#define let_cc(t, x) WIP
 
 
 #endif
