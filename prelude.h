@@ -19,17 +19,22 @@
 #define _HEAD_prelude_
 
 
-#define the(t, x) t x
+#define id(x) x
+#define file(x) x
+
+#define define_type typedef
 
 #define true 0
 #define false 1
-typedef char bool;
-#define Ref(x) ((x)*)
-#define unRef(x) (*(x))
-#define toRef(x) (&(x))
-#define RefAny (void*)
+define_type char bool;
+#define ref(x) ((x)*)
+#define un_ref(x) (*(x))
+#define to_ref(x) (&(x))
+#define ref_any (void*)
 
 #define eq_p(x,y) x==y
+
+inline void make_void(){}
 
 #define declare_private(t, n) static t n
 #define declare_public(t, n) extern t n
@@ -38,29 +43,31 @@ typedef char bool;
 #define define_private_zero(t, n) declare_private(t, n);t n
 #define define_public_zero(t, n) declare_public(t, n);t n
 
-#define declare_function_private(ret, nameargs) static ret nameargs
-#define define_function_private(ret, nameargs, value) static ret nameargs{return (value);}
-#define declare_function_public(ret, nameargs) extern ret nameargs
-#define define_function_public(ret, nameargs, value) extern ret nameargs{return (value);}
-#define declare_function_inline(ret, nameargs) inline ret nameargs
-#define define_function_inline(ret, nameargs, value) inline ret nameargs{return (value);}
+#define L ({
+#define J })
 
-#define declare_doer_private(nameargs) static void nameargs
-#define define_doer_private(nameargs, body) static void nameargs{body}
-#define declare_doer_public(nameargs) extern void nameargs
-#define define_doer_public(nameargs, body) extern void nameargs{body}
-#define declare_doer_inline(nameargs) inline void nameargs
-#define define_doer_inline(nameargs, body) inline void nameargs{body}
+//例子
+//define_private_function(int add(int x, int y))L
+//	x+y;
+//J;
+#define _HELPER_prelude_function_(value) {return (value);}
+#define declare_private_function(retnameargs) static retnameargs
+#define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
+#define declare_public_function(retnameargs) extern retnameargs
+#define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
+#define declare_inline_function(retnameargs) inline retnameargs
+#define define_inline_function(retnameargs) inline retnameargs _HELPER_prelude_function_
 
 #define record(x) struct x;typedef struct x x;struct x
 #define anonymous_record struct
 #define enumeration(x) enum x;typedef enum x x;enum x
 #define anonymous_enumeration enum
 
-#define let_cc(t, x, body) ({t _LET_CC_##x;_LET_CC_##x=(body);_LET_CC_LABEL_##x:_LET_CC_##x;})
-#define throw(x, v) ({_LET_CC_##x=v;goto _LET_CC_LABEL_##x;*((void*)0);})
-#define let_cc_doer(x, body) body _LET_CC_LABEL_##x:
-#define throw_doer(x) goto _LET_CC_LABEL_##x
+//let_cc(t,x)L ... J;
+#define _HELPER_prelude_let_cc_a_(value) value)
+#define _HELPER_prelude_let_cc_do_(t, x, value) ({t _TEMP_prelude_let_cc_##x##_;_TEMP_prelude_let_cc_##x##_=(value);_TEMP_prelude_let_cc_label_##x##_:_TEMP_prelude_let_cc_##x##_;})
+#define let_cc(t, x) _HELPER_prelude_let_cc_do_(t, x, _HELPER_prelude_let_cc_a_
+#define throw(x, v) ({_TEMP_prelude_let_cc_##x##_=x;goto _TEMP_prelude_let_cc_label_##x##_;*((void*)0);})
 
 
 #endif
