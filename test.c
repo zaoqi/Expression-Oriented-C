@@ -6,5 +6,8 @@ J;
 define_private_function(void mkvoid2())L
 	make_void();
 J;
-int main(){}
+define_public_function(int main())L
+	mkvoid2();
+	0;
+J;
 )
