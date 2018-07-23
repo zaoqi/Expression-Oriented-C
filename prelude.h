@@ -34,7 +34,8 @@ define_type char bool;
 
 #define eq_p(x,y) x==y
 
-inline void make_void(){}
+#define INLINE static inline
+INLINE void make_void(){}
 
 #define declare_private(t, n) static t n
 #define declare_public(t, n) extern t n
@@ -55,8 +56,8 @@ inline void make_void(){}
 #define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
 #define declare_public_function(retnameargs) extern retnameargs
 #define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
-#define declare_inline_function(retnameargs) inline retnameargs
-#define define_inline_function(retnameargs) inline retnameargs _HELPER_prelude_function_
+#define declare_inline_function(retnameargs) INLINE retnameargs
+#define define_inline_function(retnameargs) INLINE retnameargs _HELPER_prelude_function_
 
 #define record(x) struct x;typedef struct x x;struct x
 #define anonymous_record struct
