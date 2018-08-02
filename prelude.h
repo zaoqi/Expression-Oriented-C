@@ -1,5 +1,4 @@
 /*
-    語: The Language
     Copyright (C) 2018  Zaoqi
 
     This program is free software: you can redistribute it and/or modify
@@ -18,11 +17,6 @@
 #ifndef _HEAD_prelude_
 #define _HEAD_prelude_
 
-
-//#include <setjmp.h>
-#define id(x) x
-#define file(x) x
-#define A(x) x;
 
 #define define_type typedef
 
@@ -46,13 +40,10 @@ INLINE void make_void(){}
 #define define_private_zero(t, n) declare_private(t, n);t n
 #define define_public_zero(t, n) declare_public(t, n);t n
 
-#define L ({
-#define J })
-
 //例子
-//define_private_function(int add(int x, int y))L
+//define_private_function(int add(int x, int y))({
 //	x+y;
-//J;
+//});
 #define _HELPER_prelude_function_(value) {return value;}
 #define declare_private_function(retnameargs) static retnameargs
 #define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
@@ -66,7 +57,7 @@ INLINE void make_void(){}
 #define enumeration(x) enum x;typedef enum x x;enum x
 #define anonymous_enumeration enum
 
-//let_cc(t,x)L ... J;
+//let_cc(t,x)({ ... });
 // static ref_any _TEMP_let_cc_;
 //_TEMP_let_cc_state_##x##_ 
 //	false 运行
