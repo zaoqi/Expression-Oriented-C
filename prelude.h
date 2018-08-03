@@ -58,24 +58,23 @@ INLINE void make_void(){}
 #define anonymous_enumeration enum
 
 //let_cc(t,x)({ ... });
-// static ref_any _TEMP_let_cc_;
-//_TEMP_let_cc_state_##x##_ 
-//	false 运行
-//	true 正常返回，中断（都已写入_TEMP_let_cc_##x##_）
-static void* _TEMP_let_cc_;
-static unsigned char _TEMP_let_cc_state_;
 #define let_cc(t, x) _HELPER_prelude_let_cc_A_(t, x) _HELPER_prelude_let_cc_B_
-#define _HELPER_prelude_let_cc_A_(t, x) ({t _TEMP_let_cc_return_=({\
-	t _TEMP_let_cc_##x##_; \
-	unsigned char_TEMP_let_cc_state_=false; \
+#define _HELPER_prelude_let_cc_A_(t, x) ({ \
+	t _TEMP_let_cc_return_value_; \
+	t _TEMP_let_cc_value_##x##_; \
+	goto _TEMP_let_cc_do_##x##_; \
 	_TEMP_let_cc_out_##x##_: \
-	while(true){ \
-		if(_TEMP_let_cc_state_){ \
-			_TEMP_let_cc_=&_TEMP_let_cc_##x##_; \
-			break;} \
-		_TEMP_let_cc_##x##_=
-#define _HELPER_prelude_let_cc_B_(value) (value);_TEMP_let_cc_state_=true;};*_TEMP_let_cc_;});_TEMP_let_cc_return_;})
-#define throw(x, v) ({_TEMP_let_cc_##x##_=v;_TEMP_let_cc_state_=true;goto _TEMP_let_cc_out_##x##_;*((void*)0);})
-
+	_TEMP_let_cc_return_value_= _TEMP_let_cc_value_##x##_; \
+	goto _TEMP_let_cc_return_label_; \
+	_TEMP_let_cc_do_##x##_:
+#define _HELPER_prelude_let_cc_B_(value) \
+	_TEMP_let_cc_return_value_=(value); \
+	_TEMP_let_cc_return_label_: \
+	_TEMP_let_cc_return_value_;})
+#define throw(t, x, v) ({ \
+	_TEMP_let_cc_value_##x##_=v; \
+	goto _TEMP_let_cc_out_##x##_; \
+	t _TEMP_let_cc_throw_; \
+	_TEMP_let_cc_throw_; })
 
 #endif
