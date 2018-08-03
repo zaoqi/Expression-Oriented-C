@@ -34,7 +34,7 @@
 #undef define_public_function
 #undef declare_private_inline_function
 #undef define_private_inline_function
-#undef 
+//#undef 
 //#undef ...
 #ifdef _EOC_require_
 #error "WIP"//WIP
