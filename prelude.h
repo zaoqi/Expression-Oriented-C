@@ -14,8 +14,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef _HEAD_prelude_
-#define _HEAD_prelude_
+#pragma once
+#ifdef _EOC_require_
+#error "WIP"//WIP
+#endif
 
 
 #define define_type typedef
@@ -77,4 +79,3 @@ INLINE void make_void(){}
 	t _TEMP_let_cc_throw_; \
 	_TEMP_let_cc_throw_; })
 
-#endif
