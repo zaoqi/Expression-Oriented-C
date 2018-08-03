@@ -9,11 +9,11 @@ define_public_function(int main())({
 	mkvoid2();
 	0;
 })
-
+/*
 define_public_function(int f_cc(int x))({
 	let_cc(int, r)({
 		x?0:throw(r, 1);
 		2;
-	})
+	});
 })
-
+*/

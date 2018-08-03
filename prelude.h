@@ -44,7 +44,7 @@ INLINE void make_void(){}
 //define_private_function(int add(int x, int y))({
 //	x+y;
 //});
-#define _HELPER_prelude_function_(value) {return value;}
+#define _HELPER_prelude_function_(value) {return (value);}
 #define declare_private_function(retnameargs) static retnameargs
 #define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
 #define declare_public_function(retnameargs) extern retnameargs
@@ -62,18 +62,20 @@ INLINE void make_void(){}
 //_TEMP_let_cc_state_##x##_ 
 //	false 运行
 //	true 正常返回，中断（都已写入_TEMP_let_cc_##x##_）
+static void* _TEMP_let_cc_;
+static unsigned char _TEMP_let_cc_state_;
 #define let_cc(t, x) _HELPER_prelude_let_cc_A_(t, x) _HELPER_prelude_let_cc_B_
-#define _HELPER_prelude_let_cc_A_(t, x) ((t)({\
+#define _HELPER_prelude_let_cc_A_(t, x) ({t _TEMP_let_cc_return_=({\
 	t _TEMP_let_cc_##x##_; \
-	unsigned char _TEMP_let_cc_state_##x##_=false; \
+	unsigned char_TEMP_let_cc_state_=false; \
 	_TEMP_let_cc_out_##x##_: \
 	while(true){ \
-		if(_TEMP_let_cc_state_##x##_){ \
+		if(_TEMP_let_cc_state_){ \
 			_TEMP_let_cc_=&_TEMP_let_cc_##x##_; \
 			break;} \
 		_TEMP_let_cc_##x##_=
-#define _HELPER_prelude_let_cc_B_(value) (value);_TEMP_let_cc_state_##x##_=true;}*_TEMP_let_cc_;}))
-#define throw(x, v) ({_TEMP_let_cc_##x##_=v;_TEMP_let_cc_state_##x##_=true;goto _TEMP_let_cc_out_##x##_;*((void*)0);})
+#define _HELPER_prelude_let_cc_B_(value) (value);_TEMP_let_cc_state_=true;};*_TEMP_let_cc_;});_TEMP_let_cc_return_;})
+#define throw(x, v) ({_TEMP_let_cc_##x##_=v;_TEMP_let_cc_state_=true;goto _TEMP_let_cc_out_##x##_;*((void*)0);})
 
 
 #endif
