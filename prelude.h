@@ -61,6 +61,8 @@ static inline void make_void(){}
 
 #ifdef _EOC_require_
 
+//WIP
+
 #else
 
 #define declare_private_function(retnameargs) static retnameargs
