@@ -14,7 +14,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma once
 #ifdef _EOC_require_
 #error "WIP"//WIP
 #endif
@@ -32,27 +31,46 @@
 
 #define eq_p(x,y) x==y
 
-#define INLINE static inline
-INLINE void make_void(){}
+static inline void make_void(){}
+
+#define declare_public(t, n) extern t n
+
+#ifdef _EOC_require_
+
+#define declare_private(t, n)
+#define define_private(t, n, x)
+#define define_public(t, n, x) declare_public(t, n);
+#define define_private_zero(t, n)
+#define define_public_zero(t, n) declare_public(t, n);
+
+#else
 
 #define declare_private(t, n) static t n
-#define declare_public(t, n) extern t n
 #define define_private(t, n, x) declare_private(t, n);t n=x
 #define define_public(t, n, x) declare_public(t, n);t n=x
 #define define_private_zero(t, n) declare_private(t, n);t n
 #define define_public_zero(t, n) declare_public(t, n);t n
+
+#endif
 
 //例子
 //define_private_function(int add(int x, int y))({
 //	x+y;
 //});
 #define _HELPER_prelude_function_(value) {return (value);}
+
+#ifdef _EOC_require_
+
+#else
+
 #define declare_private_function(retnameargs) static retnameargs
 #define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
 #define declare_public_function(retnameargs) extern retnameargs
 #define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
 #define declare_inline_function(retnameargs) INLINE retnameargs
 #define define_inline_function(retnameargs) INLINE retnameargs _HELPER_prelude_function_
+
+#endif
 
 #define record(x) struct x;typedef struct x x;struct x
 #define anonymous_record struct

@@ -18,7 +18,7 @@ mkmodule(){
 		echo "#ifdef _EOC_require_$1_"
 		echo '#error "BUG!"'
 		echo "#else"
-		echo "#unset $2"
+		echo "#undef $2"
 		echo "#endif"
 	else
 		echo "#ifdef _EOC_require_$1_"
@@ -26,7 +26,7 @@ mkmodule(){
 		let k++
 		mkmodule $k "_EOC_require_$1_"
 		echo "#else"
-		echo "#unset $2"
+		echo "#undef $2"
 		echo "#endif"
 	fi
 }
