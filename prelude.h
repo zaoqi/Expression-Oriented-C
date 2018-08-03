@@ -14,6 +14,27 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#undef define_type
+#undef true
+#undef false
+#undef ref
+#undef un_ref
+#undef to_ref
+#undef ref_any
+#undef eq_p
+#undef declare_public
+#undef declare_private
+#undef define_private
+#undef define_public
+#undef define_private_zero
+#undef define_public_zero
+#undef declare_private_function
+#undef define_private_function
+#undef declare_public_function
+#undef define_public_function
+#undef declare_private_inline_function
+#undef define_private_inline_function
+#undef 
 //#undef ...
 #ifdef _EOC_require_
 #error "WIP"//WIP
@@ -32,7 +53,10 @@
 
 #define eq_p(x,y) x==y
 
+#ifndef _EOC_make_void_
+#define _EOC_make_void_
 static inline void make_void(){}
+#endif
 
 #define declare_public(t, n) extern t n
 
@@ -70,8 +94,8 @@ static inline void make_void(){}
 #define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
 #define declare_public_function(retnameargs) extern retnameargs
 #define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
-#define declare_inline_function(retnameargs) INLINE retnameargs
-#define define_inline_function(retnameargs) INLINE retnameargs _HELPER_prelude_function_
+#define declare_private_inline_function(retnameargs) static inline retnameargs
+#define define_private_inline_function(retnameargs) static inline retnameargs _HELPER_prelude_function_
 
 #endif
 
