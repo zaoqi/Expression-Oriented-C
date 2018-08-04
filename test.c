@@ -1,4 +1,4 @@
-#include "prelude.h"
+#include "module<"
 define_private_function(int add(int x, int y))({
 	x+y;
 })
@@ -16,4 +16,4 @@ define_public_function(int f_cc(int x))({
 		2;
 	});
 })
-
+#include ">module"
