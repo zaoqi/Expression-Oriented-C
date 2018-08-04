@@ -1,6 +1,7 @@
 # 安装
 
-复制文件```
+复制文件
+```
 module<
 >module
 require<
