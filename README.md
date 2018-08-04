@@ -38,3 +38,4 @@ define_public_function(int f_cc(int x))({
 + `enumeration(名字){...};` 类似record
 + `define_type` typedef
 + `define_private_function` `define_public_function` `define_private_inline_function` `define_public_inline_function` 定义函数。
++ `({ ... })` 最后一行作为值，无需return等
