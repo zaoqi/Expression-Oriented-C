@@ -1,5 +1,5 @@
 #安装
-复制`module<``>module``require<``>require`文件。
+复制`module\<``\>module``require\<``\>require`文件。
 #模块
 ```C
 #include "module<"
