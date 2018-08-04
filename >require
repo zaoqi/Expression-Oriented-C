@@ -615,6 +615,8 @@
 
 #define define_type typedef
 
+#define id(x) x
+
 #define true 1
 #define false 0
 
@@ -651,6 +653,11 @@ static inline void make_void(){}
 	goto _TEMP_let_cc_out_##x##_; \
 	t _TEMP_let_cc_throw_; \
 	_TEMP_let_cc_throw_; })
+
+//if_then_else(b)({...})({...});
+#define if_then_else(b) ((b)? _HELPER_prelude_if_then_else_A_
+#define _HELPER_prelude_if_then_else_A_(b) (b): _HELPER_prelude_if_then_else_B_
+#define _HELPER_prelude_if_then_else_B_(b) (b))
 
 
 #endif//_HEAD_prelude_static_
