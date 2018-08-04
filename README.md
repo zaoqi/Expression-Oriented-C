@@ -6,7 +6,8 @@ module<
 >module
 require<
 >require
-```。
+```
+。
 
 # 模块
 
