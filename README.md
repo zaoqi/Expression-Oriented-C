@@ -1,6 +1,14 @@
-#安装
-复制`module\<``\>module``require\<``\>require`文件。
-#模块
+# 安装
+
+复制文件```
+module<
+>module
+require<
+>require
+```。
+
+# 模块
+
 ```C
 #include "module<"
 define_private_function(int add(int x, int y))({
@@ -24,7 +32,8 @@ define_public_function(int f_cc(int x))({
 
 一个模块以`#include "module<"`开始，`#include ">module"`结束。
 
-#导入
+# 导入
+
 ```C
 #include "require<"
 #include "test.c"
@@ -33,7 +42,7 @@ define_public_function(int f_cc(int x))({
 
 导入`#include "require<"`开始，`#include ">require"`结束。直接include `*.c`文件。
 
-#物
+# 物
 + `record(名字){...};` 代替struct。自动 typedef struct 名字 名字;
 + `enumeration(名字){...};` 类似record
 + `define_type` typedef
