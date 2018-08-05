@@ -1,3 +1,3 @@
 #include "module<"
-define_private_zero(int, zero_int);
+define_private(int, zero_int);
 #include ">module"
