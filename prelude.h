@@ -124,7 +124,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #else
 #  define declare_private(t, n) static t n
 #  define _HELPER_prelude_define_private3(t, n, x) static t n=x
-#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n)t n=x
+#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n);t n=x
 #  define _HELPER_prelude_define_private2(t, n) static t n
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
 #endif
@@ -143,11 +143,11 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #undef declare_public_inline_function
 #undef define_public_inline_function
 #ifdef _EOC_require_
-#  define declare_private_function(retnameargs)
+#  define declare_private_function(retnameargs) _HELPER_prelude_global_nothing_
 #  define define_private_function(retnameargs) _HELPER_prelude_ignore_
 #  define declare_public_function(retnameargs) extern retnameargs
 #  define define_public_function(retnameargs) extern retnameargs; _HELPER_prelude_ignore_
-#  define declare_private_inline_function(retnameargs)
+#  define declare_private_inline_function(retnameargs) _HELPER_prelude_global_nothing_
 #  define define_private_inline_function(retnameargs) _HELPER_prelude_ignore_
 #  if _HELPER_prelude_inline_
 #    define declare_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs
