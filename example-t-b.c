@@ -1,5 +1,5 @@
 #include "require<"
-#include "test.c"
+#include "example-t.c"
 #include ">require"
 #include "module<"
 define_public_function(void f())({
