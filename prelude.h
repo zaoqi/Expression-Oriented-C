@@ -82,7 +82,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 	t _TEMP_prelude_let_cc_throw_; \
 	_TEMP_prelude_let_cc_throw_; })
 
-//if_then_else(b)({...})({...});
+/*if_then_else(b)({...})({...});*/
 #define if_then_else(b) ((b)? _HELPER_prelude_if_then_else_A_
 #define _HELPER_prelude_if_then_else_A_(b) (b): _HELPER_prelude_if_then_else_B_
 #define _HELPER_prelude_if_then_else_B_(b) (b))
@@ -90,7 +90,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #define _HELPER_prelude_function_(value) {return (value);}
 #define _HELPER_prelude_ignore_(x) _HELPER_prelude_global_nothing_
 
-//参考https://blog.csdn.net/u011787119/article/details/53815950
+/*参考https://blog.csdn.net/u011787119/article/details/53815950*/
 #define _HELPER_prelude_ATTR_(args) args
 #define _HELPER_prelude_COUNT_PARMS_IMP_(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, NUM, ...) NUM
 #define _HELPER_prelude_COUNT_PARMS_(...) _HELPER_prelude_ATTR_(_HELPER_prelude_COUNT_PARMS_IMP_(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
@@ -129,10 +129,10 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
 #endif
 
-//例子
-//define_private_function(int add(int x, int y))({
-//	x+y;
-//});
+/*例子
+define_private_function(int add(int x, int y))({
+	x+y;
+});*/
 
 #undef declare_private_function
 #undef define_private_function
