@@ -627,7 +627,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 		_HELPER_prelude_SYMBOL_CATENATE_WITH_MACRO_(_HELPER_prelude_define_public, _HELPER_prelude_COUNT_PARMS_(__VA_ARGS__)) \
 		(__VA_ARGS__))
 
-#define declare_public(t, n) extern t n
+#define declare_public(t, n) extern t n;
 
 #endif//_HEAD_prelude_static_
 
@@ -643,11 +643,11 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #  define _HELPER_prelude_define_private2(t, n) ;
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n)
 #else
-#  define declare_private(t, n) static t n
-#  define _HELPER_prelude_define_private3(t, n, x) declare_private(t, n);t n=x
-#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n);t n=x
-#  define _HELPER_prelude_define_private2(t, n) declare_private(t, n);t n
-#  define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
+#  define declare_private(t, n) static t n;
+#  define _HELPER_prelude_define_private3(t, n, x) static t n=x;
+#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n) t n=x;
+#  define _HELPER_prelude_define_private2(t, n) static t n;
+#  define _HELPER_prelude_define_public2(t, n) declare_public(t, n) t n;
 #endif
 
 //例子

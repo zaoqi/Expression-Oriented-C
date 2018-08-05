@@ -39,6 +39,7 @@
 
 #define define_type typedef
 
+#define _HELPER_prelude_global_nothing_
 #define id(x) x
 
 #if defined(__cplusplus)||defined(__STDBOOL_H)||defined(bool)||defined(true)||defined(false)
@@ -87,7 +88,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #define _HELPER_prelude_if_then_else_B_(b) (b))
 
 #define _HELPER_prelude_function_(value) {return (value);}
-#define _HELPER_prelude_ignore_(x) ;
+#define _HELPER_prelude_ignore_(x) _HELPER_prelude_global_nothing_
 
 //参考https://blog.csdn.net/u011787119/article/details/53815950
 #define _HELPER_prelude_ATTR_(args) args
@@ -115,16 +116,16 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #undef _HELPER_prelude_define_public2
 #undef _HELPER_prelude_define_public3
 #ifdef _EOC_require_
-#  define declare_private(t, n) ;
-#  define _HELPER_prelude_define_private3(t, n, x) ;
+#  define declare_private(t, n) _HELPER_prelude_global_nothing_
+#  define _HELPER_prelude_define_private3(t, n, x) _HELPER_prelude_global_nothing_
 #  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n)
-#  define _HELPER_prelude_define_private2(t, n) ;
+#  define _HELPER_prelude_define_private2(t, n) _HELPER_prelude_global_nothing_
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n)
 #else
 #  define declare_private(t, n) static t n
-#  define _HELPER_prelude_define_private3(t, n, x) declare_private(t, n);t n=x
-#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n);t n=x
-#  define _HELPER_prelude_define_private2(t, n) declare_private(t, n);t n
+#  define _HELPER_prelude_define_private3(t, n, x) static t n=x
+#  define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n)t n=x
+#  define _HELPER_prelude_define_private2(t, n) static t n
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
 #endif
 
@@ -142,11 +143,11 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #undef declare_public_inline_function
 #undef define_public_inline_function
 #ifdef _EOC_require_
-#  define declare_private_function(retnameargs) ;
+#  define declare_private_function(retnameargs)
 #  define define_private_function(retnameargs) _HELPER_prelude_ignore_
 #  define declare_public_function(retnameargs) extern retnameargs
 #  define define_public_function(retnameargs) extern retnameargs; _HELPER_prelude_ignore_
-#  define declare_private_inline_function(retnameargs) ;
+#  define declare_private_inline_function(retnameargs)
 #  define define_private_inline_function(retnameargs) _HELPER_prelude_ignore_
 #  if _HELPER_prelude_inline_
 #    define declare_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs
