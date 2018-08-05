@@ -22,23 +22,19 @@
 #undef define_public
 #undef define_private_zero
 #undef define_public_zero
-#ifdef _EOC_require_//_EOC_require_
-
-#define declare_private(t, n)
-#define define_private(t, n, x)
-#define define_public(t, n, x) declare_public(t, n);
-#define define_private_zero(t, n)
-#define define_public_zero(t, n) declare_public(t, n);
-
-#else//_EOC_require_
-
-#define declare_private(t, n) static t n
-#define define_private(t, n, x) declare_private(t, n);t n=x
-#define define_public(t, n, x) declare_public(t, n);t n=x
-#define define_private_zero(t, n) declare_private(t, n);t n
-#define define_public_zero(t, n) declare_public(t, n);t n
-
-#endif//_EOC_require_
+#ifdef _EOC_require_
+	#define declare_private(t, n)
+	#define define_private(t, n, x)
+	#define define_public(t, n, x) declare_public(t, n);
+	#define define_private_zero(t, n)
+	#define define_public_zero(t, n) declare_public(t, n);
+#else
+	#define declare_private(t, n) static t n
+	#define define_private(t, n, x) declare_private(t, n);t n=x
+	#define define_public(t, n, x) declare_public(t, n);t n=x
+	#define define_private_zero(t, n) declare_private(t, n);t n
+	#define define_public_zero(t, n) declare_public(t, n);t n
+#endif
 
 //例子
 //define_private_function(int add(int x, int y))({
@@ -49,11 +45,19 @@
 #undef _HELPER_prelude_ignore_
 #define _HELPER_prelude_ignore_(x)
 
-//C99?
+#undef _HELPER_prelude_staticDefine_inlineDefine_
 #undef _HELPER_prelude_externDefine_inlineDefine_
-#define _HELPER_prelude_externDefine_inlineDefine_ extern inline
 #undef _HELPER_prelude_externDeclare_inlineDefine_
-#define _HELPER_prelude_externDeclare_inlineDefine_ inline
+#ifdef __cplusplus
+	#define _HELPER_prelude_staticDefine_inlineDefine_ inline
+	#define _HELPER_prelude_externDefine_inlineDefine_ inline
+	#define _HELPER_prelude_externDeclare_inlineDefine_ inline
+#else
+	//C99?
+	#define _HELPER_prelude_staticDefine_inlineDefine_ static inline
+	#define _HELPER_prelude_externDefine_inlineDefine_ extern inline
+	#define _HELPER_prelude_externDeclare_inlineDefine_ inline
+#endif
 
 #undef declare_private_function
 #undef define_private_function
@@ -63,29 +67,25 @@
 #undef define_private_inline_function
 #undef declare_public_inline_function
 #undef define_public_inline_function
-#ifdef _EOC_require_//_EOC_require_
-
-#define declare_private_function(retnameargs)
-#define define_private_function(retnameargs) _HELPER_prelude_ignore_
-#define declare_public_function(retnameargs) extern retnameargs
-#define define_public_function(retnameargs) extern retnameargs; _HELPER_prelude_ignore_
-#define declare_private_inline_function(retnameargs)
-#define define_private_inline_function(retnameargs) _HELPER_prelude_ignore_
-#define declare_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs
-#define define_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs; _HELPER_prelude_ignore_
-
-#else//_EOC_require_
-
-#define declare_private_function(retnameargs) static retnameargs
-#define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
-#define declare_public_function(retnameargs) extern retnameargs
-#define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
-#define declare_private_inline_function(retnameargs) static inline retnameargs
-#define define_private_inline_function(retnameargs) static inline retnameargs _HELPER_prelude_function_
-#define declare_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs
-#define define_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs _HELPER_prelude_function_
-
-#endif//_EOC_require_
+#ifdef _EOC_require_
+	#define declare_private_function(retnameargs)
+	#define define_private_function(retnameargs) _HELPER_prelude_ignore_
+	#define declare_public_function(retnameargs) extern retnameargs
+	#define define_public_function(retnameargs) extern retnameargs; _HELPER_prelude_ignore_
+	#define declare_private_inline_function(retnameargs)
+	#define define_private_inline_function(retnameargs) _HELPER_prelude_ignore_
+	#define declare_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs
+	#define define_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs; _HELPER_prelude_ignore_
+#else
+	#define declare_private_function(retnameargs) static retnameargs
+	#define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
+	#define declare_public_function(retnameargs) extern retnameargs
+	#define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
+	#define declare_private_inline_function(retnameargs) static inline retnameargs
+	#define define_private_inline_function(retnameargs) static inline retnameargs _HELPER_prelude_function_
+	#define declare_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs
+	#define define_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs _HELPER_prelude_function_
+#endif
 
 #ifndef _HEAD_prelude_static_//_HEAD_prelude_static_
 #define _HEAD_prelude_static_
@@ -95,8 +95,11 @@
 
 #define id(x) x
 
-#define true 1
-#define false 0
+#if defined(__cplusplus)||defined(__STDBOOL_H)||defined(bool)||defined(true)||defined(false)
+#else
+	#define true 1
+	#define false 0
+#endif
 
 #define ref(x) ((x)*)
 #define un_ref(x) (*(x))
