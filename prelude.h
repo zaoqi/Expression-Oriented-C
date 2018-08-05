@@ -87,8 +87,9 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #define _HELPER_prelude_if_then_else_A_(b) (b): _HELPER_prelude_if_then_else_B_
 #define _HELPER_prelude_if_then_else_B_(b) (b))
 
-#define _HELPER_prelude_function_(value) {return (value);}
-#define _HELPER_prelude_ignore_(x) _HELPER_prelude_global_nothing_
+/*例 lambda(int, int x, int y)({x+y;}) */
+#define lambda(return_type, ...) ({return_type _TEMP_prelude_lambda_(__VA_ARGS__) _HELPER_prelude_lambda_
+#define _HELPER_prelude_lambda_(value) {return (value);}_TEMP_prelude_lambda_;})
 
 /*参考https://blog.csdn.net/u011787119/article/details/53815950*/
 #define _HELPER_prelude_ATTR_(args) args
@@ -107,6 +108,9 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 		(__VA_ARGS__))
 
 #define declare_public(t, n) extern t n
+#define _HELPER_prelude_function_(value) {return (value);}
+#define _HELPER_prelude_ignore_(x) _HELPER_prelude_global_nothing_
+
 
 #endif//_HEAD_prelude_static_
 
@@ -129,7 +133,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #  define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
 #endif
 
-/*例子
+/*例
 define_private_function(int add(int x, int y))({
 	x+y;
 });*/
