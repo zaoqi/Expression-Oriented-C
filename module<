@@ -43,10 +43,15 @@
 #define _HELPER_prelude_global_nothing_
 #define id(x) x
 
-#if defined(__cplusplus)||defined(__STDBOOL_H)||defined(bool)||defined(true)||defined(false)
+#if defined(__cplusplus) || defined(__STDBOOL_H) || defined(bool) || defined(true) || defined(false) || (defined(__bool_true_false_are_defined) && __bool_true_false_are_defined)
 #else
-#  define true 1
-#  define false 0
+#  if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#    include <stdbool.h>
+#  else
+#    define bool unsigned char
+#    define true 1
+#    define false 0
+#  endif
 #endif
 
 #define ref(x) ((x)*)
