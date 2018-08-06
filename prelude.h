@@ -53,6 +53,11 @@
 #  endif
 #endif
 
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#else
+#define restrict
+#endif
+
 #define ref(x) ((x)*)
 #define un_ref(x) (*(x))
 #define to_ref(x) (&(x))
