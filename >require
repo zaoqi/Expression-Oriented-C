@@ -575,6 +575,25 @@
 #  endif
 #endif
 
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#  include <stdint.h>
+#else
+#  define restrict
+  /* 经常成立 开始 */
+#  define uintptr_t size_t
+#  define intptr_t ssize_t
+#  define uint8_t unsigned char
+#  define int8_t signed char
+  /* 经常成立 结束 */
+#endif
+
+#define byte_t uint8_t
+#define signed_byte_t int8_t
+#define nat8_t uint8_t
+#define nat16_t uint16_t
+#define nat32_t uint32_t
+#define nat64_t uint64_t
+
 #define ref(x) ((x)*)
 #define un_ref(x) (*(x))
 #define to_ref(x) (&(x))
@@ -615,6 +634,7 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
 #define _HELPER_prelude_if_then_else_B_(b) (b))
 
 /*例 lambda(int, int x, int y)({x+y;}) */
+/* GCC */
 #define lambda(return_type, ...) ({return_type _TEMP_prelude_lambda_(__VA_ARGS__) _HELPER_prelude_lambda_
 #define _HELPER_prelude_lambda_(value) {return (value);}_TEMP_prelude_lambda_;})
 
