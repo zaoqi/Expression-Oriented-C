@@ -63,6 +63,7 @@
 #	define intptr_t ssize_t
 #	define uint8_t unsigned char
 #	define int8_t signed char
+#	define ptrdiff_t intptr_t
 	/* 经常成立 结束 */
 #endif
 
