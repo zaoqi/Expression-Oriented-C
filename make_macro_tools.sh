@@ -79,6 +79,7 @@ prefix_from_to(){
 prefix_from_to_suffix(){
 	eval echo $1{$2..$3}$4
 }
+defn error x "{{{!!!ERROR x ERROR!!!}}}"
 defn expand x x
 defn count_helper0 $(prefix_from_to _ 0 $max) x ... x
 defn count_helper1 ... $(call expand $(call count_helper0 __VA_ARGS__ $(from_to $max 0)))

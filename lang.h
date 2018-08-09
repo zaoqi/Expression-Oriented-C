@@ -23,7 +23,6 @@
 #define EOC_TEMP_static
 
 #define EOC_HELPER_nothing
-#define EOC_HELPER_error(x) ERROR x ERROR
 
 #ifdef __cplusplus
 #	define EOC_HELPER_staticDefine_inlineDefine static
