@@ -138,34 +138,26 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #define var(...) EOC_HELPER_with_count(EOC_HELPER_var, __VA_ARGS__)
 #define EOC_HELPER_var2(ider, t) t ider
 #define EOC_HELPER_var1(ider) auto ider
-#define var_lambda(ider, ret, ...) ret (*ider) EOC_HELPER_function_args(__VA_ARGS__)
+#define var_lambda(ider, ...) EOC_HELPER_tail(__VA_ARGS__) (*ider) EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
+
+#define __ ,
 
 #define EOC_HELPER_global_nothing
 #define EOC_HELPER_define_lambda(x) {return (x);}
 #define EOC_HELPER_global_ignore(x) EOC_HELPER_global_nothing
 
-#ifdef __cplusplus /* __cplusplus */
-#define EOC_HELPER_function_args(...) (__VA_ARGS__)
-#else /* __cplusplus */
-#define EOC_HELPER_function_args(...) EOC_HELPER_with_count(EOC_HELPER_function_args, __VA_ARGS__)
-#define EOC_HELPER_function_args0() (void)
-#define EOC_HELPER_function_args1(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args2(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args3(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args4(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args5(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args6(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args7(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args8(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args9(...) (__VA_ARGS__)
-#define EOC_HELPER_function_args10(...) (__VA_ARGS__)
-#endif /* __cplusplus */
+#define EOC_HELPER_define_lambda_args_init(...) EOC_HELPER_expand(EOC_HELPER_define_lambda_args(EOC_HELPER_init(__VA_ARGS__)))
+#ifdef __cplusplus
+#	define EOC_HELPER_define_lambda_args(...) (__VA_ARGS__)
+#else
+#	define EOC_HELPER_define_lambda_args(...) EOC_HELPER_if(EOC_HELPER_zero_p(EOC_HELPER_count(__VA_ARGS__)), (void), (__VA_ARGS__))
+#endif
 
 #define define_private(...) EOC_HELPER_with_count(EOC_HELPER_define_private, __VA_ARGS__)
 #define define_public(...) EOC_HELPER_with_count(EOC_HELPER_define_public, __VA_ARGS__)
 
 #define declare_public(ider, t) extern t ider
-#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
+#define declare_public_lambda(ider, ...) extern EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
 #endif/* EOC_TEMP_static */
 /* 有
 EOC_require
@@ -199,7 +191,7 @@ EOC_TEMP_state
 #undef define_private_lambda
 #undef declare_private_inline_lambda
 #undef define_private_inline_lambda
-#undef declare_public_lambda
+#undef define_public_lambda
 #undef define_public_inline_lambda
 #endif/* EOC_TEMP_define_re */
 #ifdef EOC_require/* EOC_require */
@@ -208,23 +200,23 @@ EOC_TEMP_state
 #define EOC_HELPER_define_private3(ider, t, x) EOC_HELPER_global_nothing
 #define EOC_HELPER_define_public2(ider, t) declare_public(ider, t)
 #define EOC_HELPER_define_public3(ider, t, x) declare_public(ider, t)
-#define declare_private_lambda(ider, ret, ...) EOC_HELPER_global_nothing
-#define define_private_lambda(ider, ret, ...) EOC_HELPER_global_ignore
-#define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_nothing
-#define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_ignore
-#define define_public_lambda(ider, ret, ...) EOC_HELPER_expand(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
-#define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDeclare_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
+#define declare_private_lambda(ider, ...) EOC_HELPER_global_nothing
+#define define_private_lambda(ider, ...) EOC_HELPER_global_ignore
+#define declare_private_inline_lambda(ider, ...) EOC_HELPER_global_nothing
+#define define_private_inline_lambda(ider, ...) EOC_HELPER_global_ignore
+#define define_public_lambda(ider, ...) EOC_HELPER_expand(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
+#define define_public_inline_lambda(ider, ...) EOC_HELPER_externDeclare_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #else/* EOC_require */
 #define declare_private(ider, t) static t ider
 #define EOC_HELPER_define_private2(ider, t) static t ider
 #define EOC_HELPER_define_private3(ider, t, x) static t ider=x
 #define EOC_HELPER_define_public2(ider, t) t ider
 #define EOC_HELPER_define_public3(ider, t, x) t ider=x
-#define declare_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__)
-#define define_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
-#define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__)
-#define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
-#define define_public_lambda(ider, ret, ...)  extern ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
-#define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
+#define declare_private_lambda(ider, ...) static EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
+#define define_private_lambda(ider, ...) static EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
+#define declare_private_inline_lambda(ider, ...) EOC_HELPER_staticDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
+#define define_private_inline_lambda(ider, ...) EOC_HELPER_staticDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
+#define define_public_lambda(ider, ...)  extern EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
+#define define_public_inline_lambda(ider, ...) EOC_HELPER_externDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #endif/* EOC_require */
 #endif/* EOC_TEMP_define */

@@ -140,7 +140,8 @@ do
 done
 
 defn init ... $(call with_count $(S init) __VA_ARGS__)
-for i in $(from_to 1 $max)
+defn init1 x ' '
+for i in $(from_to 2 $max)
 do
 	let isub=i-1
 	defn init$i $(prefix_from_to _ 1 $i) $(add_between , $(prefix_from_to _ 1 $isub))
