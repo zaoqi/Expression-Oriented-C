@@ -20,7 +20,7 @@ make_begin_require(){
 	echo "#else"
 	echo "#define EOC_require"
 	echo "#endif"
-	cat lang.h
+	echo '#include "module<"'
 }
 help_make_end_require(){
 	if [ $1 = $max ] ; then
@@ -46,7 +46,7 @@ make_end_require(){
 	echo "#else"
 	echo '#error "Too many >require"'
 	echo "#endif"
-	cat lang.h
+	echo '#include "module<"'
 }
 make_begin_require > 'require<'
 make_end_require > '>require'
