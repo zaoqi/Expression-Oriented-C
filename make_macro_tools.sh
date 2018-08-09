@@ -120,12 +120,13 @@ defn expand x x
 defn count_helper0 $(prefix_from_to _ 0 $max) x ... x
 defn count_helper1 ... $(expand $(call count_helper0 __VA_ARGS__ $(from_to $max 0)))
 defn count ... $(call count_helper1 _Nothing '##__VA_ARGS__')
-echo '#define EOC_HELPER_count_assert0()
-#define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
-EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())'
 defn symbol_append x y "x##y"
 defn symbol_append_with_macro x y $(call symbol_append x y)
 defn with_count ider ... $(expand $(symbol_append ider $(call count __VA_ARGS__))'(__VA_ARGS__)')
+
+echo '#define EOC_HELPER_count_assert0()
+#define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
+EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())'
 
 defn if b x y $(expand $(symbol_append $(S if) b)'(x,y)')
 defn if1 x y x
