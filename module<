@@ -15,193 +15,241 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef _HEAD_prelude_static_//_HEAD_prelude_static_
-#define _HEAD_prelude_static_
+#if (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L) || (defined(__cplusplus) && __cplusplus >= 201103L)
+#else
+#	error "need C99 or later or C++11 or later"
+#endif
 
+#ifndef EOC_TEMP_static/* EOC_TEMP_static */
+#define EOC_TEMP_static
+
+#define EOC_HELPER_nothing
+#define EOC_HELPER_error(x) ERROR_ ## x ## _ERROR
 
 #ifdef __cplusplus
-#	define _HELPER_prelude_inline_ 1
-#	define _HELPER_prelude_staticDefine_inlineDefine_ inline
-#	define _HELPER_prelude_externDefine_inlineDefine_ inline
-#	define _HELPER_prelude_externDeclare_inlineDefine_ inline
+#	define EOC_HELPER_staticDefine_inlineDefine static
+#	define EOC_HELPER_externDefine_inlineDefine inline
+#	define EOC_HELPER_externDeclare_inlineDefine inline
+#elif defined(__STDC_VERSION__)
+#	define EOC_HELPER_staticDefine_inlineDefine static inline
+#	define EOC_HELPER_externDefine_inlineDefine extern inline
+#	define EOC_HELPER_externDeclare_inlineDefine inline
 #else
-#	if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#		define _HELPER_prelude_inline_ 1
-#		define _HELPER_prelude_staticDefine_inlineDefine_ static inline
-#		define _HELPER_prelude_externDefine_inlineDefine_ extern inline
-#		define _HELPER_prelude_externDeclare_inlineDefine_ inline
-#	else
-#		define _HELPER_prelude_inline_ 0
-#		define _HELPER_prelude_staticDefine_inlineDefine_ static
-#		define _HELPER_prelude_externDefine_inlineDefine_ extern
-#		define _HELPER_prelude_externDeclare_inlineDefine_ ERROR_HELPER_prelude_externDeclare_inlineDefine_
-#	endif
+#	error ""
 #endif
 
 #define define_type typedef
 
-#define _HELPER_prelude_global_nothing_
-#define id(x) x
-
-#if defined(__cplusplus) || defined(__STDBOOL_H) || defined(bool) || defined(true) || defined(false) || (defined(__bool_true_false_are_defined) && __bool_true_false_are_defined)
-#else
-#	if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#		include <stdbool.h>
-#	else
-#		define bool unsigned char
-#		define true 1
-#		define false 0
-#	endif
-#endif
-
-#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#if defined(__cplusplus)
+#	define restrict
+#	include <cstddef>
+	using std::size_t;
+	using std::ptrdiff_t;
+#	include <cstdint>
+	using std::int_least8_t;
+	using std::int_least16_t;
+	using std::int_least32_t;
+	using std::int_least64_t;
+	using std::uint_least8_t;
+	using std::uint_least16_t;
+	using std::uint_least32_t;
+	using std::uint_least64_t;
+	using std::uintptr_t;
+	using std::intptr_t;
+#elif defined(__STDC_VERSION__)
+#	include <stddef.h>
 #	include <stdint.h>
 #else
-#	define restrict
-	/* 经常成立 开始 */
-#	define uintptr_t size_t
-#	define intptr_t ssize_t
-#	define uint8_t unsigned char
-#	define int8_t signed char
-#	define ptrdiff_t intptr_t
-	/* 经常成立 结束 */
+#	error ""
 #endif
-
-#define byte_t uint8_t
-#define signed_byte_t int8_t
-#define nat8_t uint8_t
-#define nat16_t uint16_t
-#define nat32_t uint32_t
-#define nat64_t uint64_t
+#define int8 int_least8_t
+#define int16 int_least16_t
+#define int32 int_least32_t
+#define int64 int_least64_t
+#define nat8 uint_least8_t
+#define nat16 uint_least16_t
+#define nat32 uint_least32_t
+#define nat64 uint_least64_t
 #define ptr_t uintptr_t
+#define byte nat8
+#define signed_byte int8
 
 #define ref(x) ((x)*)
 #define un_ref(x) (*(x))
 #define to_ref(x) (&(x))
 #define ref_any (void*)
 
-#define eq_p(x,y) x==y
+#define cast(x, t) ((t)x)
+#define eq_p(x,y) ((x)==(y))
+#define not_eq_p(x,y) ((x)!=(y))
+#define not(x) (!(x))
+#define and(x, y) ((x)&&(y))
+#define or(x, y) ((x)||(y))
 
-_HELPER_prelude_staticDefine_inlineDefine_ void make_void(){}
+_HELPER_prelude_staticDefine_inlineDefine_ void make_void(void){}
 
-#define record(x) struct x;typedef struct x x;struct x
+#define declare_record(x) struct x;typedef struct x x
+#define define_record(x) declare_record(x);struct x
 #define anonymous_record struct
-#define enumeration(x) enum x;typedef enum x x;enum x
+#define declare_enumeration(x) enum x;typedef enum x x
+#define define_enumeration(x) declare_enumeration(x);enum x
 #define anonymous_enumeration enum
 
+#if defined(__cplusplus)
+#elif defined(__STDC_VERSION__)
+#	include <stdbool.h>
+#else
+#	define bool unsigned char
+#	define true 1
+#	define false 0
+#	define __bool_true_false_are_defined 1
+#endif
+
+#define id(x) x
+
 //let_cc(t,x)({ ... });
-#define let_cc(t, x) _HELPER_prelude_let_cc_A_(t, x) _HELPER_prelude_let_cc_B_
-#define _HELPER_prelude_let_cc_A_(t, x) ({ \
-	t _TEMP_prelude_let_cc_return_value_; \
-	t _TEMP_prelude_let_cc_value_##x##_; \
-	goto _TEMP_prelude_let_cc_do_##x##_; \
-	_TEMP_prelude_let_cc_out_##x##_: \
-	_TEMP_prelude_let_cc_return_value_= _TEMP_prelude_let_cc_value_##x##_; \
-	goto _TEMP_prelude_let_cc_return_label_; \
-	_TEMP_prelude_let_cc_do_##x##_:
-#define _HELPER_prelude_let_cc_B_(value) \
-	_TEMP_prelude_let_cc_return_value_=(value); \
-	_TEMP_prelude_let_cc_return_label_: \
-	_TEMP_prelude_let_cc_return_value_;})
+#define let_cc(t, x) EOC_HELPER_let_cc_A(t, x) EOC_HELPER_let_cc_B
+#define EOC_HELPER_let_cc_A(t, x) ({ \
+	t EOC_TEMP_let_cc_return_value; \
+	t EOC_TEMP_let_cc_value_##x##; \
+	goto EOC_TEMP_let_cc_do_##x##; \
+	EOC_TEMP_let_cc_throw##x##: \
+	EOC_TEMP_let_cc_return_value= EOC_TEMP_let_cc_value_##x##; \
+	goto EOC_TEMP_let_cc_return_label; \
+	EOC_TEMP_let_cc_do_##x##:
+#define EOC_HELPER_let_cc_B(value) \
+	EOC_TEMP_let_cc_return_value=(value); \
+	EOC_TEMP_let_cc_return_label: \
+	EOC_TEMP_let_cc_return_value;})
 #define throw(t, x, v) ({ \
-	_TEMP_prelude_let_cc_value_##x##_=v; \
-	goto _TEMP_prelude_let_cc_out_##x##_; \
-	t _TEMP_prelude_let_cc_throw_; \
-	_TEMP_prelude_let_cc_throw_; })
+	EOC_TEMP_let_cc_value_##x##=v; \
+	goto EOC_TEMP_let_cc_throw##x##; \
+	t EOC_TEMP_throw; \
+	EOC_TEMP_throw;})
 
 /*if_then_else(b)({...})({...});*/
-#define if_then_else(b) ((b)? _HELPER_prelude_if_then_else_A_
-#define _HELPER_prelude_if_then_else_A_(b) (b): _HELPER_prelude_if_then_else_B_
-#define _HELPER_prelude_if_then_else_B_(b) (b))
+#define if_then_else(b) ((b)? EOC_HELPER_if_then_else_A
+#define EOC_HELPER_if_then_else_A(b) (b): EOC_HELPER_if_then_else_B
+#define EOC_HELPER_if_then_else_B(b) (b))
 
 /*例 lambda(int, int x, int y)({x+y;}) */
 /* GCC */
-#define lambda(return_type, ...) ({return_type _TEMP_prelude_lambda_(__VA_ARGS__) _HELPER_prelude_lambda_
-#define _HELPER_prelude_lambda_(value) {return (value);}_TEMP_prelude_lambda_;})
+#define lambda(return_type, ...) ({return_type EOC_TEMP_lambda EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_lambda
+#define EOC_HELPER_lambda(value) {return (value);}EOC_TEMP_lambda;})
 
 /*参考https://blog.csdn.net/u011787119/article/details/53815950*/
-#define _HELPER_prelude_ATTR_(args) args
-#define _HELPER_prelude_COUNT_PARMS_IMP_(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, NUM, ...) NUM
-#define _HELPER_prelude_COUNT_PARMS_(...) _HELPER_prelude_ATTR_(_HELPER_prelude_COUNT_PARMS_IMP_(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
-#define _HELPER_prelude_SYMBOL_CATENATE_(arg1, arg2) arg1 ## arg2
-#define _HELPER_prelude_SYMBOL_CATENATE_WITH_MACRO_(arg1, arg2) _HELPER_prelude_SYMBOL_CATENATE_(arg1, arg2)
+#define EOC_HELPER_attr(args) args
+#define EOC_HELPER_count_parms_helper(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, NUM, ...) NUM
+#define EOC_HELPER_count_parms(...) EOC_HELPER_attr(EOC_HELPER_count_parms_helper(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
+#define EOC_HELPER_symbol_append(arg1, arg2) arg1 ## arg2
+#define EOC_HELPER_symbol_append_with_macro(arg1, arg2) EOC_HELPER_symbol_append(arg1, arg2)
+
+#define var(...) \
+	EOC_HELPER_attr( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_var, EOC_HELPER_count_parms(__VA_ARGS__)) \
+		(__VA_ARGS__))
+#define EOC_HELPER_var2(ider, t) t ider
+#define EOC_HELPER_var1(ider) auto ider
+#define var_lambda(ider, ret, ...) ret (*ider) EOC_HELPER_function_args(__VA_ARGS__)
+
+#define EOC_HELPER_global_nothing
+#define EOC_HELPER_function(x) {return (x);}
+#define EOC_HELPER_global_ignore(x) EOC_HELPER_global_nothing
+#ifdef __cplusplus /* __cplusplus */
+#define EOC_HELPER_function_args(...) (__VA_ARGS__)
+#else /* __cplusplus */
+#define EOC_HELPER_function_args(...) EOC_HELPER_attr(EOC_HELPER_function_args_A(__VA_ARGS__))
+#define EOC_HELPER_function_args_A(...) \
+	EOC_HELPER_attr( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_function_args, EOC_HELPER_count_parms(__VA_ARGS__)) \
+		(__VA_ARGS__))
+#define EOC_HELPER_function_args0() (void)
+#define EOC_HELPER_function_args1(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args2(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args3(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args4(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args5(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args6(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args7(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args8(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args9(...) (__VA_ARGS__)
+#define EOC_HELPER_function_args10(...) (__VA_ARGS__)
+#endif /* __cplusplus */
 
 #define define_private(...) \
-	_HELPER_prelude_ATTR_( \
-		_HELPER_prelude_SYMBOL_CATENATE_WITH_MACRO_(_HELPER_prelude_define_private, _HELPER_prelude_COUNT_PARMS_(__VA_ARGS__)) \
+	EOC_HELPER_attr( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_private, EOC_HELPER_count_parms(__VA_ARGS__)) \
 		(__VA_ARGS__))
 #define define_public(...) \
-	_HELPER_prelude_ATTR_( \
-		_HELPER_prelude_SYMBOL_CATENATE_WITH_MACRO_(_HELPER_prelude_define_public, _HELPER_prelude_COUNT_PARMS_(__VA_ARGS__)) \
+	EOC_HELPER_attr( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_public, EOC_HELPER_count_parms(__VA_ARGS__)) \
 		(__VA_ARGS__))
-
-#define declare_public(t, n) extern t n
-#define _HELPER_prelude_function_(value) {return (value);}
-#define _HELPER_prelude_ignore_(x) _HELPER_prelude_global_nothing_
-
-
-#endif//_HEAD_prelude_static_
-
+#endif/* EOC_TEMP_static */
+/* 有
+EOC_require
+EOC_TEMP_state
+	0 require
+	1 define
+*/
+#undef EOC_TEMP_define
+#undef EOC_TEMP_define_re
+#if defined(EOC_TEMP_state)
+#	if (EOC_TEMP_state==1 && defined(EOC_require)) || (EOC_TEMP_state==0 && !defined(EOC_require))
+#		define EOC_TEMP_define EOC_HELPER_nothing
+#		define EOC_TEMP_define_re EOC_HELPER_nothing
+#	endif
+#else
+#	define EOC_TEMP_define
+#endif
+#if defined(EOC_TEMP_define)/* EOC_TEMP_define */
+#ifdef EOC_require
+#	define EOC_TEMP_state 0
+#else
+#	define EOC_TEMP_state 1
+#endif
+#if defined(EOC_TEMP_define_re)/* EOC_TEMP_define_re */
 #undef declare_private
-#undef _HELPER_prelude_define_private2
-#undef _HELPER_prelude_define_private3
-#undef _HELPER_prelude_define_public2
-#undef _HELPER_prelude_define_public3
-#ifdef _EOC_require_
-#	define declare_private(t, n) _HELPER_prelude_global_nothing_
-#	define _HELPER_prelude_define_private3(t, n, x) _HELPER_prelude_global_nothing_
-#	define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n)
-#	define _HELPER_prelude_define_private2(t, n) _HELPER_prelude_global_nothing_
-#	define _HELPER_prelude_define_public2(t, n) declare_public(t, n)
-#else
-#	define declare_private(t, n) static t n
-#	define _HELPER_prelude_define_private3(t, n, x) static t n=x
-#	define _HELPER_prelude_define_public3(t, n, x) declare_public(t, n);t n=x
-#	define _HELPER_prelude_define_private2(t, n) static t n
-#	define _HELPER_prelude_define_public2(t, n) declare_public(t, n);t n
-#endif
-
-/*例
-define_private_function(int add(int x, int y))({
-	x+y;
-});*/
-
-#undef declare_private_function
-#undef define_private_function
-#undef declare_public_function
-#undef define_public_function
-#undef declare_private_inline_function
-#undef define_private_inline_function
-#undef declare_public_inline_function
-#undef define_public_inline_function
-#ifdef _EOC_require_
-#	define declare_private_function(retnameargs) _HELPER_prelude_global_nothing_
-#	define define_private_function(retnameargs) _HELPER_prelude_ignore_
-#	define declare_public_function(retnameargs) extern retnameargs
-#	define define_public_function(retnameargs) extern retnameargs; _HELPER_prelude_ignore_
-#	define declare_private_inline_function(retnameargs) _HELPER_prelude_global_nothing_
-#	define define_private_inline_function(retnameargs) _HELPER_prelude_ignore_
-#	if _HELPER_prelude_inline_
-#		define declare_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs
-#		define define_public_inline_function(retnameargs) _HELPER_prelude_externDeclare_inlineDefine_ retnameargs _HELPER_prelude_function_
-#	else
-#		define declare_public_inline_function(retnameargs) declare_public_function(retnameargs)
-#		define define_public_inline_function(retnameargs) declare_public_function(retnameargs); _HELPER_prelude_ignore_
-#	endif
-#else
-#	define declare_private_function(retnameargs) static retnameargs
-#	define define_private_function(retnameargs) static retnameargs _HELPER_prelude_function_
-#	define declare_public_function(retnameargs) extern retnameargs
-#	define define_public_function(retnameargs) extern retnameargs _HELPER_prelude_function_
-#	if _HELPER_prelude_inline_
-#		define declare_private_inline_function(retnameargs) static inline retnameargs
-#		define define_private_inline_function(retnameargs) static inline retnameargs _HELPER_prelude_function_
-#		define declare_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs
-#		define define_public_inline_function(retnameargs) _HELPER_prelude_externDefine_inlineDefine_ retnameargs _HELPER_prelude_function_
-#	else
-#		define declare_private_inline_function(retnameargs) declare_private_function(retnameargs)
-#		define define_private_inline_function(retnameargs) define_private_function(retnameargs)
-#		define declare_public_inline_function(retnameargs) declare_public_function(retnameargs)
-#		define define_public_inline_function(retnameargs) define_public_function(retnameargs)
-#	endif
-#endif
+#undef EOC_HELPER_define_private2
+#undef EOC_HELPER_define_private3
+#undef declare_public
+#undef EOC_HELPER_define_public2
+#undef EOC_HELPER_define_public3
+#undef declare_private_lambda
+#undef define_private_lambda
+#undef declare_private_inline_lambda
+#undef define_private_inline_lambda
+#undef declare_public_lambda
+#undef define_public_lambda
+#undef declare_public_inline_lambda
+#undef define_public_inline_lambda
+#endif/* EOC_TEMP_define_re */
+#ifdef EOC_require/* EOC_require */
+#define declare_private(ider, t) EOC_HELPER_global_nothing
+#define EOC_HELPER_define_private2(ider, t) EOC_HELPER_global_nothing
+#define EOC_HELPER_define_private3(ider, t, x) EOC_HELPER_global_nothing
+#define declare_public(ider, t) extern t ider
+#define EOC_HELPER_define_public2(ider, t) declare_public(ider, t)
+#define EOC_HELPER_define_public3(ider, t, x) declare_public(ider, t)
+#define declare_private_lambda(ider, ret, ...) EOC_HELPER_global_nothing
+#define define_private_lambda(ider, ret, ...) EOC_HELPER_global_ignore
+#define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_nothing
+#define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_ignore
+#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
+#define define_public_lambda(ider, ret, ...) EOC_HELPER_attr(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
+#define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDeclare_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
+#else/* EOC_require */
+#define declare_private(ider, t) static t ider
+#define EOC_HELPER_define_private2(ider, t) static t ider
+#define EOC_HELPER_define_private3(ider, t, x) static t ider=x
+#define declare_public(ider, t) extern t ider
+#define EOC_HELPER_define_public2(ider, t) t ider
+#define EOC_HELPER_define_public3(ider, t, x) t ider=x
+#define declare_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__)
+#define define_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
+#define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__)
+#define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
+#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
+#define define_public_lambda(ider, ret, ...)  extern ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
+#define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
+#endif/* EOC_require */
+#endif/* EOC_TEMP_define */
