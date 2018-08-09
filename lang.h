@@ -85,7 +85,7 @@
 #define and(x, y) ((x)&&(y))
 #define or(x, y) ((x)||(y))
 
-_HELPER_prelude_staticDefine_inlineDefine_ void make_void(void){}
+EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 
 #define declare_record(x) struct x;typedef struct x x
 #define define_record(x) declare_record(x);struct x
