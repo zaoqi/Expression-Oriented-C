@@ -183,6 +183,9 @@ _HELPER_prelude_staticDefine_inlineDefine_ void make_void(void){}
 	EOC_HELPER_attr( \
 		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_public, EOC_HELPER_count_parms(__VA_ARGS__)) \
 		(__VA_ARGS__))
+
+#define declare_public(ider, t) extern t ider
+#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
 #endif/* EOC_TEMP_static */
 /* 有
 EOC_require
@@ -210,7 +213,6 @@ EOC_TEMP_state
 #undef declare_private
 #undef EOC_HELPER_define_private2
 #undef EOC_HELPER_define_private3
-#undef declare_public
 #undef EOC_HELPER_define_public2
 #undef EOC_HELPER_define_public3
 #undef declare_private_lambda
@@ -218,36 +220,30 @@ EOC_TEMP_state
 #undef declare_private_inline_lambda
 #undef define_private_inline_lambda
 #undef declare_public_lambda
-#undef define_public_lambda
-#undef declare_public_inline_lambda
 #undef define_public_inline_lambda
 #endif/* EOC_TEMP_define_re */
 #ifdef EOC_require/* EOC_require */
 #define declare_private(ider, t) EOC_HELPER_global_nothing
 #define EOC_HELPER_define_private2(ider, t) EOC_HELPER_global_nothing
 #define EOC_HELPER_define_private3(ider, t, x) EOC_HELPER_global_nothing
-#define declare_public(ider, t) extern t ider
 #define EOC_HELPER_define_public2(ider, t) declare_public(ider, t)
 #define EOC_HELPER_define_public3(ider, t, x) declare_public(ider, t)
 #define declare_private_lambda(ider, ret, ...) EOC_HELPER_global_nothing
 #define define_private_lambda(ider, ret, ...) EOC_HELPER_global_ignore
 #define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_nothing
 #define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_ignore
-#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
 #define define_public_lambda(ider, ret, ...) EOC_HELPER_attr(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
 #define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDeclare_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
 #else/* EOC_require */
 #define declare_private(ider, t) static t ider
 #define EOC_HELPER_define_private2(ider, t) static t ider
 #define EOC_HELPER_define_private3(ider, t, x) static t ider=x
-#define declare_public(ider, t) extern t ider
 #define EOC_HELPER_define_public2(ider, t) t ider
 #define EOC_HELPER_define_public3(ider, t, x) t ider=x
 #define declare_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__)
 #define define_private_lambda(ider, ret, ...) static ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
 #define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__)
 #define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_staticDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
-#define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
 #define define_public_lambda(ider, ret, ...)  extern ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
 #define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDefine_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_function
 #endif/* EOC_require */
