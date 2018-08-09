@@ -67,11 +67,27 @@ call(){
 	done
 	echo -n ")"
 }
+S(){
+	echo "$prefix$*"
+}
+from_to(){
+	eval echo {$1..$2}
+}
+prefix_from_to(){
+	eval echo $1{$2..$3}
+}
 prefix_from_to_suffix(){
 	eval echo $1{$2..$3}$4
 }
 defn expand x x
-defn count_helper0 $(prefix_from_to_suffix _ 0 $max) x ... x
-defn count_helper1 ... "$(call expand $(call count_helper0 __VA_ARGS__ $(prefix_from_to_suffix '' $max 0)))"
-defn count ... "$(call count_helper1 _Nothing '##'__VA_ARGS__)"
+defn count_helper0 $(prefix_from_to _ 0 $max) x ... x
+defn count_helper1 ... $(call expand $(call count_helper0 __VA_ARGS__ $(from_to $max 0)))
+defn count ... $(call count_helper1 _Nothing '##__VA_ARGS__')
+defn symbol_append x y "x##y"
+defn symbol_append_with_macro x y $(call symbol_append x y)
 
+defn tail ... $(call expand $(call symbol_append_with_macro $(S tail) $(call count __VA_ARGS__))'(__VA_ARGS__)')
+for i in $(from_to 1 $max)
+do
+	defn tail$i $(prefix_from_to _ 1 $i) _$i
+done

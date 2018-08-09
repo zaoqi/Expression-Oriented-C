@@ -136,9 +136,6 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #define lambda(return_type, ...) ({return_type EOC_TEMP_lambda EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_lambda
 #define EOC_HELPER_lambda(value) {return (value);}EOC_TEMP_lambda;})
 
-#define EOC_HELPER_symbol_append(arg1, arg2) arg1 ## arg2
-#define EOC_HELPER_symbol_append_with_macro(arg1, arg2) EOC_HELPER_symbol_append(arg1, arg2)
-
 #define EOC_HELPER_count_assert0()
 #define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
 EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())
