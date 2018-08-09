@@ -136,10 +136,6 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #define lambda(return_type, ...) ({return_type EOC_TEMP_lambda EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_lambda
 #define EOC_HELPER_lambda(value) {return (value);}EOC_TEMP_lambda;})
 
-#define EOC_HELPER_count_assert0()
-#define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
-EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())
-
 #define var(...) EOC_HELPER_with_count(EOC_HELPER_var, __VA_ARGS__)
 #define EOC_HELPER_var2(ider, t) t ider
 #define EOC_HELPER_var1(ider) auto ider
@@ -152,8 +148,7 @@ EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, E
 #ifdef __cplusplus /* __cplusplus */
 #define EOC_HELPER_function_args(...) (__VA_ARGS__)
 #else /* __cplusplus */
-#define EOC_HELPER_function_args(...) EOC_HELPER_expand(EOC_HELPER_function_args_A(__VA_ARGS__))
-#define EOC_HELPER_function_args_A(...) EOC_HELPER_with_count(EOC_HELPER_function_args, __VA_ARGS__)
+#define EOC_HELPER_function_args(...) EOC_HELPER_with_count(EOC_HELPER_function_args, __VA_ARGS__)
 #define EOC_HELPER_function_args0() (void)
 #define EOC_HELPER_function_args1(...) (__VA_ARGS__)
 #define EOC_HELPER_function_args2(...) (__VA_ARGS__)
@@ -167,14 +162,8 @@ EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, E
 #define EOC_HELPER_function_args10(...) (__VA_ARGS__)
 #endif /* __cplusplus */
 
-#define define_private(...) \
-	EOC_HELPER_expand( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_private, EOC_HELPER_count(__VA_ARGS__)) \
-		(__VA_ARGS__))
-#define define_public(...) \
-	EOC_HELPER_expand( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_public, EOC_HELPER_count(__VA_ARGS__)) \
-		(__VA_ARGS__))
+#define define_private(...) EOC_HELPER_with_count(EOC_HELPER_define_private, __VA_ARGS__)
+#define define_public(...) EOC_HELPER_with_count(EOC_HELPER_define_public, __VA_ARGS__)
 
 #define declare_public(ider, t) extern t ider
 #define declare_public_lambda(ider, ret, ...) extern ret ider EOC_HELPER_function_args(__VA_ARGS__)
