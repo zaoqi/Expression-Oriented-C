@@ -1,5 +1,5 @@
 #include "module<"
-define_public_lambda(makevoid2 , void)({
+define_public_lambda(makevoid2 __ void)({
 	make_void();
 })
 define_public_lambda(add, var(x, int), var(y, int) __ int)({

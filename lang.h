@@ -158,6 +158,9 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 
 #define declare_public(ider, t) extern t ider
 #define declare_public_lambda(ider, ...) extern EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
+
+//此修改待完成
+#define define_public_lambda(...) EOC_HELPER_expand(define_public_lambda_HELPER(__VA_ARGS__))
 #endif/* EOC_TEMP_static */
 /* 有
 EOC_require
@@ -191,7 +194,7 @@ EOC_TEMP_state
 #undef define_private_lambda
 #undef declare_private_inline_lambda
 #undef define_private_inline_lambda
-#undef define_public_lambda
+#undef define_public_lambda_HELPER
 #undef define_public_inline_lambda
 #endif/* EOC_TEMP_define_re */
 #ifdef EOC_require/* EOC_require */
@@ -204,7 +207,7 @@ EOC_TEMP_state
 #define define_private_lambda(ider, ...) EOC_HELPER_global_ignore
 #define declare_private_inline_lambda(ider, ...) EOC_HELPER_global_nothing
 #define define_private_inline_lambda(ider, ...) EOC_HELPER_global_ignore
-#define define_public_lambda(ider, ...) EOC_HELPER_expand(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
+#define define_public_lambda_HELPER(ider, ...) EOC_HELPER_expand(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
 #define define_public_inline_lambda(ider, ...) EOC_HELPER_externDeclare_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #else/* EOC_require */
 #define declare_private(ider, t) static t ider
@@ -216,7 +219,7 @@ EOC_TEMP_state
 #define define_private_lambda(ider, ...) static EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #define declare_private_inline_lambda(ider, ...) EOC_HELPER_staticDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__)
 #define define_private_inline_lambda(ider, ...) EOC_HELPER_staticDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
-#define define_public_lambda(ider, ...)  extern EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
+#define define_public_lambda_HELPER(ider, ...)  extern EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #define define_public_inline_lambda(ider, ...) EOC_HELPER_externDefine_inlineDefine EOC_HELPER_tail(__VA_ARGS__) ider EOC_HELPER_define_lambda_args_init(__VA_ARGS__) EOC_HELPER_define_lambda
 #endif/* EOC_require */
 #endif/* EOC_TEMP_define */
