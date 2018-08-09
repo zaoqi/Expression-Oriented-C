@@ -13,6 +13,8 @@
 
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# 参考https://blog.csdn.net/u011787119/article/details/53815950
 if [ -z "$prefix" ]
 then
 	prefix=EOC_HELPER_

@@ -136,21 +136,16 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #define lambda(return_type, ...) ({return_type EOC_TEMP_lambda EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_lambda
 #define EOC_HELPER_lambda(value) {return (value);}EOC_TEMP_lambda;})
 
-/*参考https://blog.csdn.net/u011787119/article/details/53815950*/
-#define EOC_HELPER_attr(args) args
-#define EOC_HELPER_count_parms_helper(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, NUM, ...) NUM
-#define EOC_HELPER_count_parms_A(...) EOC_HELPER_attr(EOC_HELPER_count_parms_helper(__VA_ARGS__, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
-#define EOC_HELPER_count_parms(...) EOC_HELPER_count_parms_A(_none, ## __VA_ARGS__)
 #define EOC_HELPER_symbol_append(arg1, arg2) arg1 ## arg2
 #define EOC_HELPER_symbol_append_with_macro(arg1, arg2) EOC_HELPER_symbol_append(arg1, arg2)
 
-#define EOC_HELPER_count_parms_assert0()
-#define EOC_HELPER_count_parms_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
-EOC_HELPER_attr(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_parms_assert, EOC_HELPER_count_parms()) ())
+#define EOC_HELPER_count_assert0()
+#define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
+EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())
 
 #define var(...) \
-	EOC_HELPER_attr( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_var, EOC_HELPER_count_parms(__VA_ARGS__)) \
+	EOC_HELPER_expand( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_var, EOC_HELPER_count(__VA_ARGS__)) \
 		(__VA_ARGS__))
 #define EOC_HELPER_var2(ider, t) t ider
 #define EOC_HELPER_var1(ider) auto ider
@@ -163,10 +158,10 @@ EOC_HELPER_attr(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_parms_asser
 #ifdef __cplusplus /* __cplusplus */
 #define EOC_HELPER_function_args(...) (__VA_ARGS__)
 #else /* __cplusplus */
-#define EOC_HELPER_function_args(...) EOC_HELPER_attr(EOC_HELPER_function_args_A(__VA_ARGS__))
+#define EOC_HELPER_function_args(...) EOC_HELPER_expand(EOC_HELPER_function_args_A(__VA_ARGS__))
 #define EOC_HELPER_function_args_A(...) \
-	EOC_HELPER_attr( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_function_args, EOC_HELPER_count_parms(__VA_ARGS__)) \
+	EOC_HELPER_expand( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_function_args, EOC_HELPER_count(__VA_ARGS__)) \
 		(__VA_ARGS__))
 #define EOC_HELPER_function_args0() (void)
 #define EOC_HELPER_function_args1(...) (__VA_ARGS__)
@@ -182,12 +177,12 @@ EOC_HELPER_attr(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_parms_asser
 #endif /* __cplusplus */
 
 #define define_private(...) \
-	EOC_HELPER_attr( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_private, EOC_HELPER_count_parms(__VA_ARGS__)) \
+	EOC_HELPER_expand( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_private, EOC_HELPER_count(__VA_ARGS__)) \
 		(__VA_ARGS__))
 #define define_public(...) \
-	EOC_HELPER_attr( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_public, EOC_HELPER_count_parms(__VA_ARGS__)) \
+	EOC_HELPER_expand( \
+		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_define_public, EOC_HELPER_count(__VA_ARGS__)) \
 		(__VA_ARGS__))
 
 #define declare_public(ider, t) extern t ider
@@ -238,7 +233,7 @@ EOC_TEMP_state
 #define define_private_lambda(ider, ret, ...) EOC_HELPER_global_ignore
 #define declare_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_nothing
 #define define_private_inline_lambda(ider, ret, ...) EOC_HELPER_global_ignore
-#define define_public_lambda(ider, ret, ...) EOC_HELPER_attr(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
+#define define_public_lambda(ider, ret, ...) EOC_HELPER_expand(declare_public_lambda(ider, ret, __VA_ARGS__)); EOC_HELPER_global_ignore
 #define define_public_inline_lambda(ider, ret, ...) EOC_HELPER_externDeclare_inlineDefine ret ider EOC_HELPER_function_args(__VA_ARGS__) EOC_HELPER_define_lambda
 #else/* EOC_require */
 #define declare_private(ider, t) static t ider
