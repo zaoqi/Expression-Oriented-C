@@ -85,8 +85,9 @@ defn count_helper1 ... $(call expand $(call count_helper0 __VA_ARGS__ $(from_to 
 defn count ... $(call count_helper1 _Nothing '##__VA_ARGS__')
 defn symbol_append x y "x##y"
 defn symbol_append_with_macro x y $(call symbol_append x y)
+defn with_count ider ... $(call expand $(call symbol_append_with_macro ider $(call count __VA_ARGS__))'(__VA_ARGS__)')
 
-defn tail ... $(call expand $(call symbol_append_with_macro $(S tail) $(call count __VA_ARGS__))'(__VA_ARGS__)')
+defn tail ... $(call with_count $(S tail) __VA_ARGS__)
 for i in $(from_to 1 $max)
 do
 	defn tail$i $(prefix_from_to _ 1 $i) _$i

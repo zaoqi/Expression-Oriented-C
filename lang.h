@@ -140,10 +140,7 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
 EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())
 
-#define var(...) \
-	EOC_HELPER_expand( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_var, EOC_HELPER_count(__VA_ARGS__)) \
-		(__VA_ARGS__))
+#define var(...) EOC_HELPER_with_count(EOC_HELPER_var, __VA_ARGS__)
 #define EOC_HELPER_var2(ider, t) t ider
 #define EOC_HELPER_var1(ider) auto ider
 #define var_lambda(ider, ret, ...) ret (*ider) EOC_HELPER_function_args(__VA_ARGS__)
@@ -156,10 +153,7 @@ EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, E
 #define EOC_HELPER_function_args(...) (__VA_ARGS__)
 #else /* __cplusplus */
 #define EOC_HELPER_function_args(...) EOC_HELPER_expand(EOC_HELPER_function_args_A(__VA_ARGS__))
-#define EOC_HELPER_function_args_A(...) \
-	EOC_HELPER_expand( \
-		EOC_HELPER_symbol_append_with_macro(EOC_HELPER_function_args, EOC_HELPER_count(__VA_ARGS__)) \
-		(__VA_ARGS__))
+#define EOC_HELPER_function_args_A(...) EOC_HELPER_with_count(EOC_HELPER_function_args, __VA_ARGS__)
 #define EOC_HELPER_function_args0() (void)
 #define EOC_HELPER_function_args1(...) (__VA_ARGS__)
 #define EOC_HELPER_function_args2(...) (__VA_ARGS__)
