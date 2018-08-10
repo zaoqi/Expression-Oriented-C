@@ -40,9 +40,9 @@
 
 #if defined(__cplusplus) && __cplusplus >= 201103L
 #	define restrict
-#	include <cstddef>
+/*#	include <cstddef>*/
+#	include <cstdio>
 	using std::size_t;
-	using std::ptrdiff_t;
 #	include <cstdint>
 	using std::int_least8_t;
 	using std::int_least16_t;
