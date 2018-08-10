@@ -157,6 +157,37 @@ do
 	defn init$i $(prefix_from_to _ 1 $i) $(add_between , $(prefix_from_to _ 1 $isub))
 done
 
+odds(){
+	while [ -n "$1" ]
+	do
+		echo -n "$1 "
+		shift
+		shift
+	done
+}
+evens(){
+	shift
+	odds "$@"
+}
+defn reduce ... $(callS with_count $(S reduce) __VA_ARGS__)
+mkreduce(){
+	f="$1"
+	shift
+	if [ $# = 1 ]
+	then
+		echo "$1"
+	elif [ $# = 2 ]
+	then
+		call0 "$f" "$1" "$2"
+	else
+		call0 "$f" $(mkreduce "$f" $(odds "$@")) $(mkreduce "$f" $(evens "$@"))
+	fi
+}
+for i in $(from_to 3 $max)
+do
+	defn reduce$i f $(prefix_from_to _ 2 $i) $(mkreduce f $(prefix_from_to _ 2 $i))
+done
+
 #defn zero_p x $(symbol_append $(S zero_p) x)
 #define zero_p0 true
 #for i in $(from_to 1 $max)

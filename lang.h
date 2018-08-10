@@ -83,9 +83,10 @@
 #if !(defined(__cplusplus) || defined(not))
 #	define not(x) (!(x))
 #endif
-//WIP
-#define and(x, y) ((x)&&(y))
-#define or(x, y) ((x)||(y))
+#define and2(x, y) ((x)&&(y))
+#define and_s(...) EOC_HELPER_reduce(and2, __VA_ARGS__)
+#define or2(x, y) ((x)||(y))
+#define or_s(...) EOC_HELPER_reduce(or2, __VA_ARGS__)
 
 EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 
