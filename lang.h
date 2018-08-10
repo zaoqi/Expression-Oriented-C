@@ -149,7 +149,6 @@ EOC_HELPER_staticDefine_inlineDefine void make_void(void){}
 #	endif
 #endif
 #define __ ,
-#define ret ,
 
 #define var_lambda_withTypeOfBody(ider, ...) EOC_HELPER_tail(__VA_ARGS__) (*ider)(EOC_HELPER_init(__VA_ARGS__))
 
