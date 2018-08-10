@@ -78,7 +78,7 @@ call0(){
 	add_between ',' "$@"
 	echo -n ")"
 }
-call(){
+callS(){
 	echo -n "$prefix"
 	call0 "$@"
 }
@@ -92,11 +92,11 @@ symbol_append(){
 	else
 		local x="$1"
 		shift
-		echo $(call symbol_append_with_macro "$x" $(symbol_append "$@"))
+		echo $(callS symbol_append_with_macro "$x" $(symbol_append "$@"))
 	fi
 }
 expand(){
-	call expand "$*"
+	callS expand "$*"
 }
 ifdef(){
 	echo "#ifdef $*"
@@ -124,11 +124,11 @@ el
 endif
 defn expand x x
 defn count_helper0 $(prefix_from_to _ 0 $max) x ... x
-defn count_helper1 ... $(expand $(call count_helper0 __VA_ARGS__ $(from_to $max 0)))
-defn count ... $(call count_helper1 _Nothing '##__VA_ARGS__')
+defn count_helper1 ... $(expand $(callS count_helper0 __VA_ARGS__ $(from_to $max 0)))
+defn count ... $(callS count_helper1 _Nothing '##__VA_ARGS__')
 defn symbol_append x y "x##y"
-defn symbol_append_with_macro x y $(call symbol_append x y)
-defn with_count ider ... $(expand $(symbol_append ider $(call count __VA_ARGS__))'(__VA_ARGS__)')
+defn symbol_append_with_macro x y $(callS symbol_append x y)
+defn with_count ider ... $(expand $(symbol_append ider $(callS count __VA_ARGS__))'(__VA_ARGS__)')
 
 echo '#define EOC_HELPER_count_assert0()
 #define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
@@ -143,13 +143,13 @@ defn iffalse x y y
 defn head x ... x
 defn tail x ... __VA_ARGS__
 
-defn last ... $(call with_count $(S last) __VA_ARGS__)
+defn last ... $(callS with_count $(S last) __VA_ARGS__)
 for i in $(from_to 1 $max)
 do
 	defn last$i $(prefix_from_to _ 1 $i) _$i
 done
 
-defn init ... $(call with_count $(S init) __VA_ARGS__)
+defn init ... $(callS with_count $(S init) __VA_ARGS__)
 defn init1 x ' '
 for i in $(from_to 2 $max)
 do
