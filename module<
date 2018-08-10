@@ -426,10 +426,10 @@ EOC_TEMP_state
 #endif
 #if defined(EOC_TEMP_define_re)/* EOC_TEMP_define_re */
 #undef declare_private
+#undef EOC_HELPER_define_private1
 #undef EOC_HELPER_define_private2
-#undef EOC_HELPER_define_private3
+#undef EOC_HELPER_define_public1
 #undef EOC_HELPER_define_public2
-#undef EOC_HELPER_define_public3
 #undef declare_private_lambda
 #undef define_private_lambda
 #undef declare_private_inline_lambda
