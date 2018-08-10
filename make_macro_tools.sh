@@ -73,6 +73,12 @@ add_between(){
 	done
 	echo
 }
+call0(){
+	echo -n "$1("
+	shift
+	add_between , "$@"
+	echo ")"
+}
 call(){
 	echo -n "$prefix$1("
 	shift
@@ -88,7 +94,7 @@ call(){
 		echo -n "$1"
 		shift
 	done
-	echo -n ")"
+	echo ")"
 }
 S(){
 	echo "$prefix$*"
@@ -142,17 +148,19 @@ echo '#define EOC_HELPER_count_assert0()
 #define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
 EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())'
 
-#暂时无用
-#defn if b x y $(expand $(symbol_append $(S if) b)'(x,y)')
-#defn if1 x y x
-#defn iftrue x y x
-#defn if0 x y y
-#defn iffalse x y y
+defn if b x y $(expand $(symbol_append $(S if) b)'(x,y)')
+defn if1 x y x
+defn iftrue x y x
+defn if0 x y y
+defn iffalse x y y
 
-defn tail ... $(call with_count $(S tail) __VA_ARGS__)
+defn head x ... x
+defn tail x ... __VA_ARGS__
+
+defn last ... $(call with_count $(S last) __VA_ARGS__)
 for i in $(from_to 1 $max)
 do
-	defn tail$i $(prefix_from_to _ 1 $i) _$i
+	defn last$i $(prefix_from_to _ 1 $i) _$i
 done
 
 defn init ... $(call with_count $(S init) __VA_ARGS__)
@@ -163,7 +171,6 @@ do
 	defn init$i $(prefix_from_to _ 1 $i) $(add_between , $(prefix_from_to _ 1 $isub))
 done
 
-#暂时无用
 #defn zero_p x $(symbol_append $(S zero_p) x)
 #define zero_p0 true
 #for i in $(from_to 1 $max)

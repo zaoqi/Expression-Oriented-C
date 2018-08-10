@@ -80,7 +80,10 @@
 #define cast(x, t) ((t)x)
 #define eq_p(x,y) ((x)==(y))
 #define not_eq_p(x,y) ((x)!=(y))
-#define not(x) (!(x))
+#if !(defined(__cplusplus) || defined(not))
+#	define not(x) (!(x))
+#endif
+//WIP
 #define and(x, y) ((x)&&(y))
 #define or(x, y) ((x)||(y))
 
