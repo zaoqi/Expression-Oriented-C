@@ -418,6 +418,7 @@ EOC_TEMP_state
 #	define EOC_TEMP_define
 #endif
 #if defined(EOC_TEMP_define)/* EOC_TEMP_define */
+#undef EOC_TEMP_state
 #ifdef EOC_require
 #	define EOC_TEMP_state 0
 #else
