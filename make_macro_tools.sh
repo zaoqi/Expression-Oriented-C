@@ -71,30 +71,16 @@ add_between(){
 		echo -n "$1"
 		shift
 	done
-	echo
 }
 call0(){
 	echo -n "$1("
 	shift
-	add_between , "$@"
+	add_between ',' "$@"
 	echo ")"
 }
 call(){
-	echo -n "$prefix$1("
-	shift
-	local first="true"
-	while [ -n "$1" ]
-	do
-		if [ -n "$first" ]
-		then
-			first=""
-		else
-			echo -n ","
-		fi
-		echo -n "$1"
-		shift
-	done
-	echo ")"
+	echo -n "$prefix"
+	call0 "$@"
 }
 S(){
 	echo "$prefix$*"
