@@ -76,7 +76,7 @@ call0(){
 	echo -n "$1("
 	shift
 	add_between ',' "$@"
-	echo ")"
+	echo -n ")"
 }
 call(){
 	echo -n "$prefix"
