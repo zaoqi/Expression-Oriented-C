@@ -80,8 +80,11 @@
 #define cast(x, t) ((t)x)
 #define eq_p(x,y) ((x)==(y))
 #define not_eq_p(x,y) ((x)!=(y))
-#if !(defined(__cplusplus) || defined(not))
-#	define not(x) (!(x))
+#ifndef __cplusplus
+#	ifndef not
+/*#		define not ! 亦可用*/
+#		define not(x) (!(x))
+#	endif
 #endif
 #define and2(x, y) ((x)&&(y))
 #define and_s(...) EOC_HELPER_reduce(and2, __VA_ARGS__)
