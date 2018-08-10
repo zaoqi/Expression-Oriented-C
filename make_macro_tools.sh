@@ -142,11 +142,12 @@ echo '#define EOC_HELPER_count_assert0()
 #define EOC_HELPER_count_assert1() EOC_HELPER_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
 EOC_HELPER_expand(EOC_HELPER_symbol_append_with_macro(EOC_HELPER_count_assert, EOC_HELPER_count()) ())'
 
-defn if b x y $(expand $(symbol_append $(S if) b)'(x,y)')
-defn if1 x y x
-defn iftrue x y x
-defn if0 x y y
-defn iffalse x y y
+#暂时无用
+#defn if b x y $(expand $(symbol_append $(S if) b)'(x,y)')
+#defn if1 x y x
+#defn iftrue x y x
+#defn if0 x y y
+#defn iffalse x y y
 
 defn tail ... $(call with_count $(S tail) __VA_ARGS__)
 for i in $(from_to 1 $max)
@@ -162,9 +163,10 @@ do
 	defn init$i $(prefix_from_to _ 1 $i) $(add_between , $(prefix_from_to _ 1 $isub))
 done
 
-defn zero_p x $(symbol_append $(S zero_p) x)
-define zero_p0 true
-for i in $(from_to 1 $max)
-do
-	define zero_p$i false
-done
+#暂时无用
+#defn zero_p x $(symbol_append $(S zero_p) x)
+#define zero_p0 true
+#for i in $(from_to 1 $max)
+#do
+#	define zero_p$i false
+#done
