@@ -68,8 +68,8 @@
 #define nat16 uint_least16_t
 #define nat32 uint_least32_t
 #define nat64 uint_least64_t
-#define pointer_t uintptr_t
-#define signed_pointer_t intptr_t
+#define nat_pointer uintptr_t
+#define int_pointer intptr_t
 #define byte nat8
 #define signed_byte int8
 
