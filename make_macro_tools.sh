@@ -116,7 +116,7 @@ el(){
 	echo "#else"
 }
 elseif(){
-	echo "#elif"
+	echo "#elif $*"
 }
 endif(){
 	echo "#endif"
