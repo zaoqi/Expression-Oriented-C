@@ -32,6 +32,7 @@
 #define DEFINE DEFINE_
 #define DEFINE_FUNCTION DEFINE_FUNCTION_
 #define ERROR ERROR_
+#define LINE LINE_
 #define IF_(x) echo("#if ");{x}echo("\n");
 #define ELSE_ echo("#else\n");
 #define ELIF_(x) echo("#elif ");{x}echo("\n");
@@ -39,7 +40,9 @@
 #define DEFINE_(x, v) echo("#define ");{x}echo(" ");{v}echo("\n");
 #define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}{args}echo(" ");{v}echo("\n");
 #define ERROR_(x) echo("#error ");{x}echo("\n");
+#define LINE_(x) {x}echo("\n");
 
+#define String String_
 #define X X_
 #define Nat Nat_
 #define Defined Defined_
@@ -51,6 +54,7 @@
 #define Eq Eq_
 #define Lt Lt_
 #define LtEq LtEq_
+#define String_(x) echo("\"");echo(x);echo("\"");
 #define X_(x) echo(x);
 #define Nat_(x) echo_nat(x);
 #define Defined_(x) echo("defined(");{x}echo(")");
@@ -66,6 +70,8 @@
 #define StdC99 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("199901L")))
 #define StdC11 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("201112L")))
 #define CPlusPlus11 And(Defined(X("__cplusplus")),GtEq(X("__cplusplus"),X("201103L")))
+
+#define Call0(f) {f}X("()")
 #define Call1(f, x) {f}X("("){x}X(")")
 #define Call2(f, x, y) {f}X("("){x}X(","){y}X(")")
 #define Call3(f, x, y, z) {f}X("("){x}X(","){y}X(","){z}X(")")
@@ -111,10 +117,19 @@
 		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append_with_macro"),X("(x,y)"),Call2(X(TOOLS_prefix"symbol_append"),X("x"),X("y"))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"with_count"),X("(ider,...)"), \
 			Call1(X(TOOLS_prefix"expand"), \
-				Call2(X(TOOLS_prefix"symbol_append"), \
+				Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
 					X("ider"), \
 					Call1(X(TOOLS_prefix"count"),X("__VA_ARGS__"))) \
 				X("(__VA_ARGS__)"))) \
+		\
+		DEFINE(X(TOOLS_prefix"count_assert0"),) \
+		DEFINE(X(TOOLS_prefix"count_assert1"),Call1(X(TOOLS_prefix"error"), \
+			String("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty"))) \
+		LINE(Call1(X(TOOLS_prefix"expand"), \
+			Call2(X(TOOLS_prefix"symbol_append"), \
+				X(TOOLS_prefix"count_assert"), \
+				Call0(X(TOOLS_prefix"count"))))) \
+		\
 	)
 
 int main(){

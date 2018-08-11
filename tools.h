@@ -13,5 +13,8 @@
 #define eoC_TOOLS_count(...) eoC_TOOLS_countHELPER1(_Nothing,##__VA_ARGS__)
 #define eoC_TOOLS_symbol_append(x,y) x##y
 #define eoC_TOOLS_symbol_append_with_macro(x,y) eoC_TOOLS_symbol_append(x,y)
-#define eoC_TOOLS_with_count(ider,...) eoC_TOOLS_expand(eoC_TOOLS_symbol_append(ider,eoC_TOOLS_count(__VA_ARGS__))(__VA_ARGS__))
+#define eoC_TOOLS_with_count(ider,...) eoC_TOOLS_expand(eoC_TOOLS_symbol_append_with_macro(ider,eoC_TOOLS_count(__VA_ARGS__))(__VA_ARGS__))
+#define eoC_TOOLS_count_assert0 
+#define eoC_TOOLS_count_assert1 eoC_TOOLS_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
+eoC_TOOLS_expand(eoC_TOOLS_symbol_append(eoC_TOOLS_count_assert,eoC_TOOLS_count()))
 #endif
