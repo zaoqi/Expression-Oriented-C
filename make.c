@@ -19,12 +19,11 @@
 
 #define eq_p(x, y) ((x)==(y))
 #define nat unsigned long long
+#define string char*
 
 /* 有 #define file "" */
 #define echo(x) fputs(x, file)
-#define echo_int(x) fprintf(file, "%d", x)
 #define echo_nat(x) fprintf(file, "%u", x)
-#define echo_nat_hex(x) fprintf(file, "%x", x)
 
 #define IF IF_
 #define ELSE ELSE_
@@ -42,6 +41,7 @@
 #define ERROR_(x) echo("#error ");{x}echo("\n");
 
 #define X X_
+#define Nat Nat_
 #define Defined Defined_
 #define Not Not_
 #define Or Or_
@@ -52,6 +52,7 @@
 #define Lt Lt_
 #define LtEq LtEq_
 #define X_(x) echo(x);
+#define Nat_(x) echo_nat(x);
 #define Defined_(x) echo("defined(");{x}echo(")");
 #define Not_(x) echo("(!(");{x}echo("))");
 #define Or_(x, y) echo("((");{x}echo(")||(");{y}echo("))");
@@ -65,41 +66,45 @@
 #define StdC99 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("199901L")))
 #define StdC11 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("201112L")))
 #define CPlusPlus11 And(Defined(X("__cplusplus")),GtEq(X("__cplusplus"),X("201103L")))
+#define Call1(f, x) {f}X("("){x}X(")")
+#define Call2(f, x, y) {f}X("("){x}X(","){y}X(")")
+#define Call3(f, x, y, z) {f}X("("){x}X(","){y}X(","){z}X(")")
 
 #define prefix_addbetween_from_to(prefix, addbetween, x, y) { \
 	nat a=(x); \
 	nat b=(y); \
-	echo(prefix); \
-	echo_nat_hex(a); \
+	X(prefix); \
+	Nat(a); \
 	if(eq_p(a, b)){ \
 	}else if(a<b){ \
 		while(a!=b){ \
 			a++;/*a<=b*/\
-			echo(addbetween); \
-			echo(prefix); \
-			echo_nat_hex(a);} \
+			X(addbetween prefix); \
+			Nat(a);} \
 	}else{/*a>b*/ \
 		while(a!=b){ \
 			a--;/*a>=b*/ \
-			echo(addbetween); \
-			echo(prefix); \
-			echo_nat_hex(a);}}}
-#define from_to(x, y) prefix_addbetween_from_to("_", ",", x, y)
+			X(addbetween prefix); \
+			Nat(a);}}}
+#define var_from_to(x, y) prefix_addbetween_from_to("_", ",", x, y)
+#define from_to(x, y) prefix_addbetween_from_to("", ",", x, y)
 
 #define HEADER(n, x) IF(Not(Defined(n))) DEFINE(n,) {x} ENDIF
 
 /* 有 #define TOOLS_prefix "" */
 #define TOOLS \
-	HEADER(X(TOOLS_prefix "defined"), \
+	HEADER(X(TOOLS_prefix"defined"), \
 		IF(StdC11) \
-			DEFINE_FUNCTION(X(TOOLS_prefix "error"),X("(x)"),X("_Static_assert(0,x)")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("_Static_assert(0,x)")) \
 		ELIF(CPlusPlus11) \
-			DEFINE_FUNCTION(X(TOOLS_prefix "error"),X("(x)"),X("static_assert(0,x)")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("static_assert(0,x)")) \
 		ELSE \
-			DEFINE_FUNCTION(X(TOOLS_prefix "error"),X("(x)"),X("{{{!!!ERROR x ERROR!!!}}}")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("{{{!!!ERROR x ERROR!!!}}}")) \
 		ENDIF \
-		DEFINE_FUNCTION(X(TOOLS_prefix "expand"),X("(x)"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix "countHELPER0"),X("(")from_to(0, eoc_max)X(",x)"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"expand"),X("(x)"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),X("(")var_from_to(0, eoc_max)X(",x,...)"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER1"),X("(...)"), \
+			Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"countHELPER0"),X("__VA_ARGS__"),from_to(eoc_max, 0)))) \
 	)
 
 int main(){
