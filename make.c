@@ -93,7 +93,21 @@
 			X(addbetween prefix); \
 			Nat(a);}}}
 #define var_from_to(x, y) prefix_addbetween_from_to("_", ",", x, y)
+#define list_var_from_to(x, y) X("(")prefix_addbetween_from_to("_", ",", x, y)X(")")
 #define from_to(x, y) prefix_addbetween_from_to("", ",", x, y)
+#define for_in_from_to(v, x, y, body) { \
+	nat for_in_from_toTEMPx=(x); \
+	nat for_in_from_toTEMPy=(y); \
+	{nat v=for_in_from_toTEMPx;{body}} \
+	if(eq_p(for_in_from_toTEMPx, for_in_from_toTEMPy)){ \
+	}else if(for_in_from_toTEMPx<for_in_from_toTEMPy){ \
+		while(for_in_from_toTEMPx!=for_in_from_toTEMPy){ \
+			for_in_from_toTEMPx++; \
+			{nat v=for_in_from_toTEMPx;{body}}} \
+	}else{ \
+		while(for_in_from_toTEMPx!=for_in_from_toTEMPy){ \
+			for_in_from_toTEMPx--; \
+			{nat v=for_in_from_toTEMPx;{body}}}}}
 
 #define HEADER(n, x) IF(Not(Defined(n))) DEFINE(n,) {x} ENDIF
 
@@ -108,7 +122,7 @@
 			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("{{{!!!ERROR x ERROR!!!}}}")) \
 		ENDIF \
 		DEFINE_FUNCTION(X(TOOLS_prefix"expand"),X("(x)"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),X("(")var_from_to(0, eoc_max)X(",x,...)"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),X("(")var_from_to(0,eoc_max)X(",x,...)"),X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER1"),X("(...)"), \
 			Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"countHELPER0"),X("__VA_ARGS__"),from_to(eoc_max, 0)))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"count"),X("(...)"), \
@@ -130,6 +144,11 @@
 				X(TOOLS_prefix"count_assert"), \
 				Call0(X(TOOLS_prefix"count"))))) \
 		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"init"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"init"),X("__VA_ARGS__"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"init1"),X("(x)"),) \
+		for_in_from_to(i, 2, eoc_max, { \
+			nat isub=i-1; \
+			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),list_var_from_to(1,i),var_from_to(1,isub)) }) \
 	)
 
 int main(){
