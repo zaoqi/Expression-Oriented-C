@@ -266,6 +266,21 @@
 				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x;typedef enum x x")) \
 				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),Call1(X(LANG_prefix"declare_enumeration"),X("x"))X(";enum x")) \
 			ENDIF \
+			\
+			LANG_EXPORT_ONLY_C("bool") LANG_EXPORT_ONLY_C("true") LANG_EXPORT_ONLY_C("false") \
+			IF(CPlusPlus) \
+			ELIF(StdC99) \
+				DEFINE(X(LANG_prefix"bool"),X("_Bool")) \
+				DEFINE(X(LANG_prefix"true"),Nat(1)) \
+				DEFINE(X(LANG_prefix"false"),Nat(0)) \
+				DEFINE(X("__bool_true_false_are_defined"),) \
+			ELSE \
+				DEFINE(X(LANG_prefix"bool"),X("unsigned char")) \
+				DEFINE(X(LANG_prefix"true"),Nat(1)) \
+				DEFINE(X(LANG_prefix"false"),Nat(0)) \
+				DEFINE(X("__bool_true_false_are_defined"),) \
+			ENDIF \
+			"WIP"; \
 		) \
 	))
 
@@ -281,6 +296,10 @@ int main(){
 		fputs("#undef "x"\n",undef); \
 		fputs("#define "x" "LANG_prefix x"\n",redef); \
 		DEFINE(X(x),X(LANG_prefix x))}
+	#define LANG_EXPORT_ONLY_C(x) { \
+		fputs("#ifndef __cplusplus\n#undef "x"\n#endif\n",undef); \
+		fputs("#ifndef __cplusplus\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
+		IF(Not(CPlusPlus)) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
 	LANG
 	fclose(f);
 	fclose(undef);

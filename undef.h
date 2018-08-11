@@ -29,3 +29,12 @@
 #undef anonymous_enumeration
 #undef declare_enumeration
 #undef define_enumeration
+#ifndef __cplusplus
+#undef bool
+#endif
+#ifndef __cplusplus
+#undef true
+#endif
+#ifndef __cplusplus
+#undef false
+#endif

@@ -263,6 +263,27 @@ typedef intptr_t eoC_LANG_int_pointer;
 #define eoC_LANG_declare_enumeration(x) enum x;typedef enum x x
 #define eoC_LANG_define_enumeration(x) eoC_LANG_declare_enumeration(x);enum x
 #endif
+#if (!(defined(__cplusplus)))
+#define bool eoC_LANG_bool
+#endif
+#if (!(defined(__cplusplus)))
+#define true eoC_LANG_true
+#endif
+#if (!(defined(__cplusplus)))
+#define false eoC_LANG_false
+#endif
+#if defined(__cplusplus)
+#elif ((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L))))
+#define eoC_LANG_bool _Bool
+#define eoC_LANG_true 1
+#define eoC_LANG_false 0
+#define __bool_true_false_are_defined 
+#else
+#define eoC_LANG_bool unsigned char
+#define eoC_LANG_true 1
+#define eoC_LANG_false 0
+#define __bool_true_false_are_defined 
+#endif
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later

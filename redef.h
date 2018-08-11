@@ -29,3 +29,12 @@
 #define anonymous_enumeration eoC_LANG_anonymous_enumeration
 #define declare_enumeration eoC_LANG_declare_enumeration
 #define define_enumeration eoC_LANG_define_enumeration
+#ifndef __cplusplus
+#define bool eoC_LANG_bool
+#endif
+#ifndef __cplusplus
+#define true eoC_LANG_true
+#endif
+#ifndef __cplusplus
+#define false eoC_LANG_false
+#endif
