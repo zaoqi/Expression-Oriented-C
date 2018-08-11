@@ -71,6 +71,8 @@
 #define StdC11 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("201112L")))
 #define CPlusPlus11 And(Defined(X("__cplusplus")),GtEq(X("__cplusplus"),X("201103L")))
 
+#define WITH_MACRO_VA_ARGS(x) IF(Or(StdC99, CPlusPlus11)){x}ELSE ERROR(X("__VA_ARGS__ requires C99 or later or C++11 or later")) ENDIF
+
 #define Call0(f) {f}X("()")
 #define Call1(f, x) {f}X("("){x}X(")")
 #define Call2(f, x, y) {f}X("("){x}X(","){y}X(")")
@@ -113,7 +115,7 @@
 
 /* 有 #define TOOLS_prefix "" */
 #define TOOLS \
-	HEADER(X(TOOLS_prefix"defined"), \
+	HEADER(X(TOOLS_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
 		IF(StdC11) \
 			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("_Static_assert(0,x)")) \
 		ELIF(CPlusPlus11) \
@@ -162,11 +164,18 @@
 				Call2(X("_1"), \
 					Call1(X(TOOLS_prefix"reduce")Nat(p1+1),var_from_to(1,p1+1)), \
 					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
-	)
+	))
+
+/* 有 #define LANG_prefix "" */
+#define LANG \
+	HEADER(X(LANG_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
+	))
 
 int main(){
-	FILE* f=fopen("tools.h", "w");
+	FILE* f=fopen("module<", "w");
 	#define file f
 	#define TOOLS_prefix "eoC_TOOLS_"
+	#define LANG_prefix "eoC_LANG_"
 	TOOLS
+	LANG
 }
