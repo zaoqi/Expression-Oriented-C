@@ -13,4 +13,5 @@
 #define eoC_TOOLS_count(...) eoC_TOOLS_countHELPER1(_Nothing,##__VA_ARGS__)
 #define eoC_TOOLS_symbol_append(x,y) x##y
 #define eoC_TOOLS_symbol_append_with_macro(x,y) eoC_TOOLS_symbol_append(x,y)
+#define eoC_TOOLS_with_count(ider,...) eoC_TOOLS_expand(eoC_TOOLS_symbol_append(ider,eoC_TOOLS_count(__VA_ARGS__))(__VA_ARGS__))
 #endif

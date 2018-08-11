@@ -109,6 +109,12 @@
 			Call2(X(TOOLS_prefix"countHELPER1"),X("_Nothing"),X("##__VA_ARGS__"))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append"),X("(x,y)"),X("x##y")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append_with_macro"),X("(x,y)"),Call2(X(TOOLS_prefix"symbol_append"),X("x"),X("y"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"with_count"),X("(ider,...)"), \
+			Call1(X(TOOLS_prefix"expand"), \
+				Call2(X(TOOLS_prefix"symbol_append"), \
+					X("ider"), \
+					Call1(X(TOOLS_prefix"count"),X("__VA_ARGS__"))) \
+				X("(__VA_ARGS__)"))) \
 	)
 
 int main(){
