@@ -39,7 +39,7 @@
 #define ELIF_(x) echo("#elif ");{x}echo("\n");
 #define ENDIF_ echo("#endif\n");
 #define DEFINE_(x, v) echo("#define ");{x}echo(" ");{v}echo("\n");
-#define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}{args}echo(" ");{v}echo("\n");
+#define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}echo("(");{args}echo(") ");{v}echo("\n");
 #define ERROR_(x) echo("#error ");{x}echo("\n");
 #define LINE_(x) {x}echo("\n");
 #define INCLUDE_(x) echo("#include ");{x}echo("\n");
@@ -121,21 +121,21 @@
 #define TOOLS \
 	HEADER(X(TOOLS_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
 		IF(StdC11) \
-			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("_Static_assert(0,x)")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("x"),X("_Static_assert(0,x)")) \
 		ELIF(CPlusPlus11) \
-			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("static_assert(0,x)")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("x"),X("static_assert(0,x)")) \
 		ELSE \
-			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("(x)"),X("{{{!!!ERROR x ERROR!!!}}}")) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"error"),X("x"),X("{{{!!!ERROR x ERROR!!!}}}")) \
 		ENDIF \
-		DEFINE_FUNCTION(X(TOOLS_prefix"expand"),X("(x)"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),X("(")var_from_to(0,eoc_max)X(",x,...)"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER1"),X("(...)"), \
+		DEFINE_FUNCTION(X(TOOLS_prefix"expand"),X("x"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),var_from_to(0,eoc_max)X(",x,..."),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER1"),X("..."), \
 			Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"countHELPER0"),X("__VA_ARGS__"),from_to(eoc_max, 0)))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"count"),X("(...)"), \
+		DEFINE_FUNCTION(X(TOOLS_prefix"count"),X("..."), \
 			Call2(X(TOOLS_prefix"countHELPER1"),X("_Nothing"),X("##__VA_ARGS__"))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append"),X("(x,y)"),X("x##y")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append_with_macro"),X("(x,y)"),Call2(X(TOOLS_prefix"symbol_append"),X("x"),X("y"))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"with_count"),X("(ider,...)"), \
+		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append"),X("x,y"),X("x##y")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append_with_macro"),X("x,y"),Call2(X(TOOLS_prefix"symbol_append"),X("x"),X("y"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"with_count"),X("ider,..."), \
 			Call1(X(TOOLS_prefix"expand"), \
 				Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
 					X("ider"), \
@@ -151,20 +151,20 @@
 				Call0(X(TOOLS_prefix"count"))))) \
 		\
 		DEFINE_FUNCTION(X(TOOLS_prefix"init"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"init"),X("__VA_ARGS__"))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"init1"),X("(x)"),) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"init1"),X("x"),) \
 		for_in_from_to(i, 2, eoc_max, { \
 			nat isub=i-1; \
-			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),list_var_from_to(1,i),var_from_to(1,isub)) }) \
+			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),var_from_to(1,i),var_from_to(1,isub)) }) \
 		\
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce"),X("__VA_ARGS__"))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce2"),X("(f,x)"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce3"),X("(f,x,y)"),X("f(x,y)")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce2"),X("f,x"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce3"),X("f,x,y"),X("f(x,y)")) \
 		for_in_from_to(i, 4, eoc_max, { \
 			nat length=i-1; \
 			nat p1=length/2; \
 			nat p2=length-p1; \
 			nat p2base=i-p2+1; \
-			DEFINE_FUNCTION(X(TOOLS_prefix"reduce")Nat(i),list_var_from_to(1,i),/*_1=f*/\
+			DEFINE_FUNCTION(X(TOOLS_prefix"reduce")Nat(i),var_from_to(1,i),/*_1=f*/\
 				Call2(X("_1"), \
 					Call1(X(TOOLS_prefix"reduce")Nat(p1+1),var_from_to(1,p1+1)), \
 					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
@@ -229,6 +229,8 @@
 			ELSE \
 				ERROR(X("<stdint.h> or <cstdint> requires C99 or later or C++11 or later")) \
 			ENDIF \
+			\
+			DEFINE_FUNCTION(X(LANG_prefix"ref"),X("x"),X("((x)*)")) \
 		) \
 	))
 
