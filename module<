@@ -167,6 +167,8 @@ eoC_TOOLS_expand(eoC_TOOLS_symbol_append(eoC_TOOLS_count_assert,eoC_TOOLS_count(
 #else
 #error inline requires C99 or later or C++
 #endif
+#define define_type eoC_LANG_define_type
+#define eoC_LANG_define_type typedef
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later

@@ -169,7 +169,7 @@
 	))
 
 /* 有 #define LANG_prefix "..." */
-/* 有 #define LANG_EXPORT(X(...)) ... */
+/* 有 #define LANG_EXPORT("...") ... */
 #define LANG \
 	HEADER(X(LANG_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
 		HEADER(X(LANG_prefix"_static_dEFINEd"), \
@@ -184,15 +184,25 @@
 			ELSE \
 				ERROR(X("inline requires C99 or later or C++")) \
 			ENDIF \
+			LANG_EXPORT("define_type") \
+			DEFINE(X(LANG_prefix"define_type"),X("typedef")) \
 		) \
 	))
 
 int main(){
 	FILE* f=fopen("module<", "w");
+	FILE* undef=fopen("undef.h", "w");
+	FILE* redef=fopen("redef.h", "w");
 	#define file f
 	#define TOOLS_prefix "eoC_TOOLS_"
-	#define LANG_prefix "eoC_LANG_"
 	TOOLS
+	#define LANG_prefix "eoC_LANG_"
+	#define LANG_EXPORT(x) { \
+		fputs("#undef "x"\n",undef); \
+		fputs("#define "x" "LANG_prefix x"\n",redef); \
+		DEFINE(X(x),X(LANG_prefix x))}
 	LANG
 	fclose(f);
+	fclose(undef);
+	fclose(redef);
 }

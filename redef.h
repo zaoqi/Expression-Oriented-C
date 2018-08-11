@@ -1,0 +1,1 @@
+#define define_type eoC_LANG_define_type
