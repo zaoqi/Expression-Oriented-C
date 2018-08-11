@@ -105,6 +105,10 @@
 		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER0"),X("(")var_from_to(0, eoc_max)X(",x,...)"),X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"countHELPER1"),X("(...)"), \
 			Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"countHELPER0"),X("__VA_ARGS__"),from_to(eoc_max, 0)))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"count"),X("(...)"), \
+			Call2(X(TOOLS_prefix"countHELPER1"),X("_Nothing"),X("##__VA_ARGS__"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append"),X("(x,y)"),X("x##y")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"symbol_append_with_macro"),X("(x,y)"),Call2(X(TOOLS_prefix"symbol_append"),X("x"),X("y"))) \
 	)
 
 int main(){
