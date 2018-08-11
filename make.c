@@ -149,6 +149,19 @@
 		for_in_from_to(i, 2, eoc_max, { \
 			nat isub=i-1; \
 			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),list_var_from_to(1,i),var_from_to(1,isub)) }) \
+		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce"),X("__VA_ARGS__"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce2"),X("(f,x)"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce3"),X("(f,x,y)"),X("f(x,y)")) \
+		for_in_from_to(i, 4, eoc_max, { \
+			nat length=i-1; \
+			nat p1=length/2; \
+			nat p2=length-p1; \
+			nat p2base=i-p2+1; \
+			DEFINE_FUNCTION(X(TOOLS_prefix"reduce")Nat(i),list_var_from_to(1,i),/*_1=f*/\
+				Call2(X("_1"), \
+					Call1(X(TOOLS_prefix"reduce")Nat(p1+1),var_from_to(1,p1+1)), \
+					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
 	)
 
 int main(){
