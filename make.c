@@ -67,9 +67,11 @@
 #define Lt_(x, y) echo("((");{x}echo(")<(");{y}echo("))");
 #define LtEq_(x, y) echo("((");{x}echo(")<=(");{y}echo("))");
 
-#define StdC99 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("199901L")))
-#define StdC11 And(Defined(X("__STDC_VERSION__")),GtEq(X("__STDC_VERSION__"),X("201112L")))
-#define CPlusPlus11 And(Defined(X("__cplusplus")),GtEq(X("__cplusplus"),X("201103L")))
+#define CPlusPlus Defined(X("__cplusplus"))
+#define StdC Defined(X("__STDC_VERSION__"))
+#define StdC99 And(StdC,GtEq(X("__STDC_VERSION__"),X("199901L")))
+#define StdC11 And(StdC,GtEq(X("__STDC_VERSION__"),X("201112L")))
+#define CPlusPlus11 And(CPlusPlus,GtEq(X("__cplusplus"),X("201103L")))
 
 #define WITH_MACRO_VA_ARGS(x) IF(Or(StdC99, CPlusPlus11)){x}ELSE ERROR(X("__VA_ARGS__ requires C99 or later or C++11 or later")) ENDIF
 
@@ -113,7 +115,7 @@
 
 #define HEADER(n, x) IF(Not(Defined(n))) DEFINE(n,) {x} ENDIF
 
-/* 有 #define TOOLS_prefix "" */
+/* 有 #define TOOLS_prefix "..." */
 #define TOOLS \
 	HEADER(X(TOOLS_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
 		IF(StdC11) \
@@ -166,9 +168,23 @@
 					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
 	))
 
-/* 有 #define LANG_prefix "" */
+/* 有 #define LANG_prefix "..." */
+/* 有 #define LANG_EXPORT(X(...)) ... */
 #define LANG \
 	HEADER(X(LANG_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
+		HEADER(X(LANG_prefix"_static_dEFINEd"), \
+			IF(CPlusPlus) \
+				DEFINE(X(LANG_prefix"HELPERstaticDefine_inlineDefine"),X("static inline")) \
+				DEFINE(X(LANG_prefix"HELPERexternDefine_inlineDefine"),X("inline")) \
+				DEFINE(X(LANG_prefix"HELPERexternDeclare_inlineDefine"),X("inline")) \
+			ELIF(StdC99) \
+				DEFINE(X(LANG_prefix"HELPERstaticDefine_inlineDefine"),X("static inline")) \
+				DEFINE(X(LANG_prefix"HELPERexternDefine_inlineDefine"),X("extern inline")) \
+				DEFINE(X(LANG_prefix"HELPERexternDeclare_inlineDefine"),X("inline")) \
+			ELSE \
+				ERROR(X("inline requires C99 or later or C++")) \
+			ENDIF \
+		) \
 	))
 
 int main(){
@@ -178,4 +194,5 @@ int main(){
 	#define LANG_prefix "eoC_LANG_"
 	TOOLS
 	LANG
+	fclose(f);
 }

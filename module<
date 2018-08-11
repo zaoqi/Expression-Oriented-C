@@ -1,6 +1,6 @@
 #if (!(defined(eoC_TOOLS_dEFINEd)))
 #define eoC_TOOLS_dEFINEd 
-#if ((((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L)))))||(((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(201112L))))))
+#if ((((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L)))))||(((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))))
 #if ((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(201112L))))
 #define eoC_TOOLS_error(x) _Static_assert(0,x)
 #elif ((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))
@@ -153,7 +153,21 @@ eoC_TOOLS_expand(eoC_TOOLS_symbol_append(eoC_TOOLS_count_assert,eoC_TOOLS_count(
 #endif
 #if (!(defined(eoC_LANG_dEFINEd)))
 #define eoC_LANG_dEFINEd 
-#if ((((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L)))))||(((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(201112L))))))
+#if ((((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L)))))||(((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))))
+#if (!(defined(eoC_LANG__static_dEFINEd)))
+#define eoC_LANG__static_dEFINEd 
+#if defined(__cplusplus)
+#define eoC_LANG_HELPERstaticDefine_inlineDefine static inline
+#define eoC_LANG_HELPERexternDefine_inlineDefine inline
+#define eoC_LANG_HELPERexternDeclare_inlineDefine inline
+#elif ((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L))))
+#define eoC_LANG_HELPERstaticDefine_inlineDefine static inline
+#define eoC_LANG_HELPERexternDefine_inlineDefine extern inline
+#define eoC_LANG_HELPERexternDeclare_inlineDefine inline
+#else
+#error inline requires C99 or later or C++
+#endif
+#endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
 #endif
