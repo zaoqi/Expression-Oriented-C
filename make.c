@@ -232,6 +232,17 @@
 			\
 			LANG_EXPORT("cast") DEFINE_FUNCTION(X(LANG_prefix"cast"),X("x,t"),X("((t)x)")) \
 			LANG_EXPORT("annotate") DEFINE_FUNCTION(X(LANG_prefix"annotate"),X("x,t"),X("({t "LANG_prefix"tEMp=x;"LANG_prefix"tEMp;})")) \
+			LANG_EXPORT("bool_not") DEFINE_FUNCTION(X(LANG_prefix"bool_not"),X("x"),X("(!(x))")) \
+			LANG_EXPORT("eq_p") DEFINE_FUNCTION(X(LANG_prefix"eq_p"),X("..."), \
+				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"eq_p2"),X("__VA_ARGS__"))) \
+			DEFINE_FUNCTION(X(LANG_prefix"eq_p2"),X("x,y"),X("((x)==(y))")) \
+			LANG_EXPORT("not_eq_p") DEFINE_FUNCTION(X(LANG_prefix"not_eq_p"),X("x,y"),X("((x)!=(y))")) \
+			LANG_EXPORT("bool_and") DEFINE_FUNCTION(X(LANG_prefix"bool_and"),X("..."), \
+				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"bool_and2"),X("__VA_ARGS__"))) \
+			DEFINE_FUNCTION(X(LANG_prefix"bool_and2"),X("x,y"),X("((x)&&(y))")) \
+			LANG_EXPORT("bool_or") DEFINE_FUNCTION(X(LANG_prefix"bool_or"),X("..."), \
+				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"bool_or2"),X("__VA_ARGS__"))) \
+			DEFINE_FUNCTION(X(LANG_prefix"bool_or2"),X("x,y"),X("((x)||(y))")) \
 		) \
 	))
 

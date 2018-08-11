@@ -14,3 +14,8 @@
 #define restrict eoC_LANG_restrict
 #define cast eoC_LANG_cast
 #define annotate eoC_LANG_annotate
+#define bool_not eoC_LANG_bool_not
+#define eq_p eoC_LANG_eq_p
+#define not_eq_p eoC_LANG_not_eq_p
+#define bool_and eoC_LANG_bool_and
+#define bool_or eoC_LANG_bool_or

@@ -14,3 +14,8 @@
 #undef restrict
 #undef cast
 #undef annotate
+#undef bool_not
+#undef eq_p
+#undef not_eq_p
+#undef bool_and
+#undef bool_or

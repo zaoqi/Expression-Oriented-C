@@ -221,6 +221,19 @@ typedef intptr_t eoC_LANG_int_pointer;
 #define eoC_LANG_cast(x,t) ((t)x)
 #define annotate eoC_LANG_annotate
 #define eoC_LANG_annotate(x,t) ({t eoC_LANG_tEMp=x;eoC_LANG_tEMp;})
+#define bool_not eoC_LANG_bool_not
+#define eoC_LANG_bool_not(x) (!(x))
+#define eq_p eoC_LANG_eq_p
+#define eoC_LANG_eq_p(...) eoC_TOOLS_reduce(eoC_LANG_eq_p2,__VA_ARGS__)
+#define eoC_LANG_eq_p2(x,y) ((x)==(y))
+#define not_eq_p eoC_LANG_not_eq_p
+#define eoC_LANG_not_eq_p(x,y) ((x)!=(y))
+#define bool_and eoC_LANG_bool_and
+#define eoC_LANG_bool_and(...) eoC_TOOLS_reduce(eoC_LANG_bool_and2,__VA_ARGS__)
+#define eoC_LANG_bool_and2(x,y) ((x)&&(y))
+#define bool_or eoC_LANG_bool_or
+#define eoC_LANG_bool_or(...) eoC_TOOLS_reduce(eoC_LANG_bool_or2,__VA_ARGS__)
+#define eoC_LANG_bool_or2(x,y) ((x)||(y))
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
