@@ -1,1 +1,14 @@
 #undef define_type
+#undef int8
+#undef int16
+#undef int32
+#undef int64
+#undef int_pointer
+#undef nat8
+#undef nat16
+#undef nat32
+#undef nat64
+#undef nat_pointer
+#undef byte
+#undef signed_byte
+#undef restrict

@@ -1,1 +1,14 @@
 #define define_type eoC_LANG_define_type
+#define int8 eoC_LANG_int8
+#define int16 eoC_LANG_int16
+#define int32 eoC_LANG_int32
+#define int64 eoC_LANG_int64
+#define int_pointer eoC_LANG_int_pointer
+#define nat8 eoC_LANG_nat8
+#define nat16 eoC_LANG_nat16
+#define nat32 eoC_LANG_nat32
+#define nat64 eoC_LANG_nat64
+#define nat_pointer eoC_LANG_nat_pointer
+#define byte eoC_LANG_byte
+#define signed_byte eoC_LANG_signed_byte
+#define restrict eoC_LANG_restrict

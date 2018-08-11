@@ -169,6 +169,54 @@ eoC_TOOLS_expand(eoC_TOOLS_symbol_append(eoC_TOOLS_count_assert,eoC_TOOLS_count(
 #endif
 #define define_type eoC_LANG_define_type
 #define eoC_LANG_define_type typedef
+#define int8 eoC_LANG_int8
+#define int16 eoC_LANG_int16
+#define int32 eoC_LANG_int32
+#define int64 eoC_LANG_int64
+#define int_pointer eoC_LANG_int_pointer
+#define nat8 eoC_LANG_nat8
+#define nat16 eoC_LANG_nat16
+#define nat32 eoC_LANG_nat32
+#define nat64 eoC_LANG_nat64
+#define nat_pointer eoC_LANG_nat_pointer
+#define byte eoC_LANG_byte
+#define signed_byte eoC_LANG_signed_byte
+#if ((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))
+#define restrict eoC_LANG_restrict
+#define eoC_LANG_restrict 
+#include <cstddef>
+using std::size_t;
+#include <cstdint>
+typedef std::int_least8_t eoC_LANG_int8;
+typedef std::int_least8_t eoC_LANG_signed_byte;
+typedef std::int_least16_t eoC_LANG_int16;
+typedef std::int_least32_t eoC_LANG_int32;
+typedef std::int_least64_t eoC_LANG_int64;
+typedef std::uint_least8_t eoC_LANG_nat8;
+typedef std::uint_least8_t eoC_LANG_byte;
+typedef std::uint_least16_t eoC_LANG_nat16;
+typedef std::uint_least32_t eoC_LANG_nat32;
+typedef std::uint_least64_t eoC_LANG_nat64;
+typedef std::uintptr_t eoC_LANG_nat_pointer;
+typedef std::intptr_t eoC_LANG_int_pointer;
+#elif ((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L))))
+#include <stddef.h>
+#include <stdint.h>
+typedef int_least8_t eoC_LANG_int8;
+typedef int_least8_t eoC_LANG_signed_byte;
+typedef int_least16_t eoC_LANG_int16;
+typedef int_least32_t eoC_LANG_int32;
+typedef int_least64_t eoC_LANG_int64;
+typedef uint_least8_t eoC_LANG_nat8;
+typedef uint_least8_t eoC_LANG_byte;
+typedef uint_least16_t eoC_LANG_nat16;
+typedef uint_least32_t eoC_LANG_nat32;
+typedef uint_least64_t eoC_LANG_nat64;
+typedef uintptr_t eoC_LANG_nat_pointer;
+typedef intptr_t eoC_LANG_int_pointer;
+#else
+#error <stdint.h> or <cstdint> requires C99 or later or C++11 or later
+#endif
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later

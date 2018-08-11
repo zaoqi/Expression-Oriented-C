@@ -33,6 +33,7 @@
 #define DEFINE_FUNCTION DEFINE_FUNCTION_
 #define ERROR ERROR_
 #define LINE LINE_
+#define INCLUDE INCLUDE_
 #define IF_(x) echo("#if ");{x}echo("\n");
 #define ELSE_ echo("#else\n");
 #define ELIF_(x) echo("#elif ");{x}echo("\n");
@@ -41,6 +42,7 @@
 #define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}{args}echo(" ");{v}echo("\n");
 #define ERROR_(x) echo("#error ");{x}echo("\n");
 #define LINE_(x) {x}echo("\n");
+#define INCLUDE_(x) echo("#include ");{x}echo("\n");
 
 #define String String_
 #define X X_
@@ -184,8 +186,49 @@
 			ELSE \
 				ERROR(X("inline requires C99 or later or C++")) \
 			ENDIF \
+			\
 			LANG_EXPORT("define_type") \
 			DEFINE(X(LANG_prefix"define_type"),X("typedef")) \
+			\
+			LANG_EXPORT("int8") LANG_EXPORT("int16") LANG_EXPORT("int32") LANG_EXPORT("int64") LANG_EXPORT("int_pointer") \
+			LANG_EXPORT("nat8") LANG_EXPORT("nat16") LANG_EXPORT("nat32") LANG_EXPORT("nat64") LANG_EXPORT("nat_pointer") \
+			LANG_EXPORT("byte") LANG_EXPORT("signed_byte") \
+			IF(CPlusPlus11) \
+				LANG_EXPORT("restrict") \
+				DEFINE(X(LANG_prefix"restrict"),) \
+				INCLUDE(X("<cstddef>")) \
+				LINE(X("using std::size_t;")) \
+				INCLUDE(X("<cstdint>")) \
+				LINE(X("typedef std::int_least8_t "LANG_prefix"int8;")) \
+				LINE(X("typedef std::int_least8_t "LANG_prefix"signed_byte;")) \
+				LINE(X("typedef std::int_least16_t "LANG_prefix"int16;")) \
+				LINE(X("typedef std::int_least32_t "LANG_prefix"int32;")) \
+				LINE(X("typedef std::int_least64_t "LANG_prefix"int64;")) \
+				LINE(X("typedef std::uint_least8_t "LANG_prefix"nat8;")) \
+				LINE(X("typedef std::uint_least8_t "LANG_prefix"byte;")) \
+				LINE(X("typedef std::uint_least16_t "LANG_prefix"nat16;")) \
+				LINE(X("typedef std::uint_least32_t "LANG_prefix"nat32;")) \
+				LINE(X("typedef std::uint_least64_t "LANG_prefix"nat64;")) \
+				LINE(X("typedef std::uintptr_t "LANG_prefix"nat_pointer;")) \
+				LINE(X("typedef std::intptr_t "LANG_prefix"int_pointer;")) \
+			ELIF(StdC99) \
+				INCLUDE(X("<stddef.h>")) \
+				INCLUDE(X("<stdint.h>")) \
+				LINE(X("typedef int_least8_t "LANG_prefix"int8;")) \
+				LINE(X("typedef int_least8_t "LANG_prefix"signed_byte;")) \
+				LINE(X("typedef int_least16_t "LANG_prefix"int16;")) \
+				LINE(X("typedef int_least32_t "LANG_prefix"int32;")) \
+				LINE(X("typedef int_least64_t "LANG_prefix"int64;")) \
+				LINE(X("typedef uint_least8_t "LANG_prefix"nat8;")) \
+				LINE(X("typedef uint_least8_t "LANG_prefix"byte;")) \
+				LINE(X("typedef uint_least16_t "LANG_prefix"nat16;")) \
+				LINE(X("typedef uint_least32_t "LANG_prefix"nat32;")) \
+				LINE(X("typedef uint_least64_t "LANG_prefix"nat64;")) \
+				LINE(X("typedef uintptr_t "LANG_prefix"nat_pointer;")) \
+				LINE(X("typedef intptr_t "LANG_prefix"int_pointer;")) \
+			ELSE \
+				ERROR(X("<stdint.h> or <cstdint> requires C99 or later or C++11 or later")) \
+			ENDIF \
 		) \
 	))
 
