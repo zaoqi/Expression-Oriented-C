@@ -1,3 +1,4 @@
+#define make_void eoC_LANG_make_void
 #define define_type eoC_LANG_define_type
 #define int8 eoC_LANG_int8
 #define int16 eoC_LANG_int16

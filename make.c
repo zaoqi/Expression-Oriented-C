@@ -186,6 +186,7 @@
 			ELSE \
 				ERROR(X("inline requires C99 or later or C++")) \
 			ENDIF \
+			LANG_EXPORT("make_void") LINE(X(LANG_prefix"HELPERstaticDefine_inlineDefine void "LANG_prefix"make_void(void){}")) \
 			\
 			LANG_EXPORT("define_type") \
 			DEFINE(X(LANG_prefix"define_type"),X("typedef")) \

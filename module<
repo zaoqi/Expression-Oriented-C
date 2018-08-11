@@ -167,6 +167,8 @@ eoC_TOOLS_expand(eoC_TOOLS_symbol_append(eoC_TOOLS_count_assert,eoC_TOOLS_count(
 #else
 #error inline requires C99 or later or C++
 #endif
+#define make_void eoC_LANG_make_void
+eoC_LANG_HELPERstaticDefine_inlineDefine void eoC_LANG_make_void(void){}
 #define define_type eoC_LANG_define_type
 #define eoC_LANG_define_type typedef
 #define int8 eoC_LANG_int8

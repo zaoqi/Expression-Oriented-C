@@ -1,3 +1,4 @@
+#undef make_void
 #undef define_type
 #undef int8
 #undef int16
