@@ -217,7 +217,10 @@ typedef intptr_t eoC_LANG_int_pointer;
 #else
 #error <stdint.h> or <cstdint> requires C99 or later or C++11 or later
 #endif
-#define eoC_LANG_ref(x) ((x)*)
+#define cast eoC_LANG_cast
+#define eoC_LANG_cast(x,t) ((t)x)
+#define annotate eoC_LANG_annotate
+#define eoC_LANG_annotate(x,t) ({t eoC_LANG_tEMp=x;eoC_LANG_tEMp;})
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later

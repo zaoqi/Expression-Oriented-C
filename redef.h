@@ -12,3 +12,5 @@
 #define byte eoC_LANG_byte
 #define signed_byte eoC_LANG_signed_byte
 #define restrict eoC_LANG_restrict
+#define cast eoC_LANG_cast
+#define annotate eoC_LANG_annotate

@@ -230,7 +230,8 @@
 				ERROR(X("<stdint.h> or <cstdint> requires C99 or later or C++11 or later")) \
 			ENDIF \
 			\
-			DEFINE_FUNCTION(X(LANG_prefix"ref"),X("x"),X("((x)*)")) \
+			LANG_EXPORT("cast") DEFINE_FUNCTION(X(LANG_prefix"cast"),X("x,t"),X("((t)x)")) \
+			LANG_EXPORT("annotate") DEFINE_FUNCTION(X(LANG_prefix"annotate"),X("x,t"),X("({t "LANG_prefix"tEMp=x;"LANG_prefix"tEMp;})")) \
 		) \
 	))
 

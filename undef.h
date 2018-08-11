@@ -12,3 +12,5 @@
 #undef byte
 #undef signed_byte
 #undef restrict
+#undef cast
+#undef annotate
