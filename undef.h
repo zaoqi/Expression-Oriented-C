@@ -20,3 +20,12 @@
 #undef not_eq_p
 #undef bool_and
 #undef bool_or
+#undef anonymous_struct
+#undef declare_struct
+#undef define_struct
+#undef anonymous_union
+#undef declare_union
+#undef define_union
+#undef anonymous_enumeration
+#undef declare_enumeration
+#undef define_enumeration

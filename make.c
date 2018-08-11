@@ -244,6 +244,28 @@
 			LANG_EXPORT("bool_or") DEFINE_FUNCTION(X(LANG_prefix"bool_or"),X("..."), \
 				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"bool_or2"),X("__VA_ARGS__"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"bool_or2"),X("x,y"),X("((x)||(y))")) \
+			\
+			LANG_EXPORT("anonymous_struct") LANG_EXPORT("declare_struct") LANG_EXPORT("define_struct") \
+			LANG_EXPORT("anonymous_union") LANG_EXPORT("declare_union") LANG_EXPORT("define_union") \
+			LANG_EXPORT("anonymous_enumeration") LANG_EXPORT("declare_enumeration") LANG_EXPORT("define_enumeration") \
+			DEFINE(X(LANG_prefix"anonymous_struct"),X("struct")) \
+			DEFINE(X(LANG_prefix"anonymous_union"),X("union")) \
+			DEFINE(X(LANG_prefix"anonymous_enumeration"),X("enum")) \
+			IF(CPlusPlus) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),X("struct x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"),X("union x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),X("enum x")) \
+			ELSE \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x;typedef struct x x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),Call1(X(LANG_prefix"declare_struct"),X("x"))X(";struct x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x;typedef union x x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"),Call1(X(LANG_prefix"declare_union"),X("x"))X(";union x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x;typedef enum x x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),Call1(X(LANG_prefix"declare_enumeration"),X("x"))X(";enum x")) \
+			ENDIF \
 		) \
 	))
 

@@ -236,6 +236,33 @@ typedef intptr_t eoC_LANG_int_pointer;
 #define bool_or eoC_LANG_bool_or
 #define eoC_LANG_bool_or(...) eoC_TOOLS_reduce(eoC_LANG_bool_or2,__VA_ARGS__)
 #define eoC_LANG_bool_or2(x,y) ((x)||(y))
+#define anonymous_struct eoC_LANG_anonymous_struct
+#define declare_struct eoC_LANG_declare_struct
+#define define_struct eoC_LANG_define_struct
+#define anonymous_union eoC_LANG_anonymous_union
+#define declare_union eoC_LANG_declare_union
+#define define_union eoC_LANG_define_union
+#define anonymous_enumeration eoC_LANG_anonymous_enumeration
+#define declare_enumeration eoC_LANG_declare_enumeration
+#define define_enumeration eoC_LANG_define_enumeration
+#define eoC_LANG_anonymous_struct struct
+#define eoC_LANG_anonymous_union union
+#define eoC_LANG_anonymous_enumeration enum
+#if defined(__cplusplus)
+#define eoC_LANG_declare_struct(x) struct x
+#define eoC_LANG_define_struct(x) struct x
+#define eoC_LANG_declare_union(x) union x
+#define eoC_LANG_define_union(x) union x
+#define eoC_LANG_declare_enumeration(x) enum x
+#define eoC_LANG_define_enumeration(x) enum x
+#else
+#define eoC_LANG_declare_struct(x) struct x;typedef struct x x
+#define eoC_LANG_define_struct(x) eoC_LANG_declare_struct(x);struct x
+#define eoC_LANG_declare_union(x) union x;typedef union x x
+#define eoC_LANG_define_union(x) eoC_LANG_declare_union(x);union x
+#define eoC_LANG_declare_enumeration(x) enum x;typedef enum x x
+#define eoC_LANG_define_enumeration(x) eoC_LANG_declare_enumeration(x);enum x
+#endif
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later

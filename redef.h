@@ -20,3 +20,12 @@
 #define not_eq_p eoC_LANG_not_eq_p
 #define bool_and eoC_LANG_bool_and
 #define bool_or eoC_LANG_bool_or
+#define anonymous_struct eoC_LANG_anonymous_struct
+#define declare_struct eoC_LANG_declare_struct
+#define define_struct eoC_LANG_define_struct
+#define anonymous_union eoC_LANG_anonymous_union
+#define declare_union eoC_LANG_declare_union
+#define define_union eoC_LANG_define_union
+#define anonymous_enumeration eoC_LANG_anonymous_enumeration
+#define declare_enumeration eoC_LANG_declare_enumeration
+#define define_enumeration eoC_LANG_define_enumeration
