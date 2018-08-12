@@ -29,6 +29,7 @@
 #define ELSE ELSE_
 #define ELIF ELIF_
 #define ENDIF ENDIF_
+#define UNDEFINE UNDEFINE_
 #define DEFINE DEFINE_
 #define DEFINE_FUNCTION DEFINE_FUNCTION_
 #define ERROR ERROR_
@@ -38,6 +39,7 @@
 #define ELSE_ echo("#else\n");
 #define ELIF_(x) echo("#elif ");{x}echo("\n");
 #define ENDIF_ echo("#endif\n");
+#define UNDEFINE_(x) echo("#undef ");{x}echo("\n");
 #define DEFINE_(x, v) echo("#define ");{x}echo(" ");{v}echo("\n");
 #define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}echo("(");{args}echo(") ");{v}echo("\n");
 #define ERROR_(x) echo("#error ");{x}echo("\n");
@@ -76,6 +78,8 @@
 #define CPlusPlus11 And(CPlusPlus,GtEq(X("__cplusplus"),X("201103L")))
 
 #define WITH_MACRO_VA_ARGS(x) IF(Or(StdC99, CPlusPlus11)){x}ELSE ERROR(X("__VA_ARGS__ requires C99 or later or C++11 or later")) ENDIF
+
+#define REDEFINE(x) UNDEFINE(x) DEFINE(x)
 
 #define Call0(f) {f}X("()")
 #define Call1(f, x) {f}X("("){x}X(")")
@@ -267,19 +271,21 @@
 				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),Call1(X(LANG_prefix"declare_enumeration"),X("x"))X(";enum x")) \
 			ENDIF \
 			\
-			LANG_EXPORT_ONLY_C("bool") LANG_EXPORT_ONLY_C("true") LANG_EXPORT_ONLY_C("false") \
-			IF(CPlusPlus) \
+			IF(And(Defined(X("__bool_true_false_are_defined")),X("__bool_true_false_are_defined"))) \
+			ELIF(CPlusPlus) \
 			ELIF(StdC99) \
-				DEFINE(X(LANG_prefix"bool"),X("_Bool")) \
-				DEFINE(X(LANG_prefix"true"),Nat(1)) \
-				DEFINE(X(LANG_prefix"false"),Nat(0)) \
-				DEFINE(X("__bool_true_false_are_defined"),) \
+				INCLUDE(X("<stdbool.h>")) \
 			ELSE \
+				DEFINE(X(LANG_prefix"__bool_true_false_are_defined"),Nat(1)) \
 				DEFINE(X(LANG_prefix"bool"),X("unsigned char")) \
 				DEFINE(X(LANG_prefix"true"),Nat(1)) \
 				DEFINE(X(LANG_prefix"false"),Nat(0)) \
-				DEFINE(X("__bool_true_false_are_defined"),) \
 			ENDIF \
+			LANG_EXPORT_IFDEF("__bool_true_false_are_defined",LANG_prefix"__bool_true_false_are_defined") \
+			LANG_EXPORT_IFDEF("bool",LANG_prefix"__bool_true_false_are_defined") \
+			LANG_EXPORT_IFDEF("true",LANG_prefix"__bool_true_false_are_defined") \
+			LANG_EXPORT_IFDEF("false",LANG_prefix"__bool_true_false_are_defined") \
+			\
 			"WIP"; \
 		) \
 	))
@@ -296,10 +302,10 @@ int main(){
 		fputs("#undef "x"\n",undef); \
 		fputs("#define "x" "LANG_prefix x"\n",redef); \
 		DEFINE(X(x),X(LANG_prefix x))}
-	#define LANG_EXPORT_ONLY_C(x) { \
-		fputs("#ifndef __cplusplus\n#undef "x"\n#endif\n",undef); \
-		fputs("#ifndef __cplusplus\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
-		IF(Not(CPlusPlus)) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
+	#define LANG_EXPORT_IFDEF(x, m) { \
+		fputs("#ifdef "m"\n#undef "x"\n#endif\n",undef); \
+		fputs("#ifdef "m"\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
+		IF(Defined(X(m))) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
 	LANG
 	fclose(f);
 	fclose(undef);

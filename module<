@@ -263,26 +263,27 @@ typedef intptr_t eoC_LANG_int_pointer;
 #define eoC_LANG_declare_enumeration(x) enum x;typedef enum x x
 #define eoC_LANG_define_enumeration(x) eoC_LANG_declare_enumeration(x);enum x
 #endif
-#if (!(defined(__cplusplus)))
-#define bool eoC_LANG_bool
-#endif
-#if (!(defined(__cplusplus)))
-#define true eoC_LANG_true
-#endif
-#if (!(defined(__cplusplus)))
-#define false eoC_LANG_false
-#endif
-#if defined(__cplusplus)
+#if ((defined(__bool_true_false_are_defined))&&(__bool_true_false_are_defined))
+#elif defined(__cplusplus)
 #elif ((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L))))
-#define eoC_LANG_bool _Bool
-#define eoC_LANG_true 1
-#define eoC_LANG_false 0
-#define __bool_true_false_are_defined 
+#include <stdbool.h>
 #else
+#define eoC_LANG___bool_true_false_are_defined 1
 #define eoC_LANG_bool unsigned char
 #define eoC_LANG_true 1
 #define eoC_LANG_false 0
-#define __bool_true_false_are_defined 
+#endif
+#if defined(eoC_LANG___bool_true_false_are_defined)
+#define __bool_true_false_are_defined eoC_LANG___bool_true_false_are_defined
+#endif
+#if defined(eoC_LANG___bool_true_false_are_defined)
+#define bool eoC_LANG_bool
+#endif
+#if defined(eoC_LANG___bool_true_false_are_defined)
+#define true eoC_LANG_true
+#endif
+#if defined(eoC_LANG___bool_true_false_are_defined)
+#define false eoC_LANG_false
 #endif
 #endif
 #else

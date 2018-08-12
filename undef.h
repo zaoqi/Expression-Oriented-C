@@ -29,12 +29,15 @@
 #undef anonymous_enumeration
 #undef declare_enumeration
 #undef define_enumeration
-#ifndef __cplusplus
+#ifdef eoC_LANG___bool_true_false_are_defined
+#undef __bool_true_false_are_defined
+#endif
+#ifdef eoC_LANG___bool_true_false_are_defined
 #undef bool
 #endif
-#ifndef __cplusplus
+#ifdef eoC_LANG___bool_true_false_are_defined
 #undef true
 #endif
-#ifndef __cplusplus
+#ifdef eoC_LANG___bool_true_false_are_defined
 #undef false
 #endif
