@@ -352,6 +352,12 @@
 						String("auto requires C++11 or later"))) \
 			ENDIF \
 			\
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
+				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
+				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")") \
+				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
+			"WIP"; \
 	)))
 
 int main(){
