@@ -362,6 +362,13 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_lambda_withTypeOfBody(...) [&](exprOrientedC_TOOLS_init(__VA_ARGS__))->exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
 #define exprOrientedC_LANG_lambda_hELPEr(x) {return ({x});}
 #else
+#define exprOrientedC_LANG_lambda(...) exprOrientedC_TOOLS_error("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later")
+#if defined(__GNUC__)
+#define exprOrientedC_LANG_lambda_withTypeOfBody(...) ({exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_withTypeOfBody_tEMp(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr
+#define exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr(x) {return ({x});}exprOrientedC_LANG_lambda_withTypeOfBody_tEMp;})
+#else
+#define exprOrientedC_LANG_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_error("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later")
+#endif
 #endif
 #endif
 #else

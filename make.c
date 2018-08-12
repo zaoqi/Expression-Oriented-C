@@ -324,7 +324,18 @@
 					Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" "LANG_prefix"lambda_hELPEr")) \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			ELSE \
-				"WIP"; \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda"),X("..."),Call1(X(TOOLS_prefix"error"), \
+					String("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later"))) \
+				IF(Defined(X("__GNUC__"))) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."), \
+						X("({")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" ")X(LANG_prefix"lambda_withTypeOfBody_tEMp(") \
+							Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")"LANG_prefix"lambda__withTypeOfBody_hELPEr")) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda__withTypeOfBody_hELPEr"),X("x"), \
+						X("{return ({x});}"LANG_prefix"lambda_withTypeOfBody_tEMp;})")) \
+				ELSE \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."),Call1(X(TOOLS_prefix"error"), \
+						String("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later"))) \
+				ENDIF \
 			ENDIF \
 	)))
 
