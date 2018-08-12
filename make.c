@@ -340,17 +340,18 @@
 			ENDIF \
 			\
 			LANG_EXPORT("var") LANG_EXPORT("var_lambda_withTypeOfBody") \
-			DEFINE_FUNCTION(X(TOOLS_prefix"var"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"var"),X("__VA_ARGS__"))) \
-			DEFINE_FUNCTION(X(TOOLS_prefix"var2"),X("ider,type"),X("type ider")) \
-			DEFINE_FUNCTION(X(TOOLS_prefix"var_lambda_withTypeOfBody"),X("ider,..."), \
+			DEFINE_FUNCTION(X(LANG_prefix"var"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"var"),X("__VA_ARGS__"))) \
+			DEFINE_FUNCTION(X(LANG_prefix"var2"),X("ider,type"),X("type ider")) \
+			DEFINE_FUNCTION(X(LANG_prefix"var_lambda_withTypeOfBody"),X("ider,..."), \
 				Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" (*ider)(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")")) \
 			IF(CPlusPlus11) \
-				DEFINE_FUNCTION(X(TOOLS_prefix"var1"),X("ider"),X("auto ider")) \
+				DEFINE_FUNCTION(X(LANG_prefix"var1"),X("ider"),X("auto ider")) \
 			ELSE \
-				DEFINE_FUNCTION(X(TOOLS_prefix"var1"),X("ider"),Call1(X(TOOLS_prefix"error"), \
+				DEFINE_FUNCTION(X(LANG_prefix"var1"),X("ider"),Call1(X(TOOLS_prefix"error"), \
 						String("auto requires C++11 or later"))) \
 			ENDIF \
+			\
 	)))
 
 int main(){
