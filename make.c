@@ -157,11 +157,23 @@
 	for_in_from_to(i, 1, eoc_max-1, { \
 		IF(Defined(X(REQUIRE_prefix)Nat(i))) }) \
 	IF(Defined(X(REQUIRE_prefix)Nat(eoc_max))) \
-		ERROR(X("Too many levels of require")) \
+		ERROR(X("Too many levels of require<")) \
 	for_in_from_to(i, eoc_max, 1, { \
 		ELSE \
 		DEFINE(X(REQUIRE_prefix)Nat(i),) \
 		ENDIF })
+#define REQUIRE_END \
+	for_in_from_to(i, 1, eoc_max, { \
+		IF(Defined(X(REQUIRE_prefix)Nat(i))) }) \
+	IF(Defined(X(REQUIRE_prefix)Nat(eoc_max+1))) \
+		ERROR(X("Too many levels of require")) \
+	for_in_from_to(i, eoc_max, 1, { \
+		ELSE \
+		UNDEFINE(X(REQUIRE_prefix)Nat(i)) \
+		ENDIF }) \
+	ELSE \
+		ERROR(X("Too many levels of >require")) \
+	ENDIF
 
 /* 有 #define LANG_prefix "..." */
 /* 有 #define LANG_EXPORT("...") ... */
@@ -300,11 +312,18 @@ int main(){
 		fclose(f);
 		fclose(undef);
 		fclose(redef);}
-	{FILE* f=fopen("require<", "w");
-		#undef file
-		#define file f
-		#define REQUIRE_prefix prefix"REQUIRE_"
-		REQUIRE_BEGIN
-		INCLUDE(String("module<"))
-		fclose(f);}
+	{
+	#define REQUIRE_prefix prefix"REQUIRE_"
+		{FILE* f=fopen("require<", "w");
+			#undef file
+			#define file f
+			REQUIRE_BEGIN
+			INCLUDE(String("module<"))
+			fclose(f);}
+		{FILE* f=fopen(">require", "w");
+			#undef file
+			#define file f
+			REQUIRE_END
+			INCLUDE(String("module<"))
+			fclose(f);}}
 }
