@@ -138,6 +138,10 @@
 			nat isub=i-1; \
 			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),var_from_to(1,i),var_from_to(1,isub)) }) \
 		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"last"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"last"),X("__VA_ARGS__"))) \
+		for_in_from_to(i, 1, eoc_max, { \
+			DEFINE_FUNCTION(X(TOOLS_prefix"last")Nat(i),var_from_to(1,i),X("_")Nat(i)) }) \
+		\
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce"),X("__VA_ARGS__"))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce2"),X("f,x"),X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce3"),X("f,x,y"),X("f(x,y)")) \
@@ -288,7 +292,7 @@
 			LANG_EXPORT_IFDEF("true",LANG_prefix"__bool_true_false_are_defined") \
 			LANG_EXPORT_IFDEF("false",LANG_prefix"__bool_true_false_are_defined") \
 			\
-			LANG_EXPORT("let_current_continuation_notFirstClass") /*let_current_continuation_notFirstClass(name,type)({ ... })*/\
+			LANG_EXPORT("let_current_continuation_notFirstClass") /*let_current_continuation_notFirstClass(name,type)( ... )*/\
 			DEFINE_FUNCTION(X(LANG_prefix"let_current_continuation_notFirstClass"),X("ider,t"), X("({") \
 				X("t "LANG_prefix"tEMp_letcc_notVal_val;") \
 				X("t "LANG_prefix"tEMp_letcc_notVal_val_##ider;") \
@@ -308,7 +312,20 @@
 				X("goto "LANG_prefix"tEMp_letcc_throw_##ider;") \
 				X("type tEMp;") \
 				X("tEMp;})")) \
-			"WIP"; \
+			\
+			/* 例 lambda(int, int x)(x+y;) */\
+			/* 例 lambda_withTypeOfBody(int, int x __ int)(x+y;) */\
+			LANG_EXPORT("lambda") \
+			LANG_EXPORT("lambda_withTypeOfBody") \
+			IF(CPlusPlus11) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda"),X("..."),X("[&](__VA_ARGS__) "LANG_prefix"lambda_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."), \
+					X("[&](")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")->") \
+					Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" "LANG_prefix"lambda_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_hELPEr"),X("x"),X("{return ({x});}")) \
+			ELSE \
+				"WIP"; \
+			ENDIF \
 	)))
 
 int main(){
