@@ -46,3 +46,5 @@
 #undef __
 #undef lambda
 #undef lambda_withTypeOfBody
+#undef var
+#undef var_lambda_withTypeOfBody

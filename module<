@@ -372,6 +372,16 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_error("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later")
 #endif
 #endif
+#define var exprOrientedC_LANG_var
+#define var_lambda_withTypeOfBody exprOrientedC_LANG_var_lambda_withTypeOfBody
+#define exprOrientedC_TOOLS_var(...) exprOrientedC_TOOLS_with_count(exprOrientedC_TOOLS_var,__VA_ARGS__)
+#define exprOrientedC_TOOLS_var2(ider,type) type ider
+#define exprOrientedC_TOOLS_var_lambda_withTypeOfBody(ider,...) exprOrientedC_TOOLS_last(__VA_ARGS__) (*ider)(exprOrientedC_TOOLS_init(__VA_ARGS__))
+#if ((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))
+#define exprOrientedC_TOOLS_var1(ider) auto ider
+#else
+#define exprOrientedC_TOOLS_var1(ider) exprOrientedC_TOOLS_error("auto requires C++11 or later")
+#endif
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
