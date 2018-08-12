@@ -152,6 +152,17 @@
 					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
 	))
 
+/* 有 #define REQUIRE_prefix "..." */
+#define REQUIRE_BEGIN \
+	for_in_from_to(i, 1, eoc_max-1, { \
+		IF(Defined(X(REQUIRE_prefix)Nat(i))) }) \
+	IF(Defined(X(REQUIRE_prefix)Nat(eoc_max))) \
+		ERROR(X("Too many levels of require")) \
+	for_in_from_to(i, eoc_max, 1, { \
+		ELSE \
+		DEFINE(X(REQUIRE_prefix)Nat(i),) \
+		ENDIF })
+
 /* 有 #define LANG_prefix "..." */
 /* 有 #define LANG_EXPORT("...") ... */
 #define LANG \
@@ -269,23 +280,31 @@
 	))
 
 int main(){
-	FILE* f=fopen("module<", "w");
-	FILE* undef=fopen("undef.h", "w");
-	FILE* redef=fopen("redef.h", "w");
-	#define file f
-	#define TOOLS_prefix "eoC_TOOLS_"
-	TOOLS
-	#define LANG_prefix "eoC_LANG_"
-	#define LANG_EXPORT(x) { \
-		fputs("#undef "x"\n",undef); \
-		fputs("#define "x" "LANG_prefix x"\n",redef); \
-		DEFINE(X(x),X(LANG_prefix x))}
-	#define LANG_EXPORT_IFDEF(x, m) { \
-		fputs("#ifdef "m"\n#undef "x"\n#endif\n",undef); \
-		fputs("#ifdef "m"\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
-		IF(Defined(X(m))) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
-	LANG
-	fclose(f);
-	fclose(undef);
-	fclose(redef);
+	#define prefix "exprOrientedC_"
+	{FILE* f=fopen("module<", "w");
+		FILE* undef=fopen("undef.h", "w");
+		FILE* redef=fopen("redef.h", "w");
+		#define file f
+		#define TOOLS_prefix prefix"TOOLS_"
+		TOOLS
+		#define LANG_prefix prefix"LANG_"
+		#define LANG_EXPORT(x) { \
+			fputs("#undef "x"\n",undef); \
+			fputs("#define "x" "LANG_prefix x"\n",redef); \
+			DEFINE(X(x),X(LANG_prefix x))}
+		#define LANG_EXPORT_IFDEF(x, m) { \
+			fputs("#ifdef "m"\n#undef "x"\n#endif\n",undef); \
+			fputs("#ifdef "m"\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
+			IF(Defined(X(m))) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
+		LANG
+		fclose(f);
+		fclose(undef);
+		fclose(redef);}
+	{FILE* f=fopen("require<", "w");
+		#undef file
+		#define file f
+		#define REQUIRE_prefix prefix"REQUIRE_"
+		REQUIRE_BEGIN
+		INCLUDE(String("module<"))
+		fclose(f);}
 }
