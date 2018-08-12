@@ -25,51 +25,29 @@
 #define echo(x) fputs(x, file)
 #define echo_nat(x) fprintf(file, "%u", x)
 
-#define IF IF_
-#define ELSE ELSE_
-#define ELIF ELIF_
-#define ENDIF ENDIF_
-#define UNDEFINE UNDEFINE_
-#define DEFINE DEFINE_
-#define DEFINE_FUNCTION DEFINE_FUNCTION_
-#define ERROR ERROR_
-#define LINE LINE_
-#define INCLUDE INCLUDE_
-#define IF_(x) echo("#if ");{x}echo("\n");
-#define ELSE_ echo("#else\n");
-#define ELIF_(x) echo("#elif ");{x}echo("\n");
-#define ENDIF_ echo("#endif\n");
-#define UNDEFINE_(x) echo("#undef ");{x}echo("\n");
-#define DEFINE_(x, v) echo("#define ");{x}echo(" ");{v}echo("\n");
-#define DEFINE_FUNCTION_(name, args, v) echo("#define ");{name}echo("(");{args}echo(") ");{v}echo("\n");
-#define ERROR_(x) echo("#error ");{x}echo("\n");
-#define LINE_(x) {x}echo("\n");
-#define INCLUDE_(x) echo("#include ");{x}echo("\n");
+#define IF(x) echo("#if ");{x}echo("\n");
+#define ELSE echo("#else\n");
+#define ELIF(x) echo("#elif ");{x}echo("\n");
+#define ENDIF echo("#endif\n");
+#define UNDEFINE(x) echo("#undef ");{x}echo("\n");
+#define DEFINE(x, v) echo("#define ");{x}echo(" ");{v}echo("\n");
+#define DEFINE_FUNCTION(name, args, v) echo("#define ");{name}echo("(");{args}echo(") ");{v}echo("\n");
+#define ERROR(x) echo("#error ");{x}echo("\n");
+#define LINE(x) {x}echo("\n");
+#define INCLUDE(x) echo("#include ");{x}echo("\n");
 
-#define String String_
-#define X X_
-#define Nat Nat_
-#define Defined Defined_
-#define Not Not_
-#define Or Or_
-#define And And_
-#define Gt Gt_
-#define GtEq GtEq_
-#define Eq Eq_
-#define Lt Lt_
-#define LtEq LtEq_
-#define String_(x) echo("\"");echo(x);echo("\"");
-#define X_(x) echo(x);
-#define Nat_(x) echo_nat(x);
-#define Defined_(x) echo("defined(");{x}echo(")");
-#define Not_(x) echo("(!(");{x}echo("))");
-#define Or_(x, y) echo("((");{x}echo(")||(");{y}echo("))");
-#define And_(x, y) echo("((");{x}echo(")&&(");{y}echo("))");
-#define Gt_(x, y) echo("((");{x}echo(")>(");{y}echo("))");
-#define GtEq_(x, y) echo("((");{x}echo(")>=(");{y}echo("))");
-#define Eq_(x, y) echo("((");{x}echo(")==(");{y}echo("))");
-#define Lt_(x, y) echo("((");{x}echo(")<(");{y}echo("))");
-#define LtEq_(x, y) echo("((");{x}echo(")<=(");{y}echo("))");
+#define String(x) echo("\"");echo(x);echo("\"");
+#define X(x) echo(x);
+#define Nat(x) echo_nat(x);
+#define Defined(x) echo("defined(");{x}echo(")");
+#define Not(x) echo("(!(");{x}echo("))");
+#define Or(x, y) echo("((");{x}echo(")||(");{y}echo("))");
+#define And(x, y) echo("((");{x}echo(")&&(");{y}echo("))");
+#define Gt(x, y) echo("((");{x}echo(")>(");{y}echo("))");
+#define GtEq(x, y) echo("((");{x}echo(")>=(");{y}echo("))");
+#define Eq(x, y) echo("((");{x}echo(")==(");{y}echo("))");
+#define Lt(x, y) echo("((");{x}echo(")<(");{y}echo("))");
+#define LtEq(x, y) echo("((");{x}echo(")<=(");{y}echo("))");
 
 #define CPlusPlus Defined(X("__cplusplus"))
 #define StdC Defined(X("__STDC_VERSION__"))
