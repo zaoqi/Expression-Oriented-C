@@ -41,3 +41,5 @@
 #ifdef exprOrientedC_LANG___bool_true_false_are_defined
 #undef false
 #endif
+#undef let_current_continuation_notFirstClass
+#undef continuation_notFirstClass_throw

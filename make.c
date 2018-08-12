@@ -237,7 +237,8 @@
 			ENDIF \
 			\
 			LANG_EXPORT("cast") DEFINE_FUNCTION(X(LANG_prefix"cast"),X("x,t"),X("((t)x)")) \
-			LANG_EXPORT("annotate") DEFINE_FUNCTION(X(LANG_prefix"annotate"),X("x,t"),X("({t "LANG_prefix"tEMp=x;"LANG_prefix"tEMp;})")) \
+			LANG_EXPORT("annotate") DEFINE_FUNCTION(X(LANG_prefix"annotate"), \
+				X("x,t"),X("({t "LANG_prefix"tEMp_annotate=x;"LANG_prefix"tEMp_annotate;})")) \
 			LANG_EXPORT("bool_not") DEFINE_FUNCTION(X(LANG_prefix"bool_not"),X("x"),X("(!(x))")) \
 			LANG_EXPORT("eq_p") DEFINE_FUNCTION(X(LANG_prefix"eq_p"),X("..."), \
 				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"eq_p2"),X("__VA_ARGS__"))) \
@@ -287,9 +288,28 @@
 			LANG_EXPORT_IFDEF("true",LANG_prefix"__bool_true_false_are_defined") \
 			LANG_EXPORT_IFDEF("false",LANG_prefix"__bool_true_false_are_defined") \
 			\
+			LANG_EXPORT("let_current_continuation_notFirstClass") /*let_current_continuation_notFirstClass(name,type)({ ... })*/\
+			DEFINE_FUNCTION(X(LANG_prefix"let_current_continuation_notFirstClass"),X("ider,t"), X("({") \
+				X("t "LANG_prefix"tEMp_letcc_notVal_val;") \
+				X("t "LANG_prefix"tEMp_letcc_notVal_val_##ider;") \
+				X("goto "LANG_prefix"tEMp_letcc_do_##ider;") \
+				X(LANG_prefix"tEMp_letcc_throw_##ider:") \
+				X(LANG_prefix"tEMp_letcc_notVal_val="LANG_prefix"tEMp_letcc_notVal_val_##ider;") \
+				X("goto "LANG_prefix"tEMp_letcc_return;") \
+				X("goto "LANG_prefix"tEMp_letcc_do_##ider:") \
+				X(LANG_prefix"let_current_continuation_notFirstClass_hELPEr")) \
+			DEFINE_FUNCTION(X(LANG_prefix"let_current_continuation_notFirstClass_hELPEr"),X("body"), \
+				X(LANG_prefix"tEMp_letcc_notVal_val=({body});") \
+				X(LANG_prefix"tEMp_letcc_return:") \
+				X(LANG_prefix"tEMp_letcc_notVal_val;})")) \
+			LANG_EXPORT("continuation_notFirstClass_throw") \
+			DEFINE_FUNCTION(X(LANG_prefix"continuation_notFirstClass_throw"),X("ider,x,type"),X("({") \
+				X(LANG_prefix"tEMp_letcc_notVal_val_##ider=x;") \
+				X("goto "LANG_prefix"tEMp_letcc_throw_##ider;") \
+				X("type tEMp;") \
+				X("tEMp;})")) \
 			"WIP"; \
-		) \
-	))
+	)))
 
 int main(){
 	#define prefix "exprOrientedC_"

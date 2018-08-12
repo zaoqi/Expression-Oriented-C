@@ -222,7 +222,7 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define cast exprOrientedC_LANG_cast
 #define exprOrientedC_LANG_cast(x,t) ((t)x)
 #define annotate exprOrientedC_LANG_annotate
-#define exprOrientedC_LANG_annotate(x,t) ({t exprOrientedC_LANG_tEMp=x;exprOrientedC_LANG_tEMp;})
+#define exprOrientedC_LANG_annotate(x,t) ({t exprOrientedC_LANG_tEMp_annotate=x;exprOrientedC_LANG_tEMp_annotate;})
 #define bool_not exprOrientedC_LANG_bool_not
 #define exprOrientedC_LANG_bool_not(x) (!(x))
 #define eq_p exprOrientedC_LANG_eq_p
@@ -285,6 +285,11 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #if defined(exprOrientedC_LANG___bool_true_false_are_defined)
 #define false exprOrientedC_LANG_false
 #endif
+#define let_current_continuation_notFirstClass exprOrientedC_LANG_let_current_continuation_notFirstClass
+#define exprOrientedC_LANG_let_current_continuation_notFirstClass(ider,t) ({t exprOrientedC_LANG_tEMp_letcc_notVal_val;t exprOrientedC_LANG_tEMp_letcc_notVal_val_##ider;goto exprOrientedC_LANG_tEMp_letcc_do_##ider;exprOrientedC_LANG_tEMp_letcc_throw_##ider:exprOrientedC_LANG_tEMp_letcc_notVal_val=exprOrientedC_LANG_tEMp_letcc_notVal_val_##ider;goto exprOrientedC_LANG_tEMp_letcc_return;goto exprOrientedC_LANG_tEMp_letcc_do_##ider:exprOrientedC_LANG_let_current_continuation_notFirstClass_hELPEr
+#define exprOrientedC_LANG_let_current_continuation_notFirstClass_hELPEr(body) exprOrientedC_LANG_tEMp_letcc_notVal_val=({body});exprOrientedC_LANG_tEMp_letcc_return:exprOrientedC_LANG_tEMp_letcc_notVal_val;})
+#define continuation_notFirstClass_throw exprOrientedC_LANG_continuation_notFirstClass_throw
+#define exprOrientedC_LANG_continuation_notFirstClass_throw(ider,x,type) ({exprOrientedC_LANG_tEMp_letcc_notVal_val_##ider=x;goto exprOrientedC_LANG_tEMp_letcc_throw_##ider;type tEMp;tEMp;})
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
