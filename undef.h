@@ -43,5 +43,6 @@
 #endif
 #undef let_current_continuation_notFirstClass
 #undef continuation_notFirstClass_throw
+#undef __
 #undef lambda
 #undef lambda_withTypeOfBody

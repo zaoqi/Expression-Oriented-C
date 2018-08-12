@@ -315,6 +315,7 @@
 			\
 			/* 例 lambda(int, int x)(x+y;) */\
 			/* 例 lambda_withTypeOfBody(int, int x __ int)(x+y;) */\
+			LANG_EXPORT("__") DEFINE(X(LANG_prefix"__"),X(",")) \
 			LANG_EXPORT("lambda") \
 			LANG_EXPORT("lambda_withTypeOfBody") \
 			IF(CPlusPlus11) \
@@ -337,6 +338,7 @@
 						String("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later"))) \
 				ENDIF \
 			ENDIF \
+			\
 	)))
 
 int main(){

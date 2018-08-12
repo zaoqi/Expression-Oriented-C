@@ -43,5 +43,6 @@
 #endif
 #define let_current_continuation_notFirstClass exprOrientedC_LANG_let_current_continuation_notFirstClass
 #define continuation_notFirstClass_throw exprOrientedC_LANG_continuation_notFirstClass_throw
+#define __ exprOrientedC_LANG___
 #define lambda exprOrientedC_LANG_lambda
 #define lambda_withTypeOfBody exprOrientedC_LANG_lambda_withTypeOfBody
