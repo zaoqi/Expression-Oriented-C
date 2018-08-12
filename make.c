@@ -356,6 +356,9 @@
 				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("prefix,iderargs,ret"), \
+				X("ret iderargs ") \
+				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			"WIP"; \
 	)))
