@@ -47,7 +47,7 @@
 #define lambda_s exprOrientedC_LANG_lambda_s
 #define lambda_withTypeOfBody exprOrientedC_LANG_lambda_withTypeOfBody
 #define var exprOrientedC_LANG_var
-#define var_lambda_withTypeOfBody exprOrientedC_LANG_var_lambda_withTypeOfBody
+#define var_lambda_s_withTypeOfBody exprOrientedC_LANG_var_lambda_s_withTypeOfBody
 #define if_then_else exprOrientedC_LANG_if_then_else
 #define begin exprOrientedC_LANG_begin
 #define declare_public exprOrientedC_LANG_declare_public

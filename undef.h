@@ -47,7 +47,7 @@
 #undef lambda_s
 #undef lambda_withTypeOfBody
 #undef var
-#undef var_lambda_withTypeOfBody
+#undef var_lambda_s_withTypeOfBody
 #undef if_then_else
 #undef begin
 #undef declare_public

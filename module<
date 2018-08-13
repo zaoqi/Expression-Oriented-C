@@ -372,10 +372,10 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #endif
 #endif
 #define var exprOrientedC_LANG_var
-#define var_lambda_withTypeOfBody exprOrientedC_LANG_var_lambda_withTypeOfBody
+#define var_lambda_s_withTypeOfBody exprOrientedC_LANG_var_lambda_s_withTypeOfBody
 #define exprOrientedC_LANG_var(...) exprOrientedC_TOOLS_with_count(exprOrientedC_LANG_var,__VA_ARGS__)
 #define exprOrientedC_LANG_var2(ider,type) type ider
-#define exprOrientedC_LANG_var_lambda_withTypeOfBody(ider,...) exprOrientedC_TOOLS_last(__VA_ARGS__) (*ider)(exprOrientedC_TOOLS_init(__VA_ARGS__))
+#define exprOrientedC_LANG_var_lambda_s_withTypeOfBody(ider,...) exprOrientedC_TOOLS_last(__VA_ARGS__) (*ider)(exprOrientedC_TOOLS_init(__VA_ARGS__))
 #if ((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))
 #define exprOrientedC_LANG_var1(ider) auto ider
 #else

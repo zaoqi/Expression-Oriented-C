@@ -351,10 +351,10 @@ LANG_define => 全局定義
 				ENDIF \
 			ENDIF \
 			\
-			LANG_EXPORT("var") LANG_EXPORT("var_lambda_withTypeOfBody") \
+			LANG_EXPORT("var") LANG_EXPORT("var_lambda_s_withTypeOfBody") \
 			DEFINE_FUNCTION(X(LANG_prefix"var"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"var"),X("__VA_ARGS__"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"var2"),X("ider,type"),X("type ider")) \
-			DEFINE_FUNCTION(X(LANG_prefix"var_lambda_withTypeOfBody"),X("ider,..."), \
+			DEFINE_FUNCTION(X(LANG_prefix"var_lambda_s_withTypeOfBody"),X("ider,..."), \
 				Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" (*ider)(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")")) \
 			IF(CPlusPlus11) \
