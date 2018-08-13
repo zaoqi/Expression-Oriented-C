@@ -389,22 +389,27 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\
 			LANG_EXPORT("declare_public") DEFINE_FUNCTION(X(LANG_prefix"declare_public"),X("typename"),X("extern typename;")) \
+			LANG_EXPORT("define_private") DEFINE_FUNCTION(X(LANG_prefix"define_private"),X("..."), \
+				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_private"),X("__VA_ARGS__"))) \
+			LANG_EXPORT("define_public") DEFINE_FUNCTION(X(LANG_prefix"define_public"),X("..."), \
+				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_public"),X("__VA_ARGS__"))) \
+			LANG_EXPORT("declare_private") \
+			\
 			LANG_EXPORT("declare_public_lambda_withTypeOfBody") DEFINE_FUNCTION(X(LANG_prefix"declare_public_lambda_withTypeOfBody"), \
 				X("..."), \
 				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
 			LANG_EXPORT("declare_public_lambda_s_withTypeOfBody") DEFINE_FUNCTION(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"), \
 				X("..."), \
 				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
-			LANG_EXPORT("define_private") DEFINE_FUNCTION(X(LANG_prefix"define_private"),X("..."), \
-				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_private"),X("__VA_ARGS__"))) \
-			LANG_EXPORT("define_public") DEFINE_FUNCTION(X(LANG_prefix"define_public"),X("..."), \
-				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_public"),X("__VA_ARGS__"))) \
-			LANG_EXPORT("declare_private") \
 			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
 			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
+			\
+			\
 			DEFINE_FUNCTION(X(LANG_prefix"ignore"),X("..."),) \
 		)/*HEADER(X(LANG_prefix"_static_dEFINEd"),*/ \
-		\
+		LANG_NOT_STATIC \
+	)
+#define LANG_NOT_STATIC \
 		IF(And(Defined(X(LANG_prefix"is_require")), \
 			Or( \
 				And(Defined(X(REQUIRE_prefix)Nat(1)),X(LANG_prefix"is_require")), \
@@ -440,7 +445,7 @@ LANG_define => 全局定義
 				"WIP"; \
 			ENDIF \
 		ENDIF \
-	)
+
 
 int main(){
 	#define prefix "exprOrientedC_"
