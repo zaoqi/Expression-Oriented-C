@@ -328,7 +328,7 @@ LANG_define => 全局定義
 			/* 例 lambda_s(int, int x)(x+y;) */\
 			/* 例 lambda_s_withTypeOfBody(int, int x __ int)(x+y;) */\
 			/* 例 lambda_withTypeOfBody((int, int x) __ int)(x+y;) */\
-			/* 例 withTypeOfBody_lambda(int __ (int, int x))(x+y;) */\
+			/* 例 withTypeOfBody_lambda(int __(int, int x))(x+y;) */\
 			DEFINE(X(LANG_prefix"lambda_error"),Call1(X(TOOLS_prefix"error"),String( \
 				"lambda_s requires C++11 or later," \
 				"lambda_s_withTypeOfBody, withTypeOfBody_lambda and lambda_withTypeOfBody requires GCC or C++11 or later" \
@@ -398,10 +398,10 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("prefix,iderargs,ret"), \
 				X("prefix ret iderargs ") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
-			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_withTypeOfBody_lambda"),X("prefix,ret,iderargs"), \
-				X("prefix ret iderargs;")) \
-			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_withTypeOfBody_lambda"),X("prefix,ret,iderargs"), \
-				X("prefix ret iderargs ") \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_withTypeOfBody_lambda"),X("prefix,retiderargs"), \
+				X("prefix retiderargs;")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_withTypeOfBody_lambda"),X("prefix,retiderargs"), \
+				X("prefix retiderargs ") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\

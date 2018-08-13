@@ -398,8 +398,8 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_declare_lambda_withTypeOfBody(prefix,iderargs,ret) prefix ret iderargs;
 #define exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(prefix,iderargs,ret) prefix ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
-#define exprOrientedC_LANG_hELPEr_declare_withTypeOfBody_lambda(prefix,ret,iderargs) prefix ret iderargs;
-#define exprOrientedC_LANG_hELPEr_define_withTypeOfBody_lambda(prefix,ret,iderargs) prefix ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
+#define exprOrientedC_LANG_hELPEr_declare_withTypeOfBody_lambda(prefix,retiderargs) prefix retiderargs;
+#define exprOrientedC_LANG_hELPEr_define_withTypeOfBody_lambda(prefix,retiderargs) prefix retiderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_hELPEr(x) {return ({x});}
 #define declare_public exprOrientedC_LANG_declare_public
 #define exprOrientedC_LANG_declare_public(typename) extern typename;
