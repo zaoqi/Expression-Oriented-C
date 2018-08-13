@@ -50,3 +50,7 @@
 #undef var_lambda_withTypeOfBody
 #undef if_then_else
 #undef begin
+#undef declare_public
+#undef declare_private
+#undef define_private
+#undef define_public

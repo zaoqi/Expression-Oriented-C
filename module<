@@ -216,8 +216,6 @@ exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append(exprOrientedC_TOOLS
 #error __VA_ARGS__ requires C99 or later or C++11 or later
 #endif
 #endif
-#if (!(defined(exprOrientedC_LANG_dEFINEd)))
-#define exprOrientedC_LANG_dEFINEd 
 #if ((((defined(__STDC_VERSION__))&&(((__STDC_VERSION__)>=(199901L)))))||(((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))))
 #if (!(defined(exprOrientedC_LANG__static_dEFINEd)))
 #define exprOrientedC_LANG__static_dEFINEd 
@@ -310,23 +308,24 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define anonymous_enumeration exprOrientedC_LANG_anonymous_enumeration
 #define declare_enumeration exprOrientedC_LANG_declare_enumeration
 #define define_enumeration exprOrientedC_LANG_define_enumeration
-#define exprOrientedC_LANG_anonymous_struct struct
-#define exprOrientedC_LANG_anonymous_union union
-#define exprOrientedC_LANG_anonymous_enumeration enum
+#define exprOrientedC_LANG_anonymous_struct(x) struct{x}
+#define exprOrientedC_LANG_anonymous_union(x) union{x}
+#define exprOrientedC_LANG_anonymous_enumeration(x) enum{x}
+#define exprOrientedC_LANG_define_strunienu_hELPEr(body) {body};
 #if defined(__cplusplus)
-#define exprOrientedC_LANG_declare_struct(x) struct x
-#define exprOrientedC_LANG_define_struct(x) struct x
-#define exprOrientedC_LANG_declare_union(x) union x
-#define exprOrientedC_LANG_define_union(x) union x
-#define exprOrientedC_LANG_declare_enumeration(x) enum x
-#define exprOrientedC_LANG_define_enumeration(x) enum x
+#define exprOrientedC_LANG_declare_struct(x) struct x;
+#define exprOrientedC_LANG_define_struct(x) struct x exprOrientedC_LANG_define_strunienu_hELPEr
+#define exprOrientedC_LANG_declare_union(x) union x;
+#define exprOrientedC_LANG_define_union(x) union x exprOrientedC_LANG_define_strunienu_hELPEr
+#define exprOrientedC_LANG_declare_enumeration(x) enum x;
+#define exprOrientedC_LANG_define_enumeration(x) enum x exprOrientedC_LANG_define_strunienu_hELPEr
 #else
-#define exprOrientedC_LANG_declare_struct(x) struct x;typedef struct x x
-#define exprOrientedC_LANG_define_struct(x) exprOrientedC_LANG_declare_struct(x);struct x
-#define exprOrientedC_LANG_declare_union(x) union x;typedef union x x
-#define exprOrientedC_LANG_define_union(x) exprOrientedC_LANG_declare_union(x);union x
-#define exprOrientedC_LANG_declare_enumeration(x) enum x;typedef enum x x
-#define exprOrientedC_LANG_define_enumeration(x) exprOrientedC_LANG_declare_enumeration(x);enum x
+#define exprOrientedC_LANG_declare_struct(x) struct x;typedef struct x x;
+#define exprOrientedC_LANG_define_struct(x) exprOrientedC_LANG_declare_struct(x)struct x exprOrientedC_LANG_define_strunienu_hELPEr
+#define exprOrientedC_LANG_declare_union(x) union x;typedef union x x;
+#define exprOrientedC_LANG_define_union(x) exprOrientedC_LANG_declare_union(x)union x exprOrientedC_LANG_define_strunienu_hELPEr
+#define exprOrientedC_LANG_declare_enumeration(x) enum x;typedef enum x x;
+#define exprOrientedC_LANG_define_enumeration(x) exprOrientedC_LANG_declare_enumeration(x)enum x exprOrientedC_LANG_define_strunienu_hELPEr
 #endif
 #if ((defined(__bool_true_false_are_defined))&&(__bool_true_false_are_defined))
 #elif defined(__cplusplus)
@@ -391,8 +390,44 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(prefix,iderargs,ret) ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_hELPEr(x) {return ({x});}
+#define declare_public exprOrientedC_LANG_declare_public
+#define exprOrientedC_LANG_declare_public(typename) extern typename;
+#define declare_private exprOrientedC_LANG_declare_private
+#define define_private exprOrientedC_LANG_define_private
+#define exprOrientedC_LANG_define_private(...) exprOrientedC_TOOLS_with_count(exprOrientedC_LANG_define_private,__VA_ARGS__)
+#define define_public exprOrientedC_LANG_define_public
+#define exprOrientedC_LANG_define_public(...) exprOrientedC_TOOLS_with_count(exprOrientedC_LANG_define_public,__VA_ARGS__)
+#endif
+#if ((defined(exprOrientedC_LANG_is_require))&&(((((defined(exprOrientedC_REQUIRE_1))&&(exprOrientedC_LANG_is_require)))||((((!(defined(exprOrientedC_REQUIRE_1))))&&((!(exprOrientedC_LANG_is_require))))))))
+#else
+#if defined(exprOrientedC_REQUIRE_1)
+#undef exprOrientedC_LANG_is_require
+#define exprOrientedC_LANG_is_require 1
+#undef exprOrientedC_LANG_declare_private
+#define exprOrientedC_LANG_declare_private(typename) 
+#undef exprOrientedC_LANG_define_private1
+#define exprOrientedC_LANG_define_private1(typename) 
+#undef exprOrientedC_LANG_define_private2
+#define exprOrientedC_LANG_define_private2(typename,val) 
+#undef exprOrientedC_LANG_define_public1
+#define exprOrientedC_LANG_define_public1(typename) exprOrientedC_LANG_declare_public(typename)
+#undef exprOrientedC_LANG_define_public2
+#define exprOrientedC_LANG_define_public2(typename,val) exprOrientedC_LANG_declare_public(typename)
+#else
+#undef exprOrientedC_LANG_is_require
+#define exprOrientedC_LANG_is_require 0
+#undef exprOrientedC_LANG_declare_private
+#define exprOrientedC_LANG_declare_private(typename) static typename;
+#undef exprOrientedC_LANG_define_private1
+#define exprOrientedC_LANG_define_private1(typename) static typename;
+#undef exprOrientedC_LANG_define_private2
+#define exprOrientedC_LANG_define_private2(typename,val) static typename=val;
+#undef exprOrientedC_LANG_define_public1
+#define exprOrientedC_LANG_define_public1(typename) exprOrientedC_LANG_declare_public(typename)typename;
+#undef exprOrientedC_LANG_define_public2
+#define exprOrientedC_LANG_define_public2(typename,val) exprOrientedC_LANG_declare_public(typename)typename=val;
+#endif
 #endif
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
-#endif
 #endif

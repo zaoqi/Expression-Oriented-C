@@ -57,7 +57,8 @@
 
 #define WITH_MACRO_VA_ARGS(x) IF(Or(StdC99, CPlusPlus11)){x}ELSE ERROR(X("__VA_ARGS__ requires C99 or later or C++11 or later")) ENDIF
 
-#define REDEFINE(x) UNDEFINE(x) DEFINE(x)
+#define REDEFINE(x,v) UNDEFINE(x) DEFINE(x,v)
+#define REDEFINE_FUNCTION(x,args,v) UNDEFINE(x) DEFINE_FUNCTION(x,args,v)
 
 #define Call0(f) {f}X("()")
 #define Call1(f, x) {f}X("("){x}X(")")
@@ -179,10 +180,17 @@
 		ERROR(X("Too many levels of >require")) \
 	ENDIF
 
-/* 有 #define LANG_prefix "..." */
-/* 有 #define LANG_EXPORT("...") ... */
+/* 有
+#define LANG_prefix "..."
+#define LANG_EXPORT("...") ...
+
+LANG_define => 全局定義
+#define LANG_DEFINE_prefix "..."
+#define LANG_DEFINE_EXPORT("...") ...
+#
+*/
 #define LANG \
-	HEADER(X(LANG_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
+	WITH_MACRO_VA_ARGS( \
 		HEADER(X(LANG_prefix"_static_dEFINEd"), \
 			IF(CPlusPlus) \
 				DEFINE(X(LANG_prefix"HELPERstaticDefine_inlineDefine"),X("static inline")) \
@@ -258,23 +266,27 @@
 			LANG_EXPORT("anonymous_struct") LANG_EXPORT("declare_struct") LANG_EXPORT("define_struct") \
 			LANG_EXPORT("anonymous_union") LANG_EXPORT("declare_union") LANG_EXPORT("define_union") \
 			LANG_EXPORT("anonymous_enumeration") LANG_EXPORT("declare_enumeration") LANG_EXPORT("define_enumeration") \
-			DEFINE(X(LANG_prefix"anonymous_struct"),X("struct")) \
-			DEFINE(X(LANG_prefix"anonymous_union"),X("union")) \
-			DEFINE(X(LANG_prefix"anonymous_enumeration"),X("enum")) \
+			DEFINE_FUNCTION(X(LANG_prefix"anonymous_struct"),X("x"),X("struct{x}")) \
+			DEFINE_FUNCTION(X(LANG_prefix"anonymous_union"),X("x"),X("union{x}")) \
+			DEFINE_FUNCTION(X(LANG_prefix"anonymous_enumeration"),X("x"),X("enum{x}")) \
+			DEFINE_FUNCTION(X(LANG_prefix"define_strunienu_hELPEr"),X("body"),X("{body};")) \
 			IF(CPlusPlus) \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),X("struct x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"),X("union x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),X("enum x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),X("struct x "LANG_prefix"define_strunienu_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"),X("union x "LANG_prefix"define_strunienu_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),X("enum x "LANG_prefix"define_strunienu_hELPEr")) \
 			ELSE \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x;typedef struct x x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),Call1(X(LANG_prefix"declare_struct"),X("x"))X(";struct x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x;typedef union x x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"),Call1(X(LANG_prefix"declare_union"),X("x"))X(";union x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x;typedef enum x x")) \
-				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"),Call1(X(LANG_prefix"declare_enumeration"),X("x"))X(";enum x")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x;typedef struct x x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"), \
+					Call1(X(LANG_prefix"declare_struct"),X("x"))X("struct x "LANG_prefix"define_strunienu_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_union"),X("x"),X("union x;typedef union x x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_union"),X("x"), \
+					Call1(X(LANG_prefix"declare_union"),X("x"))X("union x "LANG_prefix"define_strunienu_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"declare_enumeration"),X("x"),X("enum x;typedef enum x x;")) \
+				DEFINE_FUNCTION(X(LANG_prefix"define_enumeration"),X("x"), \
+					Call1(X(LANG_prefix"declare_enumeration"),X("x"))X("enum x "LANG_prefix"define_strunienu_hELPEr")) \
 			ENDIF \
 			\
 			IF(And(Defined(X("__bool_true_false_are_defined")),X("__bool_true_false_are_defined"))) \
@@ -362,7 +374,6 @@
 			LANG_EXPORT("begin") \
 			DEFINE_FUNCTION(X(LANG_prefix"begin"),X("b"),X("({b})")) \
 			\
-			"WIP"; \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
 				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")") \
@@ -372,18 +383,53 @@
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\
-			"WIP"; \
-	)))
+			LANG_EXPORT("declare_public") DEFINE_FUNCTION(X(LANG_prefix"declare_public"),X("typename"),X("extern typename;")) \
+			LANG_EXPORT("declare_private") \
+			LANG_EXPORT("define_private") DEFINE_FUNCTION(X(LANG_prefix"define_private"),X("..."), \
+				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_private"),X("__VA_ARGS__"))) \
+			LANG_EXPORT("define_public") DEFINE_FUNCTION(X(LANG_prefix"define_public"),X("..."), \
+				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_public"),X("__VA_ARGS__"))) \
+		)/*HEADER(X(LANG_prefix"_static_dEFINEd"),*/ \
+		\
+		IF(And(Defined(X(LANG_prefix"is_require")), \
+			Or( \
+				And(Defined(X(REQUIRE_prefix)Nat(1)),X(LANG_prefix"is_require")), \
+				And(Not(Defined(X(REQUIRE_prefix)Nat(1))),Not(X(LANG_prefix"is_require")))))) \
+		ELSE \
+			IF(Defined(X(REQUIRE_prefix)Nat(1))) \
+				REDEFINE(X(LANG_prefix"is_require"),Nat(1)) \
+				REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
+				"WIP"; \
+			ELSE \
+				REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
+				REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),X("static typename;")) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),X("static typename;")) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),X("static typename=val;")) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"), \
+					Call1(X(LANG_prefix"declare_public"),X("typename")) \
+					X("typename;")) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"), \
+					Call1(X(LANG_prefix"declare_public"),X("typename")) \
+					X("typename=val;")) \
+				"WIP"; \
+			ENDIF \
+		ENDIF \
+	)
 
 int main(){
 	#define prefix "exprOrientedC_"
+	#define TOOLS_prefix prefix"TOOLS_"
+	#define LANG_prefix prefix"LANG_"
+	#define REQUIRE_prefix prefix"REQUIRE_"
 	{FILE* f=fopen("module<", "w");
 		FILE* undef=fopen("undef.h", "w");
 		FILE* redef=fopen("redef.h", "w");
 		#define file f
-		#define TOOLS_prefix prefix"TOOLS_"
 		TOOLS
-		#define LANG_prefix prefix"LANG_"
 		#define LANG_EXPORT(x) { \
 			fputs("#undef "x"\n",undef); \
 			fputs("#define "x" "LANG_prefix x"\n",redef); \
@@ -397,7 +443,6 @@ int main(){
 		fclose(undef);
 		fclose(redef);}
 	{
-	#define REQUIRE_prefix prefix"REQUIRE_"
 		{FILE* f=fopen("require<", "w");
 			#undef file
 			#define file f

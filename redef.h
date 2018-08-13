@@ -50,3 +50,7 @@
 #define var_lambda_withTypeOfBody exprOrientedC_LANG_var_lambda_withTypeOfBody
 #define if_then_else exprOrientedC_LANG_if_then_else
 #define begin exprOrientedC_LANG_begin
+#define declare_public exprOrientedC_LANG_declare_public
+#define declare_private exprOrientedC_LANG_declare_private
+#define define_private exprOrientedC_LANG_define_private
+#define define_public exprOrientedC_LANG_define_public
