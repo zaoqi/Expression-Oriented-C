@@ -382,6 +382,12 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #else
 #define exprOrientedC_LANG_var1(ider) exprOrientedC_TOOLS_error("auto requires C++11 or later")
 #endif
+#define if_then_else exprOrientedC_LANG_if_then_else
+#define exprOrientedC_LANG_if_then_else(b) ((b)?({exprOrientedC_LANG_if_then_else_hELPEr_A
+#define exprOrientedC_LANG_if_then_else_hELPEr_A(x) x}):({exprOrientedC_LANG_if_then_else_hELPEr_B
+#define exprOrientedC_LANG_if_then_else_hELPEr_B(x) x}))
+#define begin exprOrientedC_LANG_begin
+#define exprOrientedC_LANG_begin(b) ({b})
 #define exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(prefix,iderargs,ret) ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_hELPEr(x) {return ({x});}

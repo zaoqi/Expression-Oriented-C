@@ -352,6 +352,17 @@
 						String("auto requires C++11 or later"))) \
 			ENDIF \
 			\
+			/*if_then_else(b)(...)(...)*/\
+			LANG_EXPORT("if_then_else") \
+			DEFINE_FUNCTION(X(LANG_prefix"if_then_else"),X("b"),X("((b)?({"LANG_prefix"if_then_else_hELPEr_A")) \
+			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_A"),X("x"),X("x}):({"LANG_prefix"if_then_else_hELPEr_B")) \
+			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_B"),X("x"),X("x}))")) \
+			\
+			/*begin(...)*/\
+			LANG_EXPORT("begin") \
+			DEFINE_FUNCTION(X(LANG_prefix"begin"),X("b"),X("({b})")) \
+			\
+			"WIP"; \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
 				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")") \
@@ -360,6 +371,7 @@
 				X("ret iderargs ") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
+			\
 			"WIP"; \
 	)))
 

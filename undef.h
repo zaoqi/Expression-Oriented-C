@@ -48,3 +48,5 @@
 #undef lambda_withTypeOfBody
 #undef var
 #undef var_lambda_withTypeOfBody
+#undef if_then_else
+#undef begin
