@@ -404,13 +404,12 @@ LANG_define => 全局定義
 	LANG_EXPORT("declare_"#x"_lambda_withTypeOfBody") \
 	LANG_EXPORT("declare_"#x"_lambda_s_withTypeOfBody") \
 	LANG_EXPORT("define_"#x"_lambda_withTypeOfBody") \
-	LANG_EXPORT("define_"#x"_lambda_s_withTypeOfBody") \
-
+	LANG_EXPORT("define_"#x"_lambda_s_withTypeOfBody")
 #define LANG_NOT_STATIC_EXPORT \
 	LANG_NOT_STATIC_EXPORT_do(public) \
 	LANG_NOT_STATIC_EXPORT_do(private) \
 	LANG_NOT_STATIC_EXPORT_do(public_inline) \
-
+	LANG_NOT_STATIC_EXPORT_do(private_inline)
 #define HELPER_declare_define_lambda_MACRO(x, prefix) \
 	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"), \
 		X("..."), \
@@ -453,6 +452,7 @@ LANG_define => 全局定義
 			HELPER_declare_defineIsDeclare_lambda_MACRO(public, "extern") \
 			HELPER_declareDefineAreNothing_lambda_MACRO(private) \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDeclare_inlineDefine") \
+			HELPER_declareDefineAreNothing_lambda_MACRO(private_inline) \
 			"WIP"; \
 		ELSE \
 			REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
@@ -468,6 +468,7 @@ LANG_define => 全局定義
 			HELPER_declare_define_lambda_MACRO(public, "extern") \
 			HELPER_declare_define_lambda_MACRO(private, "static") \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDefine_inlineDefine") \
+			HELPER_declare_define_lambda_MACRO(private_inline, LANG_prefix"HELPERstaticDefine_inlineDefine") \
 			"WIP"; \
 		ENDIF \
 	ENDIF \
