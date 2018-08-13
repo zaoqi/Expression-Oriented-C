@@ -408,6 +408,7 @@ LANG_define => 全局定義
 
 #define LANG_NOT_STATIC_EXPORT \
 	LANG_NOT_STATIC_EXPORT_do(public) \
+	LANG_NOT_STATIC_EXPORT_do(private) \
 	LANG_NOT_STATIC_EXPORT_do(public_inline) \
 
 #define HELPER_declare_define_lambda_MACRO(x, prefix) \
@@ -432,11 +433,11 @@ LANG_define => 全局定義
 		Call1(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"), X("..."), \
 		Call1(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore"))
-#define HELPER_declareDefineAreNothing_lambda_MACRO(x, prefix) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"),)
+#define HELPER_declareDefineAreNothing_lambda_MACRO(x) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"),X("..."),)
 #define LANG_NOT_STATIC \
 	IF(Not(And(Defined(X(LANG_prefix"is_require")), \
 		Or( \
@@ -450,6 +451,7 @@ LANG_define => 全局定義
 			REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
 			REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
 			HELPER_declare_defineIsDeclare_lambda_MACRO(public, "extern") \
+			HELPER_declareDefineAreNothing_lambda_MACRO(private) \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDeclare_inlineDefine") \
 			"WIP"; \
 		ELSE \
@@ -464,6 +466,7 @@ LANG_define => 全局定義
 				Call1(X(LANG_prefix"declare_public"),X("typename")) \
 				X("typename=val;")) \
 			HELPER_declare_define_lambda_MACRO(public, "extern") \
+			HELPER_declare_define_lambda_MACRO(private, "static") \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDefine_inlineDefine") \
 			"WIP"; \
 		ENDIF \

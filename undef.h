@@ -58,6 +58,10 @@
 #undef declare_public_lambda_s_withTypeOfBody
 #undef define_public_lambda_withTypeOfBody
 #undef define_public_lambda_s_withTypeOfBody
+#undef declare_private_lambda_withTypeOfBody
+#undef declare_private_lambda_s_withTypeOfBody
+#undef define_private_lambda_withTypeOfBody
+#undef define_private_lambda_s_withTypeOfBody
 #undef declare_public_inline_lambda_withTypeOfBody
 #undef declare_public_inline_lambda_s_withTypeOfBody
 #undef define_public_inline_lambda_withTypeOfBody
