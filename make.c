@@ -328,8 +328,10 @@ LANG_define => 全局定義
 			/* 例 lambda_s(int, int x)(x+y;) */\
 			/* 例 lambda_s_withTypeOfBody(int, int x __ int)(x+y;) */\
 			/* 例 lambda_withTypeOfBody((int, int x) __ int)(x+y;) */\
+			/* 例 withTypeOfBody_lambda(int __ (int, int x))(x+y;) */\
 			DEFINE(X(LANG_prefix"lambda_error"),Call1(X(TOOLS_prefix"error"),String( \
-				"lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later" \
+				"lambda_s requires C++11 or later," \
+				"lambda_s_withTypeOfBody, withTypeOfBody_lambda and lambda_withTypeOfBody requires GCC or C++11 or later" \
 				))) \
 			LANG_EXPORT("__") DEFINE(X(LANG_prefix"__"),X(",")) \
 			LANG_EXPORT("lambda_s") \
@@ -340,6 +342,7 @@ LANG_define => 全局定義
 					X("[&](")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")->") \
 					Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" "LANG_prefix"lambda_hELPEr")) \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("args,ret"),X("[&](args)->ret "LANG_prefix"lambda_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"withTypeOfBody_lambda"),X("ret,args"),X("[&](args)->ret "LANG_prefix"lambda_hELPEr")) \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			ELSE \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_s"),X("..."),X(LANG_prefix"lambda_error")) \
@@ -349,11 +352,14 @@ LANG_define => 全局定義
 							Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")"LANG_prefix"lambda_withTypeOfBody_hELPEr")) \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("args,ret"), \
 						X("({ret "LANG_prefix"lambda_withTypeOfBody_tEMp(args)"LANG_prefix"lambda_withTypeOfBody_hELPEr")) \
+					DEFINE_FUNCTION(X(LANG_prefix"withTypeOfBody_lambda"),X("ret,args"), \
+						X("({ret "LANG_prefix"lambda_withTypeOfBody_tEMp(args)"LANG_prefix"lambda_withTypeOfBody_hELPEr")) \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody_hELPEr"),X("x"), \
 						X("{return ({x});}"LANG_prefix"lambda_withTypeOfBody_tEMp;})")) \
 				ELSE \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."),X(LANG_prefix"lambda_error")) \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."),X(LANG_prefix"lambda_error")) \
+					DEFINE_FUNCTION(X(LANG_prefix"withTypeOfBody_lambda"),X("..."),X(LANG_prefix"lambda_error")) \
 				ENDIF \
 			ENDIF \
 			\
