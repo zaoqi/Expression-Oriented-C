@@ -17,7 +17,7 @@
 #define exprOrientedC_TOOLS_with_count(ider,...) exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append_with_macro(ider,exprOrientedC_TOOLS_count(__VA_ARGS__))(__VA_ARGS__))
 #define exprOrientedC_TOOLS_count_assert0 
 #define exprOrientedC_TOOLS_count_assert1 exprOrientedC_TOOLS_error("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty")
-exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append(exprOrientedC_TOOLS_count_assert,exprOrientedC_TOOLS_count()))
+exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append_with_macro(exprOrientedC_TOOLS_count_assert,exprOrientedC_TOOLS_count()))
 #define exprOrientedC_TOOLS_init(...) exprOrientedC_TOOLS_with_count(exprOrientedC_TOOLS_init,__VA_ARGS__)
 #define exprOrientedC_TOOLS_init1(x) 
 #define exprOrientedC_TOOLS_init2(_1,_2) _1

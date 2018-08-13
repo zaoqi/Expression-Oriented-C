@@ -129,7 +129,7 @@
 		DEFINE(X(TOOLS_prefix"count_assert1"),Call1(X(TOOLS_prefix"error"), \
 			String("this compiler does not offers an extension that allows ## to appear after a comma and before __VA_ARGS__ , in which case the ## does nothing when __VA_ARGS__ is non-empty, but removes the comma when __VA_ARGS__ is empty"))) \
 		LINE(Call1(X(TOOLS_prefix"expand"), \
-			Call2(X(TOOLS_prefix"symbol_append"), \
+			Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
 				X(TOOLS_prefix"count_assert"), \
 				Call0(X(TOOLS_prefix"count"))))) \
 		\
@@ -463,6 +463,7 @@ int main(){
 		fclose(f);
 		fclose(undef);
 		fclose(redef);}
+	{FILE* f=fopen(">module", "w");fclose(f);}
 	{
 		{FILE* f=fopen("require<", "w");
 			#undef file
