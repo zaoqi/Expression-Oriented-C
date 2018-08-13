@@ -354,6 +354,7 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_let_current_continuation_notFirstClass_hELPEr(body) exprOrientedC_LANG_tEMp_letcc_notVal_val=({body});exprOrientedC_LANG_tEMp_letcc_return:exprOrientedC_LANG_tEMp_letcc_notVal_val;})
 #define continuation_notFirstClass_throw exprOrientedC_LANG_continuation_notFirstClass_throw
 #define exprOrientedC_LANG_continuation_notFirstClass_throw(ider,x,type) ({exprOrientedC_LANG_tEMp_letcc_notVal_val_##ider=x;goto exprOrientedC_LANG_tEMp_letcc_throw_##ider;type tEMp;tEMp;})
+#define exprOrientedC_LANG_lambda_error exprOrientedC_TOOLS_error("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later")
 #define __ exprOrientedC_LANG___
 #define exprOrientedC_LANG___ ,
 #define lambda_s exprOrientedC_LANG_lambda_s
@@ -363,12 +364,12 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) [&](exprOrientedC_TOOLS_init(__VA_ARGS__))->exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
 #define exprOrientedC_LANG_lambda_hELPEr(x) {return ({x});}
 #else
-#define exprOrientedC_LANG_lambda_s(...) exprOrientedC_TOOLS_error("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later")
+#define exprOrientedC_LANG_lambda_s(...) exprOrientedC_LANG_lambda_error
 #if defined(__GNUC__)
 #define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) ({exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_withTypeOfBody_tEMp(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr
 #define exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr(x) {return ({x});}exprOrientedC_LANG_lambda_withTypeOfBody_tEMp;})
 #else
-#define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) exprOrientedC_TOOLS_error("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later")
+#define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) exprOrientedC_LANG_lambda_error
 #endif
 #endif
 #define var exprOrientedC_LANG_var
