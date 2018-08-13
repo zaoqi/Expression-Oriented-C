@@ -339,17 +339,21 @@ LANG_define => 全局定義
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."), \
 					X("[&](")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")->") \
 					Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" "LANG_prefix"lambda_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("args,ret"),X("[&](args)->ret "LANG_prefix"lambda_hELPEr")) \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			ELSE \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_s"),X("..."),X(LANG_prefix"lambda_error")) \
 				IF(Defined(X("__GNUC__"))) \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."), \
 						X("({")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" ")X(LANG_prefix"lambda_withTypeOfBody_tEMp(") \
-							Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")"LANG_prefix"lambda__withTypeOfBody_hELPEr")) \
-					DEFINE_FUNCTION(X(LANG_prefix"lambda__withTypeOfBody_hELPEr"),X("x"), \
+							Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")"LANG_prefix"lambda_withTypeOfBody_hELPEr")) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("args,ret"), \
+						X("({ret "LANG_prefix"lambda_withTypeOfBody_tEMp(args)"LANG_prefix"lambda_withTypeOfBody_hELPEr")) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody_hELPEr"),X("x"), \
 						X("{return ({x});}"LANG_prefix"lambda_withTypeOfBody_tEMp;})")) \
 				ELSE \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."),X(LANG_prefix"lambda_error")) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."),X(LANG_prefix"lambda_error")) \
 				ENDIF \
 			ENDIF \
 			\
