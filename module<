@@ -387,16 +387,24 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_if_then_else_hELPEr_B(x) x}))
 #define begin exprOrientedC_LANG_begin
 #define exprOrientedC_LANG_begin(b) ({b})
+#define exprOrientedC_LANG_hELPEr_declare_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__));
 #define exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
-#define exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(prefix,iderargs,ret) ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
+#define exprOrientedC_LANG_hELPEr_declare_lambda_withTypeOfBody(prefix,iderargs,ret) prefix ret iderargs;
+#define exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(prefix,iderargs,ret) prefix ret iderargs exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_define_lambda_hELPEr(x) {return ({x});}
 #define declare_public exprOrientedC_LANG_declare_public
 #define exprOrientedC_LANG_declare_public(typename) extern typename;
-#define declare_private exprOrientedC_LANG_declare_private
+#define declare_public_lambda_withTypeOfBody exprOrientedC_LANG_declare_public_lambda_withTypeOfBody
+#define exprOrientedC_LANG_declare_public_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_declare_lambda_withTypeOfBody(extern,__VA_ARGS__))
+#define declare_public_lambda_s_withTypeOfBody exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody
+#define exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_declare_lambda_s_withTypeOfBody(extern,__VA_ARGS__))
 #define define_private exprOrientedC_LANG_define_private
 #define exprOrientedC_LANG_define_private(...) exprOrientedC_TOOLS_with_count(exprOrientedC_LANG_define_private,__VA_ARGS__)
 #define define_public exprOrientedC_LANG_define_public
 #define exprOrientedC_LANG_define_public(...) exprOrientedC_TOOLS_with_count(exprOrientedC_LANG_define_public,__VA_ARGS__)
+#define declare_private exprOrientedC_LANG_declare_private
+#define define_public_lambda_withTypeOfBody exprOrientedC_LANG_define_public_lambda_withTypeOfBody
+#define define_public_lambda_s_withTypeOfBody exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
 #endif
 #if ((defined(exprOrientedC_LANG_is_require))&&(((((defined(exprOrientedC_REQUIRE_1))&&(exprOrientedC_LANG_is_require)))||((((!(defined(exprOrientedC_REQUIRE_1))))&&((!(exprOrientedC_LANG_is_require))))))))
 #else
@@ -413,6 +421,10 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_define_public1(typename) exprOrientedC_LANG_declare_public(typename)
 #undef exprOrientedC_LANG_define_public2
 #define exprOrientedC_LANG_define_public2(typename,val) exprOrientedC_LANG_declare_public(typename)
+#undef exprOrientedC_LANG_define_public_lambda_withTypeOfBody
+#define exprOrientedC_LANG_define_public_lambda_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_withTypeOfBody(__VA_ARGS__)
+#undef exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
+#define exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody(__VA_ARGS__)
 #else
 #undef exprOrientedC_LANG_is_require
 #define exprOrientedC_LANG_is_require 0
@@ -426,6 +438,10 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_define_public1(typename) exprOrientedC_LANG_declare_public(typename)typename;
 #undef exprOrientedC_LANG_define_public2
 #define exprOrientedC_LANG_define_public2(typename,val) exprOrientedC_LANG_declare_public(typename)typename=val;
+#undef exprOrientedC_LANG_define_public_lambda_withTypeOfBody
+#define exprOrientedC_LANG_define_public_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_define_lambda_withTypeOfBody(extern,__VA_ARGS__))
+#undef exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
+#define exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(extern,__VA_ARGS__))
 #endif
 #endif
 #else

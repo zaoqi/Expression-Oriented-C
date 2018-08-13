@@ -374,21 +374,34 @@ LANG_define => 全局定義
 			LANG_EXPORT("begin") \
 			DEFINE_FUNCTION(X(LANG_prefix"begin"),X("b"),X("({b})")) \
 			\
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
+				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
+				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(");")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
 				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
 				X(" ider(")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_lambda_withTypeOfBody"),X("prefix,iderargs,ret"), \
+				X("prefix ret iderargs;")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("prefix,iderargs,ret"), \
-				X("ret iderargs ") \
+				X("prefix ret iderargs ") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\
 			LANG_EXPORT("declare_public") DEFINE_FUNCTION(X(LANG_prefix"declare_public"),X("typename"),X("extern typename;")) \
-			LANG_EXPORT("declare_private") \
+			LANG_EXPORT("declare_public_lambda_withTypeOfBody") DEFINE_FUNCTION(X(LANG_prefix"declare_public_lambda_withTypeOfBody"), \
+				X("..."), \
+				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
+			LANG_EXPORT("declare_public_lambda_s_withTypeOfBody") DEFINE_FUNCTION(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"), \
+				X("..."), \
+				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
 			LANG_EXPORT("define_private") DEFINE_FUNCTION(X(LANG_prefix"define_private"),X("..."), \
 				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_private"),X("__VA_ARGS__"))) \
 			LANG_EXPORT("define_public") DEFINE_FUNCTION(X(LANG_prefix"define_public"),X("..."), \
 				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_public"),X("__VA_ARGS__"))) \
+			LANG_EXPORT("declare_private") \
+			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
+			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
 		)/*HEADER(X(LANG_prefix"_static_dEFINEd"),*/ \
 		\
 		IF(And(Defined(X(LANG_prefix"is_require")), \
@@ -403,6 +416,10 @@ LANG_define => 全局定義
 				REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),) \
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
+					Call1(X(LANG_prefix"declare_public_lambda_withTypeOfBody"),X("__VA_ARGS__"))) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
+					Call1(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))) \
 				"WIP"; \
 			ELSE \
 				REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
@@ -415,6 +432,10 @@ LANG_define => 全局定義
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"), \
 					Call1(X(LANG_prefix"declare_public"),X("typename")) \
 					X("typename=val;")) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
+					Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
+				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
+					Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
 				"WIP"; \
 			ENDIF \
 		ENDIF \

@@ -51,6 +51,10 @@
 #undef if_then_else
 #undef begin
 #undef declare_public
-#undef declare_private
+#undef declare_public_lambda_withTypeOfBody
+#undef declare_public_lambda_s_withTypeOfBody
 #undef define_private
 #undef define_public
+#undef declare_private
+#undef define_public_lambda_withTypeOfBody
+#undef define_public_lambda_s_withTypeOfBody
