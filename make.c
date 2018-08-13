@@ -398,6 +398,11 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("prefix,iderargs,ret"), \
 				X("prefix ret iderargs ") \
 				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_withTypeOfBody_lambda"),X("prefix,ret,iderargs"), \
+				X("prefix ret iderargs;")) \
+			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_withTypeOfBody_lambda"),X("prefix,ret,iderargs"), \
+				X("prefix ret iderargs ") \
+				X(LANG_prefix"hELPEr_define_lambda_hELPEr")) \
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\
 			LANG_EXPORT("declare_public") DEFINE_FUNCTION(X(LANG_prefix"declare_public"),X("typename"),X("extern typename;")) \
@@ -413,9 +418,11 @@ LANG_define => 全局定義
 		LANG_NOT_STATIC \
 	)
 #define LANG_NOT_STATIC_EXPORT_do(x) \
+	LANG_EXPORT("declare_"#x"_withTypeOfBody_lambda") \
+	LANG_EXPORT("define_"#x"_withTypeOfBody_lambda") \
 	LANG_EXPORT("declare_"#x"_lambda_withTypeOfBody") \
-	LANG_EXPORT("declare_"#x"_lambda_s_withTypeOfBody") \
 	LANG_EXPORT("define_"#x"_lambda_withTypeOfBody") \
+	LANG_EXPORT("declare_"#x"_lambda_s_withTypeOfBody") \
 	LANG_EXPORT("define_"#x"_lambda_s_withTypeOfBody")
 #define LANG_NOT_STATIC_EXPORT \
 	LANG_NOT_STATIC_EXPORT_do(public) \
@@ -423,31 +430,37 @@ LANG_define => 全局定義
 	LANG_NOT_STATIC_EXPORT_do(public_inline) \
 	LANG_NOT_STATIC_EXPORT_do(private_inline)
 #define HELPER_declare_define_lambda_MACRO(x, prefix) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"), \
-		X("..."), \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("..."), \
 		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"), \
-		X("..."), \
-		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"), X("..."), \
 		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_withTypeOfBody_lambda"),X("..."), \
+		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_withTypeOfBody_lambda"),X(prefix),X("__VA_ARGS__")))) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_withTypeOfBody_lambda"), X("..."), \
+		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_withTypeOfBody_lambda"),X(prefix),X("__VA_ARGS__")))) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."), \
+		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"), X("..."), \
 		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X(prefix),X("__VA_ARGS__"))))
 #define HELPER_declare_defineIsDeclare_lambda_MACRO(x, prefix) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"), \
-		X("..."), \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("..."), \
 		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"), \
-		X("..."), \
-		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"), X("..."), \
 		Call1(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_withTypeOfBody_lambda"),X("..."), \
+		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_withTypeOfBody_lambda"),X(prefix),X("__VA_ARGS__")))) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_withTypeOfBody_lambda"), X("..."), \
+		Call1(X(LANG_prefix"declare_"#x"_withTypeOfBody_lambda"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."), \
+		Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X(prefix),X("__VA_ARGS__")))) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"), X("..."), \
 		Call1(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore"))
 #define HELPER_declareDefineAreNothing_lambda_MACRO(x) \
 	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("..."),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."),) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_withTypeOfBody_lambda"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_withTypeOfBody_lambda"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."),) \
 	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"),X("..."),)
 #define LANG_NOT_STATIC \
 	IF(Not(And(Defined(X(LANG_prefix"is_require")), \
