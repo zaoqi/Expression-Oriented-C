@@ -44,7 +44,7 @@
 #undef let_current_continuation_notFirstClass
 #undef continuation_notFirstClass_throw
 #undef __
-#undef lambda
+#undef lambda_s
 #undef lambda_withTypeOfBody
 #undef var
 #undef var_lambda_withTypeOfBody

@@ -325,29 +325,29 @@ LANG_define => 全局定義
 				X("type tEMp;") \
 				X("tEMp;})")) \
 			\
-			/* 例 lambda(int, int x)(x+y;) */\
-			/* 例 lambda_withTypeOfBody(int, int x __ int)(x+y;) */\
+			/* 例 lambda_s(int, int x)(x+y;) */\
+			/* 例 lambda_s_withTypeOfBody(int, int x __ int)(x+y;) */\
 			LANG_EXPORT("__") DEFINE(X(LANG_prefix"__"),X(",")) \
-			LANG_EXPORT("lambda") \
+			LANG_EXPORT("lambda_s") \
 			LANG_EXPORT("lambda_withTypeOfBody") \
 			IF(CPlusPlus11) \
-				DEFINE_FUNCTION(X(LANG_prefix"lambda"),X("..."),X("[&](__VA_ARGS__) "LANG_prefix"lambda_hELPEr")) \
-				DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."), \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_s"),X("..."),X("[&](__VA_ARGS__) "LANG_prefix"lambda_hELPEr")) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."), \
 					X("[&](")Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")->") \
 					Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" "LANG_prefix"lambda_hELPEr")) \
 				DEFINE_FUNCTION(X(LANG_prefix"lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			ELSE \
-				DEFINE_FUNCTION(X(LANG_prefix"lambda"),X("..."),Call1(X(TOOLS_prefix"error"), \
-					String("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later"))) \
+				DEFINE_FUNCTION(X(LANG_prefix"lambda_s"),X("..."),Call1(X(TOOLS_prefix"error"), \
+					String("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later"))) \
 				IF(Defined(X("__GNUC__"))) \
-					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."), \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."), \
 						X("({")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__"))X(" ")X(LANG_prefix"lambda_withTypeOfBody_tEMp(") \
 							Call1(X(TOOLS_prefix"init"),X("__VA_ARGS__"))X(")"LANG_prefix"lambda__withTypeOfBody_hELPEr")) \
 					DEFINE_FUNCTION(X(LANG_prefix"lambda__withTypeOfBody_hELPEr"),X("x"), \
 						X("{return ({x});}"LANG_prefix"lambda_withTypeOfBody_tEMp;})")) \
 				ELSE \
-					DEFINE_FUNCTION(X(LANG_prefix"lambda_withTypeOfBody"),X("..."),Call1(X(TOOLS_prefix"error"), \
-						String("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later"))) \
+					DEFINE_FUNCTION(X(LANG_prefix"lambda_s_withTypeOfBody"),X("..."),Call1(X(TOOLS_prefix"error"), \
+						String("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later"))) \
 				ENDIF \
 			ENDIF \
 			\
@@ -402,6 +402,7 @@ LANG_define => 全局定義
 			LANG_EXPORT("declare_private") \
 			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
 			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
+			DEFINE_FUNCTION(X(LANG_prefix"ignore"),X("..."),) \
 		)/*HEADER(X(LANG_prefix"_static_dEFINEd"),*/ \
 		\
 		IF(And(Defined(X(LANG_prefix"is_require")), \
@@ -417,9 +418,9 @@ LANG_define => 全局定義
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
-					Call1(X(LANG_prefix"declare_public_lambda_withTypeOfBody"),X("__VA_ARGS__"))) \
+					Call1(X(LANG_prefix"declare_public_lambda_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
 				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
-					Call1(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))) \
+					Call1(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
 				"WIP"; \
 			ELSE \
 				REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \

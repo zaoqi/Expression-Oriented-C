@@ -356,19 +356,19 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_continuation_notFirstClass_throw(ider,x,type) ({exprOrientedC_LANG_tEMp_letcc_notVal_val_##ider=x;goto exprOrientedC_LANG_tEMp_letcc_throw_##ider;type tEMp;tEMp;})
 #define __ exprOrientedC_LANG___
 #define exprOrientedC_LANG___ ,
-#define lambda exprOrientedC_LANG_lambda
+#define lambda_s exprOrientedC_LANG_lambda_s
 #define lambda_withTypeOfBody exprOrientedC_LANG_lambda_withTypeOfBody
 #if ((defined(__cplusplus))&&(((__cplusplus)>=(201103L))))
-#define exprOrientedC_LANG_lambda(...) [&](__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
-#define exprOrientedC_LANG_lambda_withTypeOfBody(...) [&](exprOrientedC_TOOLS_init(__VA_ARGS__))->exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
+#define exprOrientedC_LANG_lambda_s(...) [&](__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
+#define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) [&](exprOrientedC_TOOLS_init(__VA_ARGS__))->exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_hELPEr
 #define exprOrientedC_LANG_lambda_hELPEr(x) {return ({x});}
 #else
-#define exprOrientedC_LANG_lambda(...) exprOrientedC_TOOLS_error("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later")
+#define exprOrientedC_LANG_lambda_s(...) exprOrientedC_TOOLS_error("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later")
 #if defined(__GNUC__)
-#define exprOrientedC_LANG_lambda_withTypeOfBody(...) ({exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_withTypeOfBody_tEMp(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr
+#define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) ({exprOrientedC_TOOLS_last(__VA_ARGS__) exprOrientedC_LANG_lambda_withTypeOfBody_tEMp(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr
 #define exprOrientedC_LANG_lambda__withTypeOfBody_hELPEr(x) {return ({x});}exprOrientedC_LANG_lambda_withTypeOfBody_tEMp;})
 #else
-#define exprOrientedC_LANG_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_error("lambda requires C++11 or later, lambda_withTypeOfBody requires GCC or C++11 or later")
+#define exprOrientedC_LANG_lambda_s_withTypeOfBody(...) exprOrientedC_TOOLS_error("lambda_s requires C++11 or later, lambda_s_withTypeOfBody requires GCC or C++11 or later")
 #endif
 #endif
 #define var exprOrientedC_LANG_var
@@ -405,6 +405,7 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define declare_private exprOrientedC_LANG_declare_private
 #define define_public_lambda_withTypeOfBody exprOrientedC_LANG_define_public_lambda_withTypeOfBody
 #define define_public_lambda_s_withTypeOfBody exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
+#define exprOrientedC_LANG_ignore(...) 
 #endif
 #if ((defined(exprOrientedC_LANG_is_require))&&(((((defined(exprOrientedC_REQUIRE_1))&&(exprOrientedC_LANG_is_require)))||((((!(defined(exprOrientedC_REQUIRE_1))))&&((!(exprOrientedC_LANG_is_require))))))))
 #else
@@ -422,9 +423,9 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #undef exprOrientedC_LANG_define_public2
 #define exprOrientedC_LANG_define_public2(typename,val) exprOrientedC_LANG_declare_public(typename)
 #undef exprOrientedC_LANG_define_public_lambda_withTypeOfBody
-#define exprOrientedC_LANG_define_public_lambda_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_withTypeOfBody(__VA_ARGS__)
+#define exprOrientedC_LANG_define_public_lambda_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_withTypeOfBody(__VA_ARGS__)exprOrientedC_LANG_ignore
 #undef exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
-#define exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody(__VA_ARGS__)
+#define exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody(...) exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody(__VA_ARGS__)exprOrientedC_LANG_ignore
 #else
 #undef exprOrientedC_LANG_is_require
 #define exprOrientedC_LANG_is_require 0
