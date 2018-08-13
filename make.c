@@ -453,7 +453,6 @@ LANG_define => 全局定義
 			HELPER_declareDefineAreNothing_lambda_MACRO(private) \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDeclare_inlineDefine") \
 			HELPER_declareDefineAreNothing_lambda_MACRO(private_inline) \
-			"WIP"; \
 		ELSE \
 			REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
 			REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),X("static typename;")) \
@@ -469,7 +468,6 @@ LANG_define => 全局定義
 			HELPER_declare_define_lambda_MACRO(private, "static") \
 			HELPER_declare_define_lambda_MACRO(public_inline, LANG_prefix"HELPERexternDefine_inlineDefine") \
 			HELPER_declare_define_lambda_MACRO(private_inline, LANG_prefix"HELPERstaticDefine_inlineDefine") \
-			"WIP"; \
 		ENDIF \
 	ENDIF \
 
