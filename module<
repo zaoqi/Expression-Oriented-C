@@ -403,12 +403,15 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_declare_public_lambda_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_declare_lambda_withTypeOfBody(extern,__VA_ARGS__))
 #define declare_public_lambda_s_withTypeOfBody exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody
 #define exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody(...) exprOrientedC_TOOLS_expand(exprOrientedC_LANG_hELPEr_declare_lambda_s_withTypeOfBody(extern,__VA_ARGS__))
+#define exprOrientedC_LANG_ignore(...) 
 #define define_public_lambda_withTypeOfBody exprOrientedC_LANG_define_public_lambda_withTypeOfBody
 #define define_public_lambda_s_withTypeOfBody exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
-#define exprOrientedC_LANG_ignore(...) 
+#define declare_public_lambda_withTypeOfBody exprOrientedC_LANG_declare_public_lambda_withTypeOfBody
+#define declare_public_lambda_s_withTypeOfBody exprOrientedC_LANG_declare_public_lambda_s_withTypeOfBody
+#define define_public_lambda_withTypeOfBody exprOrientedC_LANG_define_public_lambda_withTypeOfBody
+#define define_public_lambda_s_withTypeOfBody exprOrientedC_LANG_define_public_lambda_s_withTypeOfBody
 #endif
-#if ((defined(exprOrientedC_LANG_is_require))&&(((((defined(exprOrientedC_REQUIRE_1))&&(exprOrientedC_LANG_is_require)))||((((!(defined(exprOrientedC_REQUIRE_1))))&&((!(exprOrientedC_LANG_is_require))))))))
-#else
+#if (!(((defined(exprOrientedC_LANG_is_require))&&(((((defined(exprOrientedC_REQUIRE_1))&&(exprOrientedC_LANG_is_require)))||((((!(defined(exprOrientedC_REQUIRE_1))))&&((!(exprOrientedC_LANG_is_require))))))))))
 #if defined(exprOrientedC_REQUIRE_1)
 #undef exprOrientedC_LANG_is_require
 #define exprOrientedC_LANG_is_require 1

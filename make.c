@@ -401,50 +401,57 @@ LANG_define => 全局定義
 			LANG_EXPORT("declare_public_lambda_s_withTypeOfBody") DEFINE_FUNCTION(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"), \
 				X("..."), \
 				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
-			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
-			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
-			\
 			\
 			DEFINE_FUNCTION(X(LANG_prefix"ignore"),X("..."),) \
+			LANG_NOT_STATIC_EXPORT \
 		)/*HEADER(X(LANG_prefix"_static_dEFINEd"),*/ \
 		LANG_NOT_STATIC \
 	)
+
+#define LANG_NOT_STATIC_EXPORT \
+			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
+			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
+			\
+			LANG_EXPORT("declare_public_lambda_withTypeOfBody") \
+			LANG_EXPORT("declare_public_lambda_s_withTypeOfBody") \
+			LANG_EXPORT("define_public_lambda_withTypeOfBody") \
+			LANG_EXPORT("define_public_lambda_s_withTypeOfBody") \
+
 #define LANG_NOT_STATIC \
-		IF(And(Defined(X(LANG_prefix"is_require")), \
-			Or( \
-				And(Defined(X(REQUIRE_prefix)Nat(1)),X(LANG_prefix"is_require")), \
-				And(Not(Defined(X(REQUIRE_prefix)Nat(1))),Not(X(LANG_prefix"is_require")))))) \
+	IF(Not(And(Defined(X(LANG_prefix"is_require")), \
+		Or( \
+			And(Defined(X(REQUIRE_prefix)Nat(1)),X(LANG_prefix"is_require")), \
+			And(Not(Defined(X(REQUIRE_prefix)Nat(1))),Not(X(LANG_prefix"is_require"))))))) \
+		IF(Defined(X(REQUIRE_prefix)Nat(1))) \
+			REDEFINE(X(LANG_prefix"is_require"),Nat(1)) \
+			REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
+				Call1(X(LANG_prefix"declare_public_lambda_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
+				Call1(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
+			"WIP"; \
 		ELSE \
-			IF(Defined(X(REQUIRE_prefix)Nat(1))) \
-				REDEFINE(X(LANG_prefix"is_require"),Nat(1)) \
-				REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"),Call1(X(LANG_prefix"declare_public"),X("typename"))) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
-					Call1(X(LANG_prefix"declare_public_lambda_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
-					Call1(X(LANG_prefix"declare_public_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore")) \
-				"WIP"; \
-			ELSE \
-				REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
-				REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),X("static typename;")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),X("static typename;")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),X("static typename=val;")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"), \
-					Call1(X(LANG_prefix"declare_public"),X("typename")) \
-					X("typename;")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"), \
-					Call1(X(LANG_prefix"declare_public"),X("typename")) \
-					X("typename=val;")) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
-					Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
-				REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
-					Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
-				"WIP"; \
-			ENDIF \
+			REDEFINE(X(LANG_prefix"is_require"),Nat(0)) \
+			REDEFINE_FUNCTION(X(LANG_prefix"declare_private"),X("typename"),X("static typename;")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_private1"),X("typename"),X("static typename;")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_private2"),X("typename,val"),X("static typename=val;")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public1"),X("typename"), \
+				Call1(X(LANG_prefix"declare_public"),X("typename")) \
+				X("typename;")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public2"),X("typename,val"), \
+				Call1(X(LANG_prefix"declare_public"),X("typename")) \
+				X("typename=val;")) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_withTypeOfBody"), X("..."), \
+				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
+			REDEFINE_FUNCTION(X(LANG_prefix"define_public_lambda_s_withTypeOfBody"), X("..."), \
+				Call1(X(TOOLS_prefix"expand"),Call2(X(LANG_prefix"hELPEr_define_lambda_s_withTypeOfBody"),X("extern"),X("__VA_ARGS__")))) \
+			"WIP"; \
 		ENDIF \
+	ENDIF \
 
 
 int main(){
