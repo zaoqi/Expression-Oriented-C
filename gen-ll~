@@ -1,3 +1,0 @@
-#!/bin/sh
-clang -Oz -O3 -S -emit-llvm -DNDEBUG *.c
-clang++ -Oz -O3 -S -emit-llvm -DNDEBUG *.c *.cpp
