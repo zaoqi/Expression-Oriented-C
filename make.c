@@ -527,34 +527,39 @@ int main(){
 	#define TOOLS_prefix prefix"TOOLS_"
 	#define LANG_prefix prefix"LANG_"
 	#define REQUIRE_prefix prefix"REQUIRE_"
-	#define EXTERNC prefix"EXTERNC" /* 表示定义未导出 */
+	#define EXTERNC_END prefix"EXTERNC" /* 表示定义未导出 */
 	{FILE* f=fopen("module<", "w");fputs(head, f);
 		{FILE* x=fopen("externC<", "w");fputs(head, x);fputs("#include \"require<\"\n", x);fclose(x);}
-		FILE* externC_end=fopen(">externC", "w");
-			fputs(head, externC_end);
-			fputs("#include \">require\"\n"
-				"#undef "EXTERNC"\n"
-				"#define "EXTERNC"\n", externC_end);
-		#define redef_path "redef.h"
-		FILE* redef=fopen(redef_path, "w");fputs(head, redef);
+		#define doundef_path "undef.h"
+		FILE* doundef=fopen(doundef_path, "w");
+		#define doredef_path "redef.h"
+		FILE* doredef=fopen(doredef_path, "w");
 		#define file f
 		TOOLS
 		#define LANG_EXPORT(x) { \
-			fputs("#undef "x"\n",externC_end); \
-			fputs("#define "x" "LANG_prefix x"\n",redef); \
+			fputs("#undef "x"\n",doundef); \
+			fputs("#define "x" "LANG_prefix x"\n",doredef); \
 			DEFINE(X(x),X(LANG_prefix x))}
 		#define LANG_EXPORT_IFDEF(x, m) { \
-			fputs("#ifdef "m"\n#undef "x"\n#endif\n",externC_end); \
-			fputs("#ifdef "m"\n#define "x" "LANG_prefix x"\n#endif\n",redef); \
+			fputs("#ifdef "m"\n#undef "x"\n#endif\n",doundef); \
+			fputs("#ifdef "m"\n#define "x" "LANG_prefix x"\n#endif\n",doredef); \
 			IF(Defined(X(m))) DEFINE(X(x),X(LANG_prefix x)) ENDIF}
 		LANG
-		fclose(redef);
-		IF(Defined(X(EXTERNC)))
-			UNDEFINE(X(EXTERNC))
-			file_append(f, redef_path);
-		ENDIF
+		fclose(doredef);
+		fclose(doundef);
+		{IF(Defined(X(EXTERNC_END)))
+			UNDEFINE(X(EXTERNC_END))
+			file_append(f, doredef_path);
+		ENDIF}
 		fclose(f);
-		fclose(externC_end);}
+		{
+			FILE* externC_end=fopen(">externC", "w");
+			fputs(head, externC_end);
+			fputs("#include \">require\"\n"
+				"#undef "EXTERNC_END"\n"
+				"#define "EXTERNC_END"\n", externC_end);
+			file_append(externC_end, doundef_path);
+			fclose(externC_end);}}
 	{FILE* x=fopen(">module", "w");fputs(head, x);fclose(x);}
 	{
 		{FILE* f=fopen("require<", "w");fputs(head, f);
