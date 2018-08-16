@@ -143,6 +143,10 @@
 		for_in_from_to(i, 1, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"last")Nat(i),var_from_to(1,i),X("_")Nat(i)) }) \
 		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"unbracket"),X("..."),X("__VA_ARGS__")) \
+		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("f,xs"), Call1(X(TOOLS_prefix"expand"), \
+			Call2(X(TOOLS_prefix"reduce_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce_s"),X("__VA_ARGS__"))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(2),X("f,x"),X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(3),X("f,x,y"),X("f(x,y)")) \
@@ -156,6 +160,8 @@
 					Call1(X(TOOLS_prefix"reduce_s")Nat(p1+1),var_from_to(1,p1+1)), \
 					Call2(X(TOOLS_prefix"reduce_s")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
 		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"map"),X("f,xs"), Call1(X(TOOLS_prefix"expand"), \
+			Call2(X(TOOLS_prefix"map_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"map_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"map"),X("__VA_ARGS__"))) \
 		for_in_from_to(i, 2, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"map_s")Nat(i),var_from_to(1,i),/*_1=f*/ X("(_1(_2)") \
