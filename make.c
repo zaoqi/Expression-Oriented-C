@@ -143,18 +143,25 @@
 		for_in_from_to(i, 1, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"last")Nat(i),var_from_to(1,i),X("_")Nat(i)) }) \
 		\
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce"),X("__VA_ARGS__"))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce2"),X("f,x"),X("x")) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce3"),X("f,x,y"),X("f(x,y)")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce_s"),X("__VA_ARGS__"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(2),X("f,x"),X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(3),X("f,x,y"),X("f(x,y)")) \
 		for_in_from_to(i, 4, eoc_max, { \
 			nat length=i-1; \
 			nat p1=length/2; \
 			nat p2=length-p1; \
 			nat p2base=i-p2+1; \
-			DEFINE_FUNCTION(X(TOOLS_prefix"reduce")Nat(i),var_from_to(1,i),/*_1=f*/\
+			DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(i),var_from_to(1,i),/*_1=f*/ \
 				Call2(X("_1"), \
-					Call1(X(TOOLS_prefix"reduce")Nat(p1+1),var_from_to(1,p1+1)), \
-					Call2(X(TOOLS_prefix"reduce")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
+					Call1(X(TOOLS_prefix"reduce_s")Nat(p1+1),var_from_to(1,p1+1)), \
+					Call2(X(TOOLS_prefix"reduce_s")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
+		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"map_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"map"),X("__VA_ARGS__"))) \
+		for_in_from_to(i, 2, eoc_max, { \
+			DEFINE_FUNCTION(X(TOOLS_prefix"map_s")Nat(i),var_from_to(1,i),/*_1=f*/ X("(_1(_2)") \
+				for(nat k=3;k<=i;k++){/*不是for_in_from_to*/ \
+					X(",_1(_")Nat(k)X(")")} \
+				X(")"))}) \
 	))
 
 /* 有 #define REQUIRE_prefix "..." */
@@ -254,14 +261,14 @@ LANG_define => 全局定義
 				X("x,t"),X("({t "LANG_prefix"tEMp_annotate=x;"LANG_prefix"tEMp_annotate;})")) \
 			LANG_EXPORT("bool_not") DEFINE_FUNCTION(X(LANG_prefix"bool_not"),X("x"),X("(!(x))")) \
 			LANG_EXPORT("eq_p") DEFINE_FUNCTION(X(LANG_prefix"eq_p"),X("..."), \
-				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"eq_p2"),X("__VA_ARGS__"))) \
+				Call2(X(TOOLS_prefix"reduce_s"),X(LANG_prefix"eq_p2"),X("__VA_ARGS__"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"eq_p2"),X("x,y"),X("((x)==(y))")) \
 			LANG_EXPORT("not_eq_p") DEFINE_FUNCTION(X(LANG_prefix"not_eq_p"),X("x,y"),X("((x)!=(y))")) \
 			LANG_EXPORT("bool_and") DEFINE_FUNCTION(X(LANG_prefix"bool_and"),X("..."), \
-				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"bool_and2"),X("__VA_ARGS__"))) \
+				Call2(X(TOOLS_prefix"reduce_s"),X(LANG_prefix"bool_and2"),X("__VA_ARGS__"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"bool_and2"),X("x,y"),X("((x)&&(y))")) \
 			LANG_EXPORT("bool_or") DEFINE_FUNCTION(X(LANG_prefix"bool_or"),X("..."), \
-				Call2(X(TOOLS_prefix"reduce"),X(LANG_prefix"bool_or2"),X("__VA_ARGS__"))) \
+				Call2(X(TOOLS_prefix"reduce_s"),X(LANG_prefix"bool_or2"),X("__VA_ARGS__"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"bool_or2"),X("x,y"),X("((x)||(y))")) \
 			\
 			LANG_EXPORT("anonymous_struct") LANG_EXPORT("declare_struct") LANG_EXPORT("define_struct") \
@@ -382,6 +389,9 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else"),X("b"),X("((b)?({"LANG_prefix"if_then_else_hELPEr_A")) \
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_A"),X("x"),X("x}):({"LANG_prefix"if_then_else_hELPEr_B")) \
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_B"),X("x"),X("x}))")) \
+			\
+			/*case_const_number(x, type)((a, ...)(b, ...)...)*/ \
+			"WIP";\
 			\
 			/*begin(...)*/\
 			LANG_EXPORT("begin") \
