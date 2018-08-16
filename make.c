@@ -168,6 +168,17 @@
 				for(nat k=3;k<=i;k++){/*不是for_in_from_to*/ \
 					X(",_1(_")Nat(k)X(")")} \
 				X(")"))}) \
+		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"if"),X("b,x,y"), \
+			Call1(X(TOOLS_prefix"expand"), \
+				Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
+					X("if"), \
+					X("b")) \
+				X("(x,y)"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"if1"),X("x,y"), X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"iftrue"),X("x,y"), X("x")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"if0"),X("x,y"), X("y")) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"iffalse"),X("x,y"), X("y")) \
 	))
 
 /* 有 #define REQUIRE_prefix "..." */
@@ -396,8 +407,15 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_A"),X("x"),X("x}):({"LANG_prefix"if_then_else_hELPEr_B")) \
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_B"),X("x"),X("x}))")) \
 			\
-			/*case_const_number(x, type)((a, ...)(b, ...)...)*/ \
-			"WIP";\
+			LANG_EXPORT("_") \
+			DEFINE(X(LANG_prefix"_"),X("()")) \
+			/*case_const_number(x, type)(((a ...), ...)((b ...), ...)...) default为((), ...)*/ \
+			LANG_EXPORT("case_const_number") \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number"),X("x,type"),X("({") \
+				X("type "LANG_prefix"case_const_number_tEMp;") \
+				X("switch(x){") \
+				"WIP"; \
+				) \
 			\
 			/*begin(...)*/\
 			LANG_EXPORT("begin") \

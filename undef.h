@@ -49,6 +49,8 @@
 #undef var
 #undef var_lambda_s_withTypeOfBody
 #undef if_then_else
+#undef _
+#undef case_const_number
 #undef begin
 #undef declare_public
 #undef define_private
