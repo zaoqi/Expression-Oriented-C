@@ -172,13 +172,21 @@
 		DEFINE_FUNCTION(X(TOOLS_prefix"if"),X("b,x,y"), \
 			Call1(X(TOOLS_prefix"expand"), \
 				Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
-					X("if"), \
+					X(TOOLS_prefix"if"), \
 					X("b")) \
 				X("(x,y)"))) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"if1"),X("x,y"), X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"iftrue"),X("x,y"), X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"if0"),X("x,y"), X("y")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"iffalse"),X("x,y"), X("y")) \
+		\
+		DEFINE_FUNCTION(X(TOOLS_prefix"zero_p"),X("x"), \
+			Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
+				X(TOOLS_prefix"zero_p"), \
+				X("x"))) \
+		DEFINE(X(TOOLS_prefix"zero_p")Nat(0), X("true")) \
+		for_in_from_to(i, 1, eoc_max, { \
+			DEFINE(X(TOOLS_prefix"zero_p")Nat(i), X("false"))}) \
 	))
 
 /* 有 #define REQUIRE_prefix "..." */
