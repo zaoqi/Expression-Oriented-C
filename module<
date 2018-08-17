@@ -551,9 +551,13 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define _ exprOrientedC_LANG__
 #define exprOrientedC_LANG__ ()
 #define case_const_number exprOrientedC_LANG_case_const_number
-#define exprOrientedC_LANG_case_const_number(x,type) ({type exprOrientedC_LANG_case_const_number_tEMp;switch(x){
+#define exprOrientedC_LANG_case_const_number(x,type) ({type exprOrientedC_LANG_case_const_number_tEMp;switch(x){exprOrientedC_LANG_case_const_number_hELPEr
+#define exprOrientedC_LANG_case_const_number_hELPEr(...) exprOrientedC_TOOLS_reduce(exprOrientedC_LANG_case_const_number_hELPEr_append,exprOrientedC_TOOLS_map_s(exprOrientedC_LANG_case_const_number_hELPEr_each,__VA_ARGS__))exprOrientedC_LANG_case_const_number_tEMp;
+#define exprOrientedC_LANG_case_const_number_hELPEr_append(x,y) x y
+#define exprOrientedC_LANG_case_const_number_hELPEr_each(cond,...) exprOrientedC_TOOLS_if(exprOrientedC_TOOLS_null_p(cond),default:,exprOrientedC_LANG_case_const_number_tEMp=exprOrientedC_LANG_begin(__VA_ARGS__);exprOrientedC_TOOLS_reduce(exprOrientedC_LANG_case_const_number_hELPEr_append,exprOrientedC_TOOLS_map(exprOrientedC_LANG_case_const_number_hELPEr_cond,cond))exprOrientedC_LANG_case_const_number_tEMp=exprOrientedC_LANG_begin(__VA_ARGS__);break;)
+#define exprOrientedC_LANG_case_const_number_hELPEr_cond(x) case x:
 #define begin exprOrientedC_LANG_begin
-#define exprOrientedC_LANG_begin(b) ({b})
+#define exprOrientedC_LANG_begin(x) ({x})
 #define exprOrientedC_LANG_hELPEr_declare_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__));
 #define exprOrientedC_LANG_hELPEr_define_lambda_s_withTypeOfBody(prefix,ider,...) prefix exprOrientedC_TOOLS_last(__VA_ARGS__) ider(exprOrientedC_TOOLS_init(__VA_ARGS__))exprOrientedC_LANG_hELPEr_define_lambda_hELPEr
 #define exprOrientedC_LANG_hELPEr_declare_lambda_withTypeOfBody(prefix,iderargs,ret) prefix ret iderargs;

@@ -413,7 +413,7 @@ LANG_define => 全局定義
 						String("auto requires C++11 or later"))) \
 			ENDIF \
 			\
-			/*if_then_else(b)(...)(...)*/\
+			/*if_then_else(b)(...;)(...;)*/\
 			LANG_EXPORT("if_then_else") \
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else"),X("b"),X("((b)?({"LANG_prefix"if_then_else_hELPEr_A")) \
 			DEFINE_FUNCTION(X(LANG_prefix"if_then_else_hELPEr_A"),X("x"),X("x}):({"LANG_prefix"if_then_else_hELPEr_B")) \
@@ -421,17 +421,32 @@ LANG_define => 全局定義
 			\
 			LANG_EXPORT("_") \
 			DEFINE(X(LANG_prefix"_"),X("()")) \
-			/*case_const_number(x, type)(((a ...), ...)((b ...), ...)...) default为((), ...)*/ \
+			/*case_const_number(x, type)(((a ...), ...;),((b ...), ...;)...) default为((), ...;)*/ \
 			LANG_EXPORT("case_const_number") \
-			DEFINE_FUNCTION(X(LANG_prefix"case_const_number"),X("x,type"),X("({") \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number"),X("x,type"),X("({")/*WIP*/ \
 				X("type "LANG_prefix"case_const_number_tEMp;") \
 				X("switch(x){") \
-				"WIP"; \
+				X(LANG_prefix"case_const_number_hELPEr") \
 				) \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr"),X("..."),/*WIP*/ \
+				Call2(X(TOOLS_prefix"reduce"), X(LANG_prefix"case_const_number_hELPEr_append"),\
+					Call2(X(TOOLS_prefix"map_s"),X(LANG_prefix"case_const_number_hELPEr_each"),X("__VA_ARGS__"))) \
+				X(LANG_prefix"case_const_number_tEMp;")) \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_append"),X("x,y"),X("x y")) \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each"),X("cond,..."), \
+				Call3(X(TOOLS_prefix"if"),Call1(X(TOOLS_prefix"null_p"), X("cond")),/*匹配任何*/ \
+					X("default:"), \
+					X(LANG_prefix"case_const_number_tEMp=")Call1(X(LANG_prefix"begin"),X("__VA_ARGS__"))X(";") \
+					\
+					Call2(X(TOOLS_prefix"reduce"), X(LANG_prefix"case_const_number_hELPEr_append"),\
+						Call2(X(TOOLS_prefix"map"),X(LANG_prefix"case_const_number_hELPEr_cond"),X("cond"))) \
+					X(LANG_prefix"case_const_number_tEMp=")Call1(X(LANG_prefix"begin"),X("__VA_ARGS__"))X(";break;") \
+					)) \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_cond"),X("x"), X("case x:")) \
 			\
-			/*begin(...)*/\
+			/*begin(...;)*/\
 			LANG_EXPORT("begin") \
-			DEFINE_FUNCTION(X(LANG_prefix"begin"),X("b"),X("({b})")) \
+			DEFINE_FUNCTION(X(LANG_prefix"begin"),X("x"),X("({x})")) \
 			\
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_declare_lambda_s_withTypeOfBody"),X("prefix,ider,..."), \
 				X("prefix ")Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
