@@ -367,6 +367,7 @@ exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append_with_macro(exprOrie
 #define exprOrientedC_TOOLS_zero_p62 false
 #define exprOrientedC_TOOLS_zero_p63 false
 #define exprOrientedC_TOOLS_zero_p64 false
+#define exprOrientedC_TOOLS_null_p(xs) exprOrientedC_TOOLS_zero_p(exprOrientedC_TOOLS_count(exprOrientedC_TOOLS_unbracket xs))
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
 #endif

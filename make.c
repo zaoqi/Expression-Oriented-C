@@ -187,6 +187,9 @@
 		DEFINE(X(TOOLS_prefix"zero_p")Nat(0), X("true")) \
 		for_in_from_to(i, 1, eoc_max, { \
 			DEFINE(X(TOOLS_prefix"zero_p")Nat(i), X("false"))}) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"null_p"), X("xs"), Call1(X(TOOLS_prefix"zero_p"), \
+			Call1(X(TOOLS_prefix"count"), \
+				X(TOOLS_prefix"unbracket")X(" xs")))) \
 	))
 
 /* 有 #define REQUIRE_prefix "..." */
