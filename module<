@@ -231,8 +231,8 @@ exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append_with_macro(exprOrie
 #define exprOrientedC_TOOLS_reduce_s62(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62) _1(exprOrientedC_TOOLS_reduce_s31(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31),exprOrientedC_TOOLS_reduce_s32(_1,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62))
 #define exprOrientedC_TOOLS_reduce_s63(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63) _1(exprOrientedC_TOOLS_reduce_s32(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32),exprOrientedC_TOOLS_reduce_s32(_1,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63))
 #define exprOrientedC_TOOLS_reduce_s64(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,_64) _1(exprOrientedC_TOOLS_reduce_s32(_1,_2,_3,_4,_5,_6,_7,_8,_9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32),exprOrientedC_TOOLS_reduce_s33(_1,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,_64))
-#define exprOrientedC_TOOLS_map(f,xs) exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_map_s(f,exprOrientedC_TOOLS_unbracket xs))
-#define exprOrientedC_TOOLS_map_s(...) exprOrientedC_TOOLS_with_count(exprOrientedC_TOOLS_map,__VA_ARGS__)
+#define exprOrientedC_TOOLS_map(f,xs) exprOrientedC_TOOLS_if(exprOrientedC_TOOLS_null_p(xs),(),exprOrientedC_TOOLS_map_s(f,exprOrientedC_TOOLS_unbracket xs))
+#define exprOrientedC_TOOLS_map_s(...) exprOrientedC_TOOLS_with_count(exprOrientedC_TOOLS_map_s,__VA_ARGS__)
 #define exprOrientedC_TOOLS_map_s2(_1,_2) (_1(_2))
 #define exprOrientedC_TOOLS_map_s3(_1,_2,_3) (_1(_2),_1(_3))
 #define exprOrientedC_TOOLS_map_s4(_1,_2,_3,_4) (_1(_2),_1(_3),_1(_4))
@@ -367,7 +367,7 @@ exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_symbol_append_with_macro(exprOrie
 #define exprOrientedC_TOOLS_zero_p62 false
 #define exprOrientedC_TOOLS_zero_p63 false
 #define exprOrientedC_TOOLS_zero_p64 false
-#define exprOrientedC_TOOLS_null_p(xs) exprOrientedC_TOOLS_zero_p(exprOrientedC_TOOLS_count(exprOrientedC_TOOLS_unbracket xs))
+#define exprOrientedC_TOOLS_null_p(xs) exprOrientedC_TOOLS_expand(exprOrientedC_TOOLS_zero_p(exprOrientedC_TOOLS_count xs))
 #else
 #error __VA_ARGS__ requires C99 or later or C++11 or later
 #endif

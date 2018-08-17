@@ -160,9 +160,11 @@
 					Call1(X(TOOLS_prefix"reduce_s")Nat(p1+1),var_from_to(1,p1+1)), \
 					Call2(X(TOOLS_prefix"reduce_s")Nat(p2+1),X("_1"),var_from_to(p2base,i)))) }) \
 		\
-		DEFINE_FUNCTION(X(TOOLS_prefix"map"),X("f,xs"), Call1(X(TOOLS_prefix"expand"), \
-			Call2(X(TOOLS_prefix"map_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"map_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"map"),X("__VA_ARGS__"))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"map"),X("f,xs"), \
+			Call3(X(TOOLS_prefix"if"),Call1(X(TOOLS_prefix"null_p"), X("xs")), \
+				X("()"), \
+				Call2(X(TOOLS_prefix"map_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"map_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"map_s"),X("__VA_ARGS__"))) \
 		for_in_from_to(i, 2, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"map_s")Nat(i),var_from_to(1,i),/*_1=f*/ X("(_1(_2)") \
 				for(nat k=3;k<=i;k++){/*不是for_in_from_to*/ \
@@ -187,9 +189,8 @@
 		DEFINE(X(TOOLS_prefix"zero_p")Nat(0), X("true")) \
 		for_in_from_to(i, 1, eoc_max, { \
 			DEFINE(X(TOOLS_prefix"zero_p")Nat(i), X("false"))}) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"null_p"), X("xs"), Call1(X(TOOLS_prefix"zero_p"), \
-			Call1(X(TOOLS_prefix"count"), \
-				X(TOOLS_prefix"unbracket")X(" xs")))) \
+		DEFINE_FUNCTION(X(TOOLS_prefix"null_p"), X("xs"), Call1(X(TOOLS_prefix"expand"), Call1(X(TOOLS_prefix"zero_p"), \
+			X(TOOLS_prefix"count xs")))) \
 	))
 
 /* 有 #define REQUIRE_prefix "..." */
