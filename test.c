@@ -12,7 +12,7 @@ Aha
 kAla
 exprOrientedC_TOOLS_expand(exprOrientedC_LANG_case_const_number_hELPEr(
 		((1,2) __ 3;),
-		(_ __ 4;)
+		(_ __ 4;),
 	))
 KAla
 

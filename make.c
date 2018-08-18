@@ -441,10 +441,11 @@ LANG_define => 全局定義
 					for_in_from_to(j, 1, i, { \
 						X(LANG_prefix"case_const_number_hELPEr_each")X(" _")Nat(j)X(" ") \
 					}) \
-					X("}"LANG_prefix"case_const_number_tEMp;})"))}) \
+					/*分号为了多出来的逗号*/X(";}"LANG_prefix"case_const_number_tEMp;})"))}) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each0"),X("x"), \
 				Call1(X(TOOLS_prefix"expand"), X(LANG_prefix"case_const_number_hELPEr_each")X(" x"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_append"),X("x,y"),X("x y")) \
+			LINE(X("static const int "LANG_prefix"case_const_number_hELPEr_each;"))/*多出来的逗号*/ \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each"),X("cond,..."), \
 				Call3(X(TOOLS_prefix"if"),Call1(X(TOOLS_prefix"null_p"), X("cond")),/*匹配任何*/ \
 					X("default:") \
