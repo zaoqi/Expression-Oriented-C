@@ -11,8 +11,16 @@ Aha
 
 kAla
 exprOrientedC_TOOLS_expand(exprOrientedC_LANG_case_const_number_hELPEr(
-		((1,2), 3;)
+		((1,2) __ 3;),
+		(_ __ 4;)
 	))
 KAla
+
+AKJHSk
+askoK
+exprOrientedC_LANG_case_const_number_hELPEr_each0(((1,2), 3;))
+AKJskj
+
+exprOrientedC_LANG_case_const_number_hELPEr_each((1,2), 3;)
 
 #include ">module"

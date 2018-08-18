@@ -101,6 +101,13 @@
 #define HEADER(n, x) IF(Not(Defined(n))) DEFINE(n,) {x} ENDIF
 
 /* 有 #define TOOLS_prefix "..." */
+#define DEFINE_WITH_COUNT_2(ida,ider) \
+	DEFINE_FUNCTION(ida,X("..."),Call1(X(TOOLS_prefix"expand"), \
+		Call2(X(TOOLS_prefix"symbol_append_with_macro"), \
+			ider, \
+			Call1(X(TOOLS_prefix"count"),X("__VA_ARGS__"))) \
+		X("(__VA_ARGS__)")))
+#define DEFINE_WITH_COUNT(ida) DEFINE_WITH_COUNT_2(ida, ida)
 #define TOOLS \
 	HEADER(X(TOOLS_prefix"dEFINEd"),WITH_MACRO_VA_ARGS( \
 		IF(StdC11) \
@@ -133,13 +140,13 @@
 				X(TOOLS_prefix"count_assert"), \
 				Call0(X(TOOLS_prefix"count"))))) \
 		\
-		DEFINE_FUNCTION(X(TOOLS_prefix"init"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"init"),X("__VA_ARGS__"))) \
+		DEFINE_WITH_COUNT(X(TOOLS_prefix"init")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"init1"),X("x"),) \
 		for_in_from_to(i, 2, eoc_max, { \
 			nat isub=i-1; \
 			DEFINE_FUNCTION(X(TOOLS_prefix"init")Nat(i),var_from_to(1,i),var_from_to(1,isub)) }) \
 		\
-		DEFINE_FUNCTION(X(TOOLS_prefix"last"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"last"),X("__VA_ARGS__"))) \
+		DEFINE_WITH_COUNT(X(TOOLS_prefix"last")) \
 		for_in_from_to(i, 1, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"last")Nat(i),var_from_to(1,i),X("_")Nat(i)) }) \
 		\
@@ -147,7 +154,7 @@
 		\
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce"),X("f,xs"), Call1(X(TOOLS_prefix"expand"), \
 			Call2(X(TOOLS_prefix"reduce_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"reduce_s"),X("__VA_ARGS__"))) \
+		DEFINE_WITH_COUNT(X(TOOLS_prefix"reduce_s")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(2),X("f,x"),X("x")) \
 		DEFINE_FUNCTION(X(TOOLS_prefix"reduce_s")Nat(3),X("f,x,y"),X("f(x,y)")) \
 		for_in_from_to(i, 4, eoc_max, { \
@@ -164,7 +171,7 @@
 			Call3(X(TOOLS_prefix"if"),Call1(X(TOOLS_prefix"null_p"), X("xs")), \
 				X("()"), \
 				Call2(X(TOOLS_prefix"map_s"), X("f"), X(TOOLS_prefix"unbracket xs")))) \
-		DEFINE_FUNCTION(X(TOOLS_prefix"map_s"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(TOOLS_prefix"map_s"),X("__VA_ARGS__"))) \
+		DEFINE_WITH_COUNT(X(TOOLS_prefix"map_s")) \
 		for_in_from_to(i, 2, eoc_max, { \
 			DEFINE_FUNCTION(X(TOOLS_prefix"map_s")Nat(i),var_from_to(1,i),/*_1=f*/ X("(_1(_2)") \
 				for(nat k=3;k<=i;k++){/*不是for_in_from_to*/ \
@@ -401,7 +408,7 @@ LANG_define => 全局定義
 			ENDIF \
 			\
 			LANG_EXPORT("var") LANG_EXPORT("var_lambda_s_withTypeOfBody") \
-			DEFINE_FUNCTION(X(LANG_prefix"var"),X("..."),Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"var"),X("__VA_ARGS__"))) \
+			DEFINE_WITH_COUNT(X(LANG_prefix"var")) \
 			DEFINE_FUNCTION(X(LANG_prefix"var2"),X("ider,type"),X("type ider")) \
 			DEFINE_FUNCTION(X(LANG_prefix"var_lambda_s_withTypeOfBody"),X("ider,..."), \
 				Call1(X(TOOLS_prefix"last"),X("__VA_ARGS__")) \
@@ -428,18 +435,22 @@ LANG_define => 全局定義
 				X("switch(x){") \
 				X(LANG_prefix"case_const_number_hELPEr") \
 				) \
-			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr"),X("..."),/*WIP*/ \
-				Call2(X(TOOLS_prefix"reduce"), X(LANG_prefix"case_const_number_hELPEr_append"),\
-					Call2(X(TOOLS_prefix"map_s"),X(LANG_prefix"case_const_number_hELPEr_each"),X("__VA_ARGS__"))) \
-				X(LANG_prefix"case_const_number_tEMp;")) \
+			DEFINE_WITH_COUNT(X(LANG_prefix"case_const_number_hELPEr")) \
+			for_in_from_to(i, 1, eoc_max, { \
+				DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr")Nat(i),var_from_to(1,i), \
+					for_in_from_to(j, 1, i, { \
+						X(LANG_prefix"case_const_number_hELPEr_each")X(" _")Nat(j)X(" ") \
+					}))}) \
+			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each0"),X("x"), \
+				Call1(X(TOOLS_prefix"expand"), X(LANG_prefix"case_const_number_hELPEr_each")X(" x"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_append"),X("x,y"),X("x y")) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each"),X("cond,..."), \
 				Call3(X(TOOLS_prefix"if"),Call1(X(TOOLS_prefix"null_p"), X("cond")),/*匹配任何*/ \
-					X("default:"), \
-					X(LANG_prefix"case_const_number_tEMp=")Call1(X(LANG_prefix"begin"),X("__VA_ARGS__"))X(";") \
+					X("default:") \
+					X(LANG_prefix"case_const_number_tEMp=")Call1(X(LANG_prefix"begin"),X("__VA_ARGS__"))X(";"), \
 					\
-					Call2(X(TOOLS_prefix"reduce"), X(LANG_prefix"case_const_number_hELPEr_append"),\
-						Call2(X(TOOLS_prefix"map"),X(LANG_prefix"case_const_number_hELPEr_cond"),X("cond"))) \
+					Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"reduce"), X(LANG_prefix"case_const_number_hELPEr_append"),\
+						Call1(X(TOOLS_prefix"expand"),Call2(X(TOOLS_prefix"map"),X(LANG_prefix"case_const_number_hELPEr_cond"),X("cond"))))) \
 					X(LANG_prefix"case_const_number_tEMp=")Call1(X(LANG_prefix"begin"),X("__VA_ARGS__"))X(";break;") \
 					)) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_cond"),X("x"), X("case x:")) \
@@ -468,10 +479,8 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"hELPEr_define_lambda_hELPEr"),X("x"),X("{return ({x});}")) \
 			\
 			LANG_EXPORT("declare_public") DEFINE_FUNCTION(X(LANG_prefix"declare_public"),X("typename"),X("extern typename;")) \
-			LANG_EXPORT("define_private") DEFINE_FUNCTION(X(LANG_prefix"define_private"),X("..."), \
-				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_private"),X("__VA_ARGS__"))) \
-			LANG_EXPORT("define_public") DEFINE_FUNCTION(X(LANG_prefix"define_public"),X("..."), \
-				Call2(X(TOOLS_prefix"with_count"),X(LANG_prefix"define_public"),X("__VA_ARGS__"))) \
+			LANG_EXPORT("define_private") DEFINE_WITH_COUNT(X(LANG_prefix"define_private")) \
+			LANG_EXPORT("define_public") DEFINE_WITH_COUNT(X(LANG_prefix"define_public")) \
 			LANG_EXPORT("declare_private") \
 			\
 			DEFINE_FUNCTION(X(LANG_prefix"ignore"),X("..."),) \
@@ -519,11 +528,11 @@ LANG_define => 全局定義
 		Call1(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("__VA_ARGS__"))X(LANG_prefix"ignore"))
 #define HELPER_declareDefineAreNothing_lambda_MACRO(x) \
 	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_withTypeOfBody"),X("..."),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_withTypeOfBody"),X("..."),X(LANG_prefix"ignore")) \
 	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_withTypeOfBody_lambda"),X("..."),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_withTypeOfBody_lambda"),X("..."),) \
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_withTypeOfBody_lambda"),X("..."),X(LANG_prefix"ignore")) \
 	REDEFINE_FUNCTION(X(LANG_prefix"declare_"#x"_lambda_s_withTypeOfBody"),X("..."),) \
-	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"),X("..."),)
+	REDEFINE_FUNCTION(X(LANG_prefix"define_"#x"_lambda_s_withTypeOfBody"),X("..."),X(LANG_prefix"ignore"))
 #define LANG_NOT_STATIC \
 	IF(Not(And(Defined(X(LANG_prefix"is_require")), \
 		Or( \
