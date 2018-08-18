@@ -440,7 +440,8 @@ LANG_define => 全局定義
 				DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr")Nat(i),var_from_to(1,i), \
 					for_in_from_to(j, 1, i, { \
 						X(LANG_prefix"case_const_number_hELPEr_each")X(" _")Nat(j)X(" ") \
-					}))}) \
+					}) \
+					X("}"LANG_prefix"case_const_number_tEMp;})"))}) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_each0"),X("x"), \
 				Call1(X(TOOLS_prefix"expand"), X(LANG_prefix"case_const_number_hELPEr_each")X(" x"))) \
 			DEFINE_FUNCTION(X(LANG_prefix"case_const_number_hELPEr_append"),X("x,y"),X("x y")) \
