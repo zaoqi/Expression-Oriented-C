@@ -467,7 +467,7 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #define exprOrientedC_LANG_anonymous_struct(x) struct{x}
 #define exprOrientedC_LANG_anonymous_union(x) union{x}
 #define exprOrientedC_LANG_anonymous_enumeration(x) enum{x}
-#define exprOrientedC_LANG_define_strunienu_hELPEr(body) {body};
+#define exprOrientedC_LANG_define_strunienu_hELPEr(...) {__VA_ARGS__};
 #if defined(__cplusplus)
 #define exprOrientedC_LANG_declare_struct(x) struct x;
 #define exprOrientedC_LANG_define_struct(x) struct x exprOrientedC_LANG_define_strunienu_hELPEr

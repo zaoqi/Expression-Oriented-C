@@ -313,7 +313,7 @@ LANG_define => 全局定義
 			DEFINE_FUNCTION(X(LANG_prefix"anonymous_struct"),X("x"),X("struct{x}")) \
 			DEFINE_FUNCTION(X(LANG_prefix"anonymous_union"),X("x"),X("union{x}")) \
 			DEFINE_FUNCTION(X(LANG_prefix"anonymous_enumeration"),X("x"),X("enum{x}")) \
-			DEFINE_FUNCTION(X(LANG_prefix"define_strunienu_hELPEr"),X("body"),X("{body};")) \
+			DEFINE_FUNCTION(X(LANG_prefix"define_strunienu_hELPEr"),X("..."),X("{__VA_ARGS__};")) \
 			IF(CPlusPlus) \
 				DEFINE_FUNCTION(X(LANG_prefix"declare_struct"),X("x"),X("struct x;")) \
 				DEFINE_FUNCTION(X(LANG_prefix"define_struct"),X("x"),X("struct x "LANG_prefix"define_strunienu_hELPEr")) \
