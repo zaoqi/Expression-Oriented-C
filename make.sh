@@ -1,2 +1,2 @@
 #!/bin/sh
-gcc make.c -o make.out&&./make.out
+clang -O0 make.c -o make.out&&./make.out

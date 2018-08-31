@@ -293,8 +293,8 @@ LANG_define => 全局定義
 			ENDIF \
 			\
 			LANG_EXPORT("cast") DEFINE_FUNCTION(X(LANG_prefix"cast"),X("x,t"),X("((t)x)")) \
-			LANG_EXPORT("annotate") DEFINE_FUNCTION(X(LANG_prefix"annotate"), \
-				X("x,t"),X("({t "LANG_prefix"tEMp_annotate=x;"LANG_prefix"tEMp_annotate;})")) \
+			LANG_EXPORT("ann") DEFINE_FUNCTION(X(LANG_prefix"ann"), \
+				X("x,t"),X("({t "LANG_prefix"tEMp_ann=x;"LANG_prefix"tEMp_annotate;})")) \
 			LANG_EXPORT("bool_not") DEFINE_FUNCTION(X(LANG_prefix"bool_not"),X("x"),X("(!(x))")) \
 			LANG_EXPORT("eq_p") DEFINE_FUNCTION(X(LANG_prefix"eq_p"),X("..."), \
 				Call2(X(TOOLS_prefix"reduce_s"),X(LANG_prefix"eq_p2"),X("__VA_ARGS__"))) \

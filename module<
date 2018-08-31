@@ -440,8 +440,8 @@ typedef intptr_t exprOrientedC_LANG_int_pointer;
 #endif
 #define cast exprOrientedC_LANG_cast
 #define exprOrientedC_LANG_cast(x,t) ((t)x)
-#define annotate exprOrientedC_LANG_annotate
-#define exprOrientedC_LANG_annotate(x,t) ({t exprOrientedC_LANG_tEMp_annotate=x;exprOrientedC_LANG_tEMp_annotate;})
+#define ann exprOrientedC_LANG_ann
+#define exprOrientedC_LANG_ann(x,t) ({t exprOrientedC_LANG_tEMp_ann=x;exprOrientedC_LANG_tEMp_annotate;})
 #define bool_not exprOrientedC_LANG_bool_not
 #define exprOrientedC_LANG_bool_not(x) (!(x))
 #define eq_p exprOrientedC_LANG_eq_p
@@ -810,7 +810,7 @@ static const int exprOrientedC_LANG_case_const_number_hELPEr_each;
 #define signed_byte exprOrientedC_LANG_signed_byte
 #define restrict exprOrientedC_LANG_restrict
 #define cast exprOrientedC_LANG_cast
-#define annotate exprOrientedC_LANG_annotate
+#define ann exprOrientedC_LANG_ann
 #define bool_not exprOrientedC_LANG_bool_not
 #define eq_p exprOrientedC_LANG_eq_p
 #define not_eq_p exprOrientedC_LANG_not_eq_p

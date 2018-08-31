@@ -14,7 +14,7 @@
 #undef signed_byte
 #undef restrict
 #undef cast
-#undef annotate
+#undef ann
 #undef bool_not
 #undef eq_p
 #undef not_eq_p

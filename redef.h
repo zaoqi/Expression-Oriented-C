@@ -14,7 +14,7 @@
 #define signed_byte exprOrientedC_LANG_signed_byte
 #define restrict exprOrientedC_LANG_restrict
 #define cast exprOrientedC_LANG_cast
-#define annotate exprOrientedC_LANG_annotate
+#define ann exprOrientedC_LANG_ann
 #define bool_not exprOrientedC_LANG_bool_not
 #define eq_p exprOrientedC_LANG_eq_p
 #define not_eq_p exprOrientedC_LANG_not_eq_p
